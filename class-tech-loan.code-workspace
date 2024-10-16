@@ -1,0 +1,27 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        // Enable format on save
+        "editor.formatOnSave": true,
+        // ESLint auto-fix on save
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        // Use Prettier as the default formatter
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        // Set tab size to 2 spaces (typical for JavaScript and React)
+        "editor.tabSize": 2
+    },
+    "extensions": {
+        "recommendations": [
+            "eamodio.gitlens",       // GitLens for better Git insights
+            "esbenp.prettier-vscode", // Prettier for code formatting
+            "dbaeumer.vscode-eslint", // ESLint for JavaScript linting
+            "github.vscode-pull-request-github" // GitHub Pull Requests for managing PRs
+        ]
+    }
+}
