@@ -7,8 +7,14 @@ CREATE TABLE Users (
 
 CREATE TABLE Equipment (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  description TEXT,
-  status VARCHAR(20),
-  location VARCHAR(50)
+  type VARCHAR(100) IS NOT NULL,
+  make VARCHAR(100) IS NOT NULL,
+  model VARCHAR(100) IS NOT NULL,
+  serial VARCHAR (100),
+  tag VARCHAR (100),
+  description VARCHAR(150),
+  status VARCHAR(100) IS NOT NULL,
+  room VARCHAR(100) IS NOT NULL,
+  notes VARCHAR(100),
+  expiration DATE VARCHAR(100)
 );
