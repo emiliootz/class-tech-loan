@@ -4,6 +4,8 @@ npm install @fortawesome/react-fontawesome @fortawesomefree-solid-svg-icons
 npm install @fortawesome/free-regular-svg-icons
 npm install @fortawesome/free-brands-svg-icons 
 
+these are the commands for front end. 
+
 
 # Getting Started with Create React App
 
