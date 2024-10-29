@@ -1,18 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import React from 'react';
-import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function UserPage() {
   // Sample data for items
   const items = [
-    { name: 'Item 1', quantity: 2 },
-    { name: 'Item 2', quantity: 5 },
-    { name: 'Item 3', quantity: 1 },
-    { name: 'Item 4', quantity: 3 },
-    { name: 'Item 5', quantity: 0 },
+    { name: 'Item 1', quantity: 2, image: 'https://via.placeholder.com/150' },
+    { name: 'Item 2', quantity: 5, image: 'https://via.placeholder.com/150' },
+    { name: 'Item 3', quantity: 1, image: 'https://via.placeholder.com/150' },
+    { name: 'Item 4', quantity: 3, image: 'https://via.placeholder.com/150' },
+    { name: 'Item 5', quantity: 0, image: 'https://via.placeholder.com/150' },
   ];
 
   // Sample data for categories
@@ -25,24 +25,64 @@ function UserPage() {
     { name: 'Category 6', path: '/category6' },
   ];
 
+  // Sample data for buildings
+  const buildings = [
+    'McCormack',
+    'University Hall',
+    'Wheatly'
+  ];
+
+  // State for the search query
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter items based on the search query
+  const filteredItems = items.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Container>
-      <Row className="justify-content-end">
-        <Col xs="auto" className="text-end mb-3">
+      <Row className="mt-3 align-items-center">
+        <Col xs={3}>
+          <h5>User ID: YourUserID</h5>
+        </Col>
+        <Col xs={6} className="text-center">
+          <Form.Select className="d-inline w-auto">
+            <option>Choose a Category</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category.path}>{category.name}</option>
+            ))}
+          </Form.Select>
+        </Col>
+        <Col xs={3} className="text-end">
           <Link to="/onclickcart" className="text-decoration-none">
             <Button variant="outline-primary" size="lg" className="d-flex align-items-center">
               <i className="bi bi-cart3 me-2" style={{ fontSize: '1.5rem' }}></i>
-              <span style={{ fontSize: '1.25rem' }}>Shopping Cart</span>
+              Cart
             </Button>
           </Link>
         </Col>
       </Row>
-      <Row>
-  <Col>
-    <h1 className="text-center">USER ID / Name inserted here from Microsoft etc.</h1>
-  </Col>
-</Row>
 
+      <Row className="mt-4">
+        <Col xs={3}>
+          <Form.Select className="w-100">
+            <option>Select a Building</option>
+            {buildings.map((building, index) => (
+              <option key={index}>{building}</option>
+            ))}
+          </Form.Select>
+        </Col>
+        <Col xs={9}>
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="mb-3"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </Col>
+      </Row>
 
       <Row className="mt-4">
         <Col>
@@ -50,40 +90,21 @@ function UserPage() {
             <Card.Body>
               <Card.Title>My Items</Card.Title>
               <Row className="mt-3">
-                {items.map((item, index) => (
-                  <Col key={index} xs={6} md={4} lg={2} className="mb-4">
+                {filteredItems.map((item, index) => (
+                  <Col key={index} xs={6} md={4} lg={3} className="mb-4">
                     <Card className="text-center border border-dark">
+                      <Card.Img variant="top" src={item.image} />
                       <Card.Body>
                         <Card.Title>{item.name}</Card.Title>
-                        <Card.Text>Quantity: {item.quantity}</Card.Text>
+                        <Card.Text>Amount Available: {item.quantity}</Card.Text>
                       </Card.Body>
                     </Card>
                   </Col>
                 ))}
               </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="mt-4">
-        <Col>
-          <Card className="text-center border border-dark">
-            <Card.Body>
-              <Card.Title>Categories</Card.Title>
-              <Row className="mt-3">
-                {categories.map((category, index) => (
-                  <Col key={index} xs={6} md={4} className="mb-4">
-                    <Link to={category.path} className="text-decoration-none">
-                      <Card className="text-center border border-dark">
-                        <Card.Body>
-                          <Card.Title>{category.name}</Card.Title>
-                        </Card.Body>
-                      </Card>
-                    </Link>
-                  </Col>
-                ))}
-              </Row>
+              {filteredItems.length === 0 && (
+                <p className="text-center">No items found.</p>
+              )}
             </Card.Body>
           </Card>
         </Col>
