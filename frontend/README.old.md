@@ -1,10 +1,3 @@
-npm install bootstrap 
-npm install react-bootstrap 
-npm install @fortawesome/react-fontawesome @fortawesomefree-solid-svg-icons 
-npm install @fortawesome/free-regular-svg-icons
-npm install @fortawesome/free-brands-svg-icons 
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
