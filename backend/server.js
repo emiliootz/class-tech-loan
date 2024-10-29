@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const mysql = require("mysql2");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -26,14 +28,14 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.get("/umb_lm.mccormack", (req, res) => {
+app.get("/umb_lm", (req, res) => {
   db.query("SELECT * FROM mccormack", (err, results) => {
     if (err) return res.status(500).json({ error: "Database error" });
     res.status(200).json(results);
   });
 });
 
-app.get("/umb_lm.mccormack/:ID", (req, res) => {
+app.get("/umb_lm/:ID", (req, res) => {
   const equipmentId = req.params.ID;
   db.query(
     "SELECT * FROM mccormack WHERE ID = ?",
