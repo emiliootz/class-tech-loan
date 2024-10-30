@@ -3,19 +3,17 @@ import './App.css';
 
 import React, { useState } from 'react';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function UserPage() {
-  // Sample data for items
   const items = [
-    { name: 'Item 1', quantity: 2, image: 'https://via.placeholder.com/150' },
-    { name: 'Item 2', quantity: 5, image: 'https://via.placeholder.com/150' },
-    { name: 'Item 3', quantity: 1, image: 'https://via.placeholder.com/150' },
-    { name: 'Item 4', quantity: 3, image: 'https://via.placeholder.com/150' },
-    { name: 'Item 5', quantity: 0, image: 'https://via.placeholder.com/150' },
+    { id: 1, name: 'Item 1', quantity: 2, image: 'https://via.placeholder.com/150' },
+    { id: 2, name: 'Item 2', quantity: 5, image: 'https://via.placeholder.com/150' },
+    { id: 3, name: 'Item 3', quantity: 1, image: 'https://via.placeholder.com/150' },
+    { id: 4, name: 'Item 4', quantity: 3, image: 'https://via.placeholder.com/150' },
+    { id: 5, name: 'Item 5', quantity: 0, image: 'https://via.placeholder.com/150' },
   ];
 
-  // Sample data for categories
   const categories = [
     { name: 'Category 1', path: '/category1' },
     { name: 'Category 2', path: '/category2' },
@@ -25,20 +23,23 @@ function UserPage() {
     { name: 'Category 6', path: '/category6' },
   ];
 
-  // Sample data for buildings
   const buildings = [
     'McCormack',
     'University Hall',
     'Wheatly'
   ];
 
-  // State for the search query
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter items based on the search query
   const filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const navigate = useNavigate(); 
+
+  const handleItemClick = (id) => {
+    navigate(`/item/${id}`); 
+  };
 
   return (
     <Container>
@@ -92,7 +93,7 @@ function UserPage() {
               <Row className="mt-3">
                 {filteredItems.map((item, index) => (
                   <Col key={index} xs={6} md={4} lg={3} className="mb-4">
-                    <Card className="text-center border border-dark">
+                    <Card className="text-center border border-dark" onClick={() => handleItemClick(item.id)} style={{ cursor: 'pointer' }}>
                       <Card.Img variant="top" src={item.image} />
                       <Card.Body>
                         <Card.Title>{item.name}</Card.Title>

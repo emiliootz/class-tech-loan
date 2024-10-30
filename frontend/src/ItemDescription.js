@@ -1,7 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const ItemDescription = () => {
   const { id } = useParams();
@@ -13,9 +15,11 @@ const ItemDescription = () => {
     borrowTimeIn: '2 weeks',
     timeBorrowedOut: '1 week',
     description: 'This is a detailed description of Item 1.',
-    imageUrl: 'https://via.placeholder.com/150', 
+    imageUrl: 'https://via.placeholder.com/150',
   };
 
+  const [timeIn, setTimeIn] = useState(null);
+  const [timeOut, setTimeOut] = useState(null);
 
   if (id !== String(itemData.id)) {
     return <p>Item not found.</p>;
@@ -39,6 +43,27 @@ const ItemDescription = () => {
               <Card.Text>
                 <strong>Description:</strong> {itemData.description}
               </Card.Text>
+
+              <div className="mt-3">
+                <strong>Time In:</strong>
+                <DatePicker
+                  selected={timeIn}
+                  onChange={(date) => setTimeIn(date)}
+                  showTimeSelect
+                  dateFormat="Pp"
+                  className="form-control mt-1"
+                />
+              </div>
+              <div className="mt-3">
+                <strong>Time Out:</strong>
+                <DatePicker
+                  selected={timeOut}
+                  onChange={(date) => setTimeOut(date)}
+                  showTimeSelect
+                  dateFormat="Pp"
+                  className="form-control mt-1"
+                />
+              </div>
             </Col>
           </Row>
         </Card.Body>

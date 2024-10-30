@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import { Container, Card, Form, Button, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function OnClickCategories() {
   const [selectedBuilding, setSelectedBuilding] = useState('');
+  const navigate = useNavigate();
 
   const buildings = [
-    'McCormack',
-    'University Hall',
-    'Wheatley',
+    { name: 'McCormack', id: 1 },
+    { name: 'University Hall', id: 2 },
+    { name: 'Wheatley', id: 3 },
   ];
 
   const handleSelect = (event) => {
@@ -19,7 +21,9 @@ function OnClickCategories() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Selected Building: ${selectedBuilding}`);
+    if (selectedBuilding) {
+      navigate(`/category/${selectedBuilding}`); 
+    }
   };
 
   return (
@@ -35,11 +39,11 @@ function OnClickCategories() {
                   as="select" 
                   value={selectedBuilding} 
                   onChange={handleSelect}
-                  style={{ height: '60px' }} // Increased height
+                  style={{ height: '60px' }} 
                 >
                   <option value="">Choose a building...</option>
-                  {buildings.map((building, index) => (
-                    <option key={index} value={building}>{building}</option>
+                  {buildings.map((building) => (
+                    <option key={building.id} value={building.name}>{building.name}</option>
                   ))}
                 </Form.Control>
                 <InputGroup.Text 

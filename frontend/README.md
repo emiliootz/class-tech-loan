@@ -3,6 +3,9 @@ npm install react-bootstrap
 npm install @fortawesome/react-fontawesome @fortawesomefree-solid-svg-icons 
 npm install @fortawesome/free-regular-svg-icons
 npm install @fortawesome/free-brands-svg-icons 
+npm install axios
+npm install react-datepicker
+
 
 these are the commands for front end. 
 
