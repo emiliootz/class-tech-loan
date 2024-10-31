@@ -26,7 +26,7 @@ function UserPage() {
   const buildings = [
     'McCormack',
     'University Hall',
-    'Wheatly'
+    'Wheatley'
   ];
 
   const [searchQuery, setSearchQuery] = useState('');
