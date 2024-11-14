@@ -4,34 +4,14 @@ import './App.css';
 import React, { useState } from 'react';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import {mock_items} from './mock_data/data.js'
+import UserPageOptions from './utils/UserPage/UserPageOptions.js';
 
 function UserPage() {
-  const items = [
-    { id: 1, name: 'Item 1', quantity: 2, image: 'https://via.placeholder.com/150' },
-    { id: 2, name: 'Item 2', quantity: 5, image: 'https://via.placeholder.com/150' },
-    { id: 3, name: 'Item 3', quantity: 1, image: 'https://via.placeholder.com/150' },
-    { id: 4, name: 'Item 4', quantity: 3, image: 'https://via.placeholder.com/150' },
-    { id: 5, name: 'Item 5', quantity: 0, image: 'https://via.placeholder.com/150' },
-  ];
-
-  const categories = [
-    { name: 'Category 1', path: '/category1' },
-    { name: 'Category 2', path: '/category2' },
-    { name: 'Category 3', path: '/category3' },
-    { name: 'Category 4', path: '/category4' },
-    { name: 'Category 5', path: '/category5' },
-    { name: 'Category 6', path: '/category6' },
-  ];
-
-  const buildings = [
-    'McCormack',
-    'University Hall',
-    'Wheatley'
-  ];
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredItems = items.filter(item =>
+  const filteredItems = mock_items.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -42,48 +22,8 @@ function UserPage() {
   };
 
   return (
-    <Container>
-      <Row className="mt-3 align-items-center">
-        <Col xs={3}>
-          <h5>User ID: YourUserID</h5>
-        </Col>
-        <Col xs={6} className="text-center">
-          <Form.Select className="d-inline w-auto">
-            <option>Choose a Category</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category.path}>{category.name}</option>
-            ))}
-          </Form.Select>
-        </Col>
-        <Col xs={3} className="text-end">
-          <Link to="/onclickcart" className="text-decoration-none">
-            <Button variant="outline-primary" size="lg" className="d-flex align-items-center">
-              <i className="bi bi-cart3 me-2" style={{ fontSize: '1.5rem' }}></i>
-              Cart
-            </Button>
-          </Link>
-        </Col>
-      </Row>
-
-      <Row className="mt-4">
-        <Col xs={3}>
-          <Form.Select className="w-100">
-            <option>Select a Building</option>
-            {buildings.map((building, index) => (
-              <option key={index}>{building}</option>
-            ))}
-          </Form.Select>
-        </Col>
-        <Col xs={9}>
-          <Form.Control
-            type="text"
-            placeholder="Search..."
-            className="mb-3"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </Col>
-      </Row>
+    <Container className="mainContainer">
+      <UserPageOptions searchQuery={searchQuery} setSearchQuery={setSearchQuery}  />
 
       <Row className="mt-4">
         <Col>
@@ -110,6 +50,12 @@ function UserPage() {
           </Card>
         </Col>
       </Row>
+      <Container>
+        <Col xs={6}>
+            <p>User name: [User Name]</p>
+            <p>User Email: [User Email]</p>
+          </Col>
+      </Container>
     </Container>
   );
 }
