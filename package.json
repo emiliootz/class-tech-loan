@@ -18,7 +18,8 @@
   "homepage": "https://github.com/emiliootz/class-tech-loan#readme",
   "dependencies": {
     "ejs": "^3.1.10",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
