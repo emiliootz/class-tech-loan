@@ -1,0 +1,22 @@
+{
+  "name": "class-tech-loan",
+  "version": "1.0.0",
+  "description": "React and MySQL-based rental system for UMass Boston",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emiliootz/class-tech-loan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emiliootz/class-tech-loan/issues"
+  },
+  "homepage": "https://github.com/emiliootz/class-tech-loan#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
