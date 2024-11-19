@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/emiliootz/class-tech-loan#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.1"
   },
   "devDependencies": {
