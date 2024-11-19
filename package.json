@@ -1,6 +1,10 @@
 {
   "dependencies": {
+    "axios": "^1.7.7",
     "gapi-script": "^1.2.0",
-    "react-google-login": "^5.2.2"
+    "i18next": "^23.16.6",
+    "react-datepicker": "^7.5.0",
+    "react-google-login": "^5.2.2",
+    "react-i18next": "^15.1.1"
   }
 }

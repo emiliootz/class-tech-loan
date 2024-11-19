@@ -1,15 +1,9 @@
 import React from 'react';
 import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { mock_categories } from '../../mock_data/data';
+import { mock_categories, mock_buildings } from '../../mock_data/data';
 
 export default function userpage_Options(searchQuery, setSearchQuery) {
-  const buildings = [
-    'McCormack',
-    'University Hall',
-    'Wheatley'
-  ];
-
     return (
         <Container className="userOptions">
         <Row className="mt-3 align-items-center">
@@ -35,7 +29,7 @@ export default function userpage_Options(searchQuery, setSearchQuery) {
         <Col xs={3}>
           <Form.Select className="w-100">
             <option>Select a Building</option>
-            {buildings.map((building, index) => (
+            {mock_buildings.map((building, index) => (
               <option key={index}>{building}</option>
             ))}
           </Form.Select>
