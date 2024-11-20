@@ -48,7 +48,8 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-    res.send("logout Get")
+    req.logOut();
+    res.redirect('login')
 })
 
 app.post('/logout', (req, res) => {
@@ -56,7 +57,13 @@ app.post('/logout', (req, res) => {
 })
 
 app.get('/protected', (req, res) => {
-    res.send("Protected")
+    if (req.isAuthenticated()) {
+        res.send("Protected")
+    } else {
+        res.status(401).send({ msg: "Unauthorized" })
+    }
+    console.log(req.session)
+    console.log(req.user)
 })
 
 
