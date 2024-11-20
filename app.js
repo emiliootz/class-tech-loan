@@ -1,13 +1,14 @@
+const { hashSync } = require('bcrypt');
 const express = require('express');
 const app = express();
 const UserModel = require('./config/database');
-const { hash, hashSync } = require('bcrypt');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
+
 
 app.use(session({
     secret: 'keyboard cat',
@@ -20,6 +21,7 @@ app.use(session({
 }))
 
 require('./config/passport');
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -54,7 +56,7 @@ app.post('/logout', (req, res) => {
 })
 
 app.get('/protected', (req, res) => {
-    res.send("protected Get")
+    res.send("Protected")
 })
 
 
