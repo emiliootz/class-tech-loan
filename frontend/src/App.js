@@ -1,18 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './css/App.css';
 import React, { useState } from 'react';
 import { Button, Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UserPage from './UserPage';
-import OnClickCart from './OnClickCart';
-import OnClickCategories from './OnClickCategories';
-import ItemDescription from './ItemDescription';
-import i18n from './i18n';
-import {useTranslation} from 'react-i18next';
+import UserPage from './pages/UserPage';
+import OnClickCart from './pages/OnClickCart';
+import OnClickCategories from './pages/OnClickCategories';
+import ItemDescription from './pages/ItemDescription';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = ({ onLogin }) => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const LoginPage = ({ onLogin }) => {
     <Container className="d-flex align-items-center justify-content-center vh-100">
       <Card className="login-card shadow">
         <Card.Body>
-          <h1 className="text-center mb-4">{t('login')}</h1>
+          <h1 className="text-center mb-4">{t("login")}</h1>
           <Form>
             <Form.Group controlId="formUsername">
               <Form.Label>Username</Form.Label>

@@ -45,7 +45,7 @@ npm install @fortawesome/free-regular-svg-icons
 npm install @fortawesome/free-brands-svg-icons 
 npm install axios
 npm install react-datepicker
-npm install i18next react-i18next
+npm install i18next react-i18next i18next-http-backend i18next-browser-languagedetector
 
 # Start the React application
 npm start

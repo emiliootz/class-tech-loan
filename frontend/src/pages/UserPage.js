@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import '../css/App.css'
 
 import React, { useState } from 'react';
-import { Button, Container, Row, Col, Card, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import {mock_items} from './mock_data/data.js'
-import UserPageOptions from './utils/UserPage/UserPageOptions.js';
+import UserPageOptions from './components/UserPage/UserPageOptions.js';
 
 function UserPage() {
 
