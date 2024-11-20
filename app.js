@@ -9,12 +9,11 @@ const passport = require('passport');
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
 
-
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/passport', collectionName: "sessions" }),
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/passport-google', collectionName: "sessions" }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
@@ -29,36 +28,23 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
-app.get('/register', (req, res) => {
-    res.render('register')
-})
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile'] }));
 
-app.post('/login', passport.authenticate('local', { successRedirect: 'protected' }))
+app.get('/auth/callback',
+    passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/protected' }));
 
-
-app.post('/register', (req, res) => {
-    let user = new UserModel({
-        username: req.body.username,
-        password: hashSync(req.body.password, 10)
-    })
-
-    user.save().then(user => console.log(user));
-
-    res.send({ success: true })
-})
 
 app.get('/logout', (req, res) => {
-    req.logOut();
-    res.redirect('login')
-})
-
-app.post('/logout', (req, res) => {
-    res.send("logout Post")
+    req.logout();
+    res.redirect('/login')
 })
 
 app.get('/protected', (req, res) => {
     if (req.isAuthenticated()) {
-        res.send("Protected")
+        res.render("protected", {
+            name: req.user.name
+        })
     } else {
         res.status(401).send({ msg: "Unauthorized" })
     }
@@ -68,5 +54,5 @@ app.get('/protected', (req, res) => {
 
 
 app.listen(3000, (req, res) => {
-    console.log("listening to port 3000");
+    console.log("Listening to port 3000");
 })
