@@ -1,7 +1,7 @@
 const { hashSync } = require('bcrypt');
 const express = require('express');
 const app = express();
-const UserModel = require('./config/database');
+const { UserModel, ItemModel } = require('./config/database');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
