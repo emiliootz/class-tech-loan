@@ -85,3 +85,10 @@ npm start
 - Submit a pull request and assign at least one reviewer.
 
 
+to install dependencies: 
+
+chmod +x install-dependencies.sh
+
+Run: 
+
+./install-dependencies.sh
