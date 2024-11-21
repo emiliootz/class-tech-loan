@@ -35,10 +35,15 @@ app.get('/auth/callback',
     passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/protected' }));
 
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/login')
-})
+    app.get('/logout', (req, res, next) => {
+        req.logout((err) => {
+            if (err) {
+                return next(err); // If an error occurs, pass it to the next middleware (error handler)
+            }
+            res.redirect('/login'); // Redirect to login after successful logout
+        });
+    });
+    
 
 app.get('/protected', (req, res) => {
     if (req.isAuthenticated()) {

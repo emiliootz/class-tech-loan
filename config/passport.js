@@ -1,40 +1,40 @@
-const { compareSync } = require('bcrypt');
-const passport = require('passport')
-const UserModel = require('./database')
+require('dotenv').config(); // Load environment variables
+const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const UserModel = require('./database');
 
 passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/callback"
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
 },
-    function (accessToken, refreshToken, profile, cb) {
-        console.log(accessToken, profile);
-        UserModel.findOne({ googleId: profile.id }, (err, user) => {
-            if (err) return cb(err, null);
-            if (!user) {
-                let newUser = new UserModel({
-                    googleId: profile.id,
-                    name: profile.displayName
-                })
-
-                newUser.save();
-                return cb(null, newUser);
-            } else {
-                return cb(null, user)
-            }
-        })
+async (accessToken, refreshToken, profile, cb) => {
+    try {
+        // Use async/await to find user
+        let user = await UserModel.findOne({ googleId: profile.id });
+        if (!user) {
+            // If user doesn't exist, create a new one
+            user = new UserModel({
+                googleId: profile.id,
+                name: profile.displayName
+            });
+            await user.save();
+        }
+        return cb(null, user);
+    } catch (err) {
+        return cb(err, null);
     }
-));
+}));
 
-//Persists user data inside session
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
-//Fetches session details using session id
-passport.deserializeUser(function (id, done) {
-    UserModel.findById(id, function (err, user) {
-        done(err, user);
-    });
+passport.deserializeUser(async function (id, done) {
+    try {
+        const user = await UserModel.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
 });
