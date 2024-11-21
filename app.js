@@ -8,6 +8,7 @@ const passport = require('passport');
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
 
 app.use(session({
     secret: 'keyboard cat',
@@ -57,6 +58,65 @@ app.get('/protected', (req, res) => {
     console.log(req.user)
 })
 
+// Add a new item
+app.post('/add-item', async (req, res) => {
+    const { assetId, assetType, make, model, status } = req.body;
+    try {
+        const newItem = new ItemModel({
+            assetId,
+            assetType,
+            make,
+            model,
+            status,
+        });
+        await newItem.save();
+        res.status(201).send({ message: 'Item added successfully', item: newItem });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+// Get all items
+app.get('/items', async (req, res) => {
+    try {
+        const items = await ItemModel.find();
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// Update an item by asset ID
+app.put('/update-item/:assetId', async (req, res) => {
+    const assetId = req.params.assetId;
+    try {
+        const updatedItem = await ItemModel.findOneAndUpdate(
+            { assetId },
+            req.body,
+            { new: true }
+        );
+        if (!updatedItem) {
+            return res.status(404).send({ error: 'Item not found' });
+        }
+        res.status(200).send({ message: 'Item updated successfully', item: updatedItem });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+// Delete an item by asset ID
+app.delete('/delete-item/:assetId', async (req, res) => {
+    const assetId = req.params.assetId;
+    try {
+        const deletedItem = await ItemModel.findOneAndDelete({ assetId });
+        if (!deletedItem) {
+            return res.status(404).send({ error: 'Item not found' });
+        }
+        res.status(200).send({ message: 'Item deleted successfully' });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
 
 app.listen(3000, (req, res) => {
     console.log("Listening to port 3000");
