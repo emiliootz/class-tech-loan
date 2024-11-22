@@ -68,7 +68,7 @@ npm install dotenv
 
 ### Environment Setup:
 - Create a .env file in the root directory.
-- Add the following environment variables:
+**Add the following environment variables:**
 ```bash
 GOOGLE_CLIENT_ID=<Your-Google-Client-ID>
 GOOGLE_CLIENT_SECRET=<Your-Google-Client-Secret>
