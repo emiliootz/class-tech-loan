@@ -358,6 +358,16 @@ app.put('/assign-role/:userId', requireRole('admin'), async (req, res) => {
     }
 });
 
+// User management page
+app.get('/manage-users', requireRole('admin'), async (req, res) => {
+    try {
+        const users = await UserModel.find(); // Fetch all users
+        res.render('manage-users', { users });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
 app.listen(3000, (req, res) => {
     console.log("Listening to port 3000");
 })

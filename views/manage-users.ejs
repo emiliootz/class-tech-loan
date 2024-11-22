@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>User Management</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.name %></td>
+                    <td>
+                        <select class="form-control role-select" data-user-id="<%= user._id %>">
+                            <option value="faculty" <%= user.role === 'faculty' ? 'selected' : '' %>>Faculty</option>
+                            <option value="lending_staff" <%= user.role === 'lending_staff' ? 'selected' : '' %>>Lending Staff</option>
+                            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary update-role-btn" data-user-id="<%= user._id %>">Update Role</button>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.update-role-btn').click(function() {
+                const userId = $(this).data('user-id');
+                const newRole = $(`select[data-user-id='${userId}']`).val();
+
+                $.ajax({
+                    url: `/assign-role/${userId}`,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ role: newRole }),
+                    success: function(response) {
+                        alert(`Role updated to ${newRole} successfully!`);
+                    },
+                    error: function(error) {
+                        alert(`Error updating role: ${error.responseJSON.error}`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
