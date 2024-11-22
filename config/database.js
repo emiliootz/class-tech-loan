@@ -17,6 +17,10 @@ mongoose.connect('mongodb://localhost:27017/faculty-tech-lending')
 const userSchema = mongoose.Schema({
   name: String,
   googleId: String,
+  cart: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item'
+  }]
 });
 
 const UserModel = mongoose.model('User', userSchema);

@@ -5,6 +5,8 @@ const { UserModel, ItemModel, LoanModel } = require('./config/database');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
+const mongoose = require('mongoose');
+
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
@@ -13,7 +15,7 @@ app.use(express.json());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/passport-google', collectionName: "sessions" }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
@@ -122,6 +124,9 @@ app.delete('/delete-item/:assetId', async (req, res) => {
 app.post('/add-loan/', async (req, res) => {
     const { userId, itemId, status, location } = req.body;
     try {
+        if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid userId or itemId' });
+        }
         const newLoan = new LoanModel({
             userId,
             itemId,
@@ -138,6 +143,9 @@ app.post('/add-loan/', async (req, res) => {
 // Get all loaned items
 app.get('/loaned-items/', async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid itemId' });
+        }
         const items = await LoanModel.find();
         res.status(200).json(items);
     } catch (error) {
@@ -167,6 +175,9 @@ app.put('/update-loan/:itemId', async (req, res) => {
 app.delete('/delete-loan/:itemId', async (req, res) => {
     const itemId = req.params.itemId;
     try {
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid itemId' });
+        }
         const deletedLoan = await LoanModel.findOneAndDelete({ itemId });
         if (!deletedLoan) {
             return res.status(404).send({ error: 'Loan not found' });
@@ -176,6 +187,124 @@ app.delete('/delete-loan/:itemId', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 });
+
+// Add an item to the user's cart
+app.post('/add-to-cart/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+    }
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid itemId' });
+        }
+        const user = await UserModel.findById(req.user._id);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        const item = await ItemModel.findById(itemId);
+        if (!item || item.status !== 'Available') {
+            return res.status(400).send({ error: 'Item is not available' });
+        }
+
+        // Add item to cart
+        user.cart.push(itemId);
+        await user.save();
+
+        res.status(200).send({ message: 'Item added to cart', cart: user.cart });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// View items in the user's cart
+app.get('/view-cart', async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+    }
+
+    try {
+        const user = await UserModel.findById(req.user._id).populate('cart');
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        res.status(200).send({ cart: user.cart });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// Remove an item from the user's cart
+app.delete('/remove-from-cart/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+    }
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid itemId' });
+        }
+        
+        const user = await UserModel.findById(req.user._id);
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        user.cart = user.cart.filter(item => item.toString() !== itemId);
+        await user.save();
+
+        res.status(200).send({ message: 'Item removed from cart', cart: user.cart });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// Checkout the user's cart
+app.post('/checkout-cart', async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+    }
+
+    try {
+        const user = await UserModel.findById(req.user._id).populate('cart');
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        for (const item of user.cart) {
+            if (item.status !== 'Available') {
+                return res.status(400).send({ error: `Item ${item.assetId} is no longer available` });
+            }
+        }
+
+        // Create loan records and update item status
+        for (const item of user.cart) {
+            item.status = 'Assigned To Location';
+            await item.save();
+
+            const newLoan = new LoanModel({
+                userId: user._id,
+                itemId: item._id,
+                status: 'Assigned to Location',
+                location: 'N/A'
+            });
+            await newLoan.save();
+        }
+
+        // Clear the user's cart
+        user.cart = [];
+        await user.save();
+
+        res.status(200).send({ message: 'Checkout successful' });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
 
 app.listen(3000, (req, res) => {
     console.log("Listening to port 3000");
