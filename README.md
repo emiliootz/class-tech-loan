@@ -40,6 +40,14 @@ This project is a web application designed to help faculty members track and len
   - View Cart (GET /view-cart): View items in the logged-in user's cart.
   - Remove from Cart (DELETE /remove-from-cart/:itemId): Remove an item from the user's cart.
   - Checkout Cart (POST /checkout-cart): Checkout all items in the user's cart, create loan records, and update the item status to 'Assigned to Location'.
+- Role-Based Access Control:
+  - Middleware for Role Verification: Created middleware (requireRole and requireRoles) to restrict access based on user roles.
+  - **Admin Role Only:**
+    - Add Item (POST /add-item): Only users with the 'admin' role can add new items.
+    - Update Item (PUT /update-item/:assetId) and Delete Item (DELETE /delete-item/:assetId : Only 'admin' users can modify or delete items.
+    -**Staff and Admin Roles:**
+      - View Loaned Items (GET /loaned-items/): Both 'staff' and 'admin' users can view all loaned items.
+      - Add, Update, or Delete Loans: Staff or admin users can manage loan records.
 
 ## How to Run the Project
 
