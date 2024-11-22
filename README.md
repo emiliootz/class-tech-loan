@@ -45,7 +45,7 @@ This project is a web application designed to help faculty members track and len
   - **Admin Role Only:**
     - Add Item (POST /add-item): Only users with the 'admin' role can add new items.
     - Update Item (PUT /update-item/:assetId) and Delete Item (DELETE /delete-item/:assetId : Only 'admin' users can modify or delete items.
-    -**Staff and Admin Roles:**
+  - **Staff and Admin Roles:**
       - View Loaned Items (GET /loaned-items/): Both 'staff' and 'admin' users can view all loaned items.
       - Add, Update, or Delete Loans: Staff or admin users can manage loan records.
 
