@@ -2,6 +2,9 @@
 
 const mongoose = require('mongoose');
 
+// Helper function
+const getTomorrow = () => new Date(Date.now() + 86400000);
+
 mongoose.connect('mongodb://localhost:27017/faculty-tech-lending')
   .then(() => {
     console.log('MongoDB connected');
@@ -66,8 +69,41 @@ const itemSchema = new mongoose.Schema({
 
 const ItemModel = mongoose.model('Item', itemSchema);
 
+// Lending Schema and Model
+const loaningSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.ObjectId,
+    required: true,
+  },
+  itemId: {
+    type: mongoose.ObjectId,
+    required: true,
+  },
+  startTime: {
+    type: Date,
+    default: Date.now,
+  },
+  endTime: {
+    type: Date,
+    default: getTomorrow,
+  },
+  status: {
+    type: String,
+    enum: ['Available', 'Assigned to Location'],
+    required: true,
+  },
+  location: {
+    type: String,
+    default: 'N/A',
+    required: true,
+  },
+});
+
+const LoanModel = mongoose.model('Loans', loaningSchema);
+
 // Export models
 module.exports = {
   UserModel,
   ItemModel,
+  LoanModel,
 };

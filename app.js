@@ -1,7 +1,7 @@
 const { hashSync } = require('bcrypt');
 const express = require('express');
 const app = express();
-const { UserModel, ItemModel } = require('./config/database');
+const { UserModel, ItemModel, LoanModel } = require('./config/database');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
@@ -113,6 +113,65 @@ app.delete('/delete-item/:assetId', async (req, res) => {
             return res.status(404).send({ error: 'Item not found' });
         }
         res.status(200).send({ message: 'Item deleted successfully' });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// Add a loaned item
+app.post('/add-loan/', async (req, res) => {
+    const { userId, itemId, status, location } = req.body;
+    try {
+        const newLoan = new LoanModel({
+            userId,
+            itemId,
+            status,
+            location,
+        });
+        await newLoan.save();
+        res.status(201).send({ message: 'Loan added successfully', loan: newLoan });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+// Get all loaned items
+app.get('/loaned-items/', async (req, res) => {
+    try {
+        const items = await LoanModel.find();
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+// Update a loaned item by item ID
+app.put('/update-loan/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    try {
+        const updatedLoan = await LoanModel.findOneAndUpdate(
+            { itemId },
+            req.body,
+            { new: true }
+        );
+        if (!updatedLoan) {
+            return res.status(404).send({ error: 'Loan not found' });
+        }
+        res.status(200).send({ message: 'Loan updated successfully', loan: updatedLoan });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
+// Delete a loan by item ID
+app.delete('/delete-loan/:itemId', async (req, res) => {
+    const itemId = req.params.itemId;
+    try {
+        const deletedLoan = await LoanModel.findOneAndDelete({ itemId });
+        if (!deletedLoan) {
+            return res.status(404).send({ error: 'Loan not found' });
+        }
+        res.status(200).send({ message: 'Loan deleted successfully' });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
