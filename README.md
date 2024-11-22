@@ -1,4 +1,4 @@
-**# Class Tech Loan System**
+# Class Tech Loan System
 React and MySQL-based rental system for UMass Boston
 
 ## Overview
