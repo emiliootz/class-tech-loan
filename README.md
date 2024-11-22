@@ -1,5 +1,5 @@
 # Class Tech Loan System
-React and MySQL-based rental system for UMass Boston
+A web application designed to help faculty members track and lend out tech equipment for UMass Boston
 
 ## Overview
 This project is a web application designed to help faculty members track and lend out tech equipment such as laptops, adapters, and other items.
