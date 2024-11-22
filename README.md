@@ -1,9 +1,6 @@
 # Class Tech Loan System
 A web application designed to help faculty members track and lend out tech equipment for UMass Boston
 
-## Overview
-This project is a web application designed to help faculty members track and lend out tech equipment such as laptops, adapters, and other items.
-
 ## Technologies Used
 - Node.js: Backend server
 - Express.js: Web framework
