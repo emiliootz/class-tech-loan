@@ -27,6 +27,33 @@ require('./config/passport');
 app.use(passport.initialize())
 app.use(passport.session())
 
+// check user role
+const requireRole = (role) => {
+    return (req, res, next) => {
+      if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+      }
+      if (req.user.role !== role) {
+        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
+      }
+      next();
+    };
+  };
+  
+  // allow multiple roles
+  const requireRoles = (roles) => {
+    return (req, res, next) => {
+      if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+      }
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
+      }
+      next();
+    };
+  };
+  
+
 app.get('/login', (req, res) => {
     res.render('login')
 })
@@ -61,7 +88,7 @@ app.get('/protected', (req, res) => {
 })
 
 // Add a new item
-app.post('/add-item', async (req, res) => {
+app.post('/add-item', requireRole('admin') ,async (req, res) => {
     const { assetId, assetType, make, model, status } = req.body;
     try {
         const newItem = new ItemModel({
@@ -141,7 +168,7 @@ app.post('/add-loan/', async (req, res) => {
 });
 
 // Get all loaned items
-app.get('/loaned-items/', async (req, res) => {
+app.get('/loaned-items/', requireRoles(['staff', 'admin']) ,async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(itemId)) {
             return res.status(400).send({ error: 'Invalid itemId' });
@@ -305,6 +332,31 @@ app.post('/checkout-cart', async (req, res) => {
     }
 });
 
+// Manage user roles
+app.put('/assign-role/:userId', requireRole('admin'), async (req, res) => {
+    const userId = req.params.userId;
+    const { role } = req.body;
+
+    if (!['user', 'staff', 'admin'].includes(role)) {
+        return res.status(400).send({ error: 'Invalid role' });
+    }
+
+    try {
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            { role },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        res.status(200).send({ message: `User role updated to ${role}`, user: updatedUser });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
 
 app.listen(3000, (req, res) => {
     console.log("Listening to port 3000");
