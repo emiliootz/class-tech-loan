@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Helper function
 const getTomorrow = () => new Date(Date.now() + 86400000);
 
-mongoose.connect('mongodb://localhost:27017/faculty-tech-lending')
+mongoose.connect(process.env.MONGO_URL_FACULTY_TECH_LENDING)
   .then(() => {
     console.log('MongoDB connected');
   })

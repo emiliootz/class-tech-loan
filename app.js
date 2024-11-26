@@ -1,4 +1,4 @@
-const { hashSync } = require('bcrypt');
+require('dotenv').config(); // Load environment variables
 const express = require('express');
 const app = express();
 const { UserModel, ItemModel, LoanModel } = require('./config/database');
@@ -16,7 +16,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/passport-google', collectionName: "sessions" }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL_PASSPORT_GOOGLE, collectionName: "sessions" }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
