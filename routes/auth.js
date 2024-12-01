@@ -1,0 +1,52 @@
+/**
+ * This file contains all routes related to user mangement.
+ */
+
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+
+require("../config/passport");
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+router.get(
+  "/auth/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    successRedirect: "/protected",
+  })
+);
+
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err); // If an error occurs, pass it to the next middleware (error handler)
+    }
+    res.redirect("/login"); // Redirect to login after successful logout
+  });
+});
+
+router.get("/protected", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("protected", {
+      name: req.user.name,
+    });
+  } else {
+    res.status(401).send({ msg: "Unauthorized" });
+  }
+  console.log(req.session);
+  console.log(req.user);
+});
+
+module.exports = router;
