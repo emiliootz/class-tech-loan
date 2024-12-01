@@ -6,7 +6,9 @@
 const express = require("express");
 const router = express.Router();
 
+const { LoanModel } = require("../config/database");
 const { requireRoles } = require("../config/authMiddleware");
+const mongoose = require("mongoose");
 
 // Add a loaned item
 router.post("/add-loan/", async (req, res) => {

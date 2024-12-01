@@ -6,14 +6,14 @@
 require("dotenv").config(); // Load environment variables
 const express = require("express");
 const app = express();
-const { UserModel, ItemModel, LoanModel } = require("./config/database");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(logger);
+app.use(express.static("public"));
 
 app.use(
   session({
@@ -33,6 +33,12 @@ app.use(
 app.listen(3000, (req, res) => {
   console.log("Listening to port 3000");
 });
+
+// Define Logger (This should be removed eventually)
+function logger(req, res, next) {
+  console.log(req.originalUrl);
+  next();
+}
 
 /** Define Routers:
  *  - authRouter : Contains all routes related to user authentication and user data.

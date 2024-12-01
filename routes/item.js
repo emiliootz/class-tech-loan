@@ -5,6 +5,7 @@
 const express = require("express");
 const router = express.Router();
 
+const { ItemModel } = require("../config/database");
 const { requireRole } = require("../config/authMiddleware");
 
 // Add a new item

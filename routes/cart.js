@@ -4,6 +4,8 @@
 
 const express = require("express");
 const router = express.Router();
+const { UserModel, ItemModel, LoanModel } = require("../config/database");
+const mongoose = require("mongoose");
 
 // Add an item to the user's cart
 router.post("/add-to-cart/:itemId", async (req, res) => {

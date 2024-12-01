@@ -5,6 +5,7 @@
 const express = require("express");
 const router = express.Router();
 const { requireRole } = require("../config/authMiddleware");
+const { UserModel } = require("../config/database");
 
 // Manage user roles
 router.put("/assign-role/:userId", requireRole("admin"), async (req, res) => {
