@@ -25,8 +25,8 @@
                     <td><%= user.name %></td>
                     <td>
                         <select class="form-control role-select" data-user-id="<%= user._id %>">
-                            <option value="faculty" <%= user.role === 'faculty' ? 'selected' : '' %>>Faculty</option>
-                            <option value="lending_staff" <%= user.role === 'lending_staff' ? 'selected' : '' %>>Lending Staff</option>
+                            <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>Faculty</option>
+                            <option value="staff" <%= user.role === 'staff' ? 'selected' : '' %>>Lending Staff</option>
                             <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
                         </select>
                     </td>
