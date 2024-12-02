@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/emiliootz/class-tech-loan#readme",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "class-tech-loan": "file:",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.5",
