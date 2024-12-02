@@ -1,0 +1,54 @@
+/* Make sure .App does not override layout */
+.App {
+    /* Remove these conflicting flex properties from .App */
+    height: auto; /* Let it take up as much space as needed */
+    background-color: #f8f9fa; /* Keep the light background */
+    padding: 20px; /* Add some padding for spacing */
+  }
+  
+  /* Remove the flex and 100vh height from .App-header */
+  .App-header {
+    background-color: #282c34;
+    color: white;
+    font-size: calc(10px + 2vmin);
+    padding: 20px;
+    margin-bottom: 20px; /* Add space below header */
+    text-align: center; /* Ensure text is centered */
+  }
+  
+  /* For the logo, keep the animation, but don't make it too big */
+  .App-logo {
+    height: 20vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  /* Align content inside header */
+  header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Apply flexbox to ensure content is centered, but not on the whole page */
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Adjust this as needed */
+    width: 100%;
+    padding-top: 20px; /* Add some space at the top */
+  }
