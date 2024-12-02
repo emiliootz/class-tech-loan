@@ -1,0 +1,33 @@
+.card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .google-login-button {
+    background-color: #4285F4; 
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .google-login-button i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .google-login-button:disabled {
+    background-color: #b3d7ff;
+  }
+  

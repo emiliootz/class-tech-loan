@@ -1,0 +1,25 @@
+.logout-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Make sure the button is above other content */
+  }
+  
+  .logout-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+
+  #logoutButtonContainer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -100px;  /* Manually adjust based on the width of the button */
+    z-index: 1000;
+    width: 200px;
+    text-align: center;
+  }
+  
+ 
+  
