@@ -1,6 +1,6 @@
 import { GoogleLogout } from 'react-google-login';
 import React from 'react';
-import './css/Loginout.css';  
+import './css/Logout.css';  
 import { Button } from 'react-bootstrap';
 import getClientID from './getClientID';
 

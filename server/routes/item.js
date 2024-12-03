@@ -30,6 +30,7 @@ router.post("/add-item", requireRole("admin"), async (req, res) => {
 router.get("/items", async (req, res) => {
   try {
     const items = await ItemModel.find();
+    console.log(items);
     res.status(200).json(items);
   } catch (error) {
     res.status(500).send({ error: error.message });

@@ -3,11 +3,12 @@
  * a user access to them if they are a valid user with the correct access level.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {createBrowserRouter} from 'react-router-dom';
 import LoginPage from '../src/LoginPage';
 import ProtectedRoute from './authentication/ProtectedRoute';
 import Cookies from 'js-cookie';
+import EquipmentPage from '../src/EquipmentPage';
 
 // Function to get the access token from cookies
 const getAccessToken = () => {
@@ -16,8 +17,26 @@ const getAccessToken = () => {
   
   // Function to check if the user is authenticated
   const isAuthenticated = () => {
-    return !!getAccessToken();
+    return true; // returns true for testing purposes.
+    //return !!getAccessToken();
   }
+
+  /**
+   * Determines which URL should be used for the Back-End based on the domain (url) of the Front-End
+   * @returns String
+   */
+  function getBackEndURL() {
+    switch (window.location.hostname) {
+      case "localhost": // Local environment
+      case "127.0.0.1":
+        return "http://localhost:8080";
+      default:
+        return "http://localhost:8080";
+    }
+  };
+
+  const backendURL = getBackEndURL();
+
 
 const router = createBrowserRouter(
     [
@@ -31,7 +50,7 @@ const router = createBrowserRouter(
             children: [
                 {
                     path: '/equipment',
-                    // Add element: <Equipment /> when page is added
+                    element: <EquipmentPage backendURL={backendURL} />,
                 },
                 {
                     path: '/view-cart',

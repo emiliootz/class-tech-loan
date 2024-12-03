@@ -3,19 +3,32 @@ import './App.css'
 import axios from "axios";
 import { RouterProvider } from 'react-router-dom';  // Import necessary Router components
 import router from '../public/router';
-import { Navbar } from 'react-bootstrap';
-import HomePage from './HomePage';
 
 function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  /**
+   * Determines which URL should be used for the Back-End based on the domain (url) of the Front-End
+   * @returns String
+   */
+  const FindBackendURL = () => {
+    switch (window.location.hostname) {
+      case "localhost": // Local environment
+      case "127.0.0.1":
+        return "http://localhost:8080";
+      default:
+        return "http://localhost:8080";
+    }
+  };
+
+  const [backendURL, setBackendURL] = useState(FindBackendURL());
 
   const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:8080/api");
+    const response = await axios.get(backendURL + "/api");
     console.log(response.data.fruits);
   }
 
   const fetchAuth = async () => {
-    const response = await axios.post("http://localhost:8080/api/auth/google")
+    const response = await axios.post(backendURL + "/auth/google")
     console.log(response);
   }
 
