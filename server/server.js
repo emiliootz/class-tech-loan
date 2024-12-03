@@ -18,7 +18,6 @@ const corsOptions = {
   origin: ["http://localhost:5173"],
 }
 
-
 app.set("view engine", "ejs"); // The engine tells the code to use the ejs files in the views folder
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -76,7 +75,8 @@ const loanedItemsRouter = require("./routes/loanedItems");
 app.use("/", loanedItemsRouter);
 
 
-// This line of code tells the server to run on Port 5000 and wait for something to happen indefinitely.
+// This line of code tells the server to run on Port 8080 and wait for something to happen indefinitely.
+// If we change this back to port 3000 then the server-side Google OAuth should work again
 app.listen(8080, (req, res) => {
   console.log("Listening to port 8080");
 });

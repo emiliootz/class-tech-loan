@@ -8,7 +8,6 @@ import axios from 'axios';
 import * as React from 'react';
 
 
-
 // Typescript (https://react.dev/learn/typescript)
 interface EquipmentPageProps {
     backendURL: string;

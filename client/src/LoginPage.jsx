@@ -5,8 +5,9 @@ import axios from 'axios';
 const SignonPage = () =>  {
     const clientID = "692964394601-nt6oc3esoam2julek3sm1kehqf1i0vhe.apps.googleusercontent.com";
       // Success handler
-  const onSuccess = (res) => {
-    console.log("Login success! Current user:", res.profileObj);
+  const onSuccess = async (res) => {
+    console.log("Login success! Current user:", res);
+    handleLoginSuccess(res.credential);
   };
 
   // Failure handler
@@ -18,14 +19,16 @@ const SignonPage = () =>  {
     console.log('Login Success:', credentialResponse);
 
     // Send the credential to the backend
-    await axios.get('/auth/google', {
-      method: 'POST',
+    const response = await axios.get('http://localhost:8080' + '/protected', {
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: credentialResponse.credential }),
     })
       .then((res) => res.json())
       .then((data) => console.log('Backend response:', data))
       .catch((error) => console.error('Error sending token:', error));
+
+      console.log(response);
   };
 
     return (
