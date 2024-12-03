@@ -4,7 +4,7 @@ echo "Starting installation of dependencies for the project..."
 
 # Install essential dependencies
 echo "Installing essential dependencies..."
-npm i express ejs passport passport-google-oauth20 bcrypt express-session connect-mongo mongoose save
+npm i express ejs passport passport-google-oauth20 express-session connect-mongo mongoose save express-react-views
 
 # Optional: Install dotenv for environment variable management
 echo "Installing dotenv for environment variables..."

@@ -1,5 +1,5 @@
-const { hashSync } = require('bcrypt');
 const express = require('express');
+require('dotenv').config(); // Load environment variables
 const app = express();
 const { UserModel, ItemModel, LoanModel } = require('./config/database');
 const session = require('express-session')
@@ -8,7 +8,8 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
@@ -16,7 +17,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/passport-google', collectionName: "sessions" }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL_PASSPORT_GOOGLE, collectionName: "sessions" }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
@@ -55,7 +56,7 @@ const requireRole = (role) => {
   
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('loginJSX')
 })
 
 app.get('/auth/google',
@@ -77,7 +78,7 @@ app.get('/auth/callback',
 
 app.get('/protected', (req, res) => {
     if (req.isAuthenticated()) {
-        res.render("protected", {
+        res.render("protectedJSX", {
             name: req.user.name
         })
     } else {
