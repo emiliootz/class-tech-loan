@@ -79,7 +79,7 @@ function EquipmentPage( {backendURL} ) {
   const navigate = useNavigate();
 
   const handleItemClick = (id) => {
-    navigate(`/item/${id}`);
+    navigate(`/view-item/${id}`);
   };
 
   return (
@@ -114,7 +114,7 @@ function EquipmentPage( {backendURL} ) {
 
           {/* Cart Button */}
           <Col xs={12} md={1} className="text-end mb-2">
-            <Link to="/onclickcart" className="text-decoration-none">
+            <Link to="/cart" className="text-decoration-none">
               <Button variant="outline-primary" size="lg">
                 <i className="bi bi-cart3 me-2" style={{ fontSize: '1.5rem' }}></i>
                 Cart
@@ -147,6 +147,7 @@ function EquipmentPage( {backendURL} ) {
         </Row>
       </Container>
 
+      {/* Removed Logout button for now */}
 
     </div>
   );

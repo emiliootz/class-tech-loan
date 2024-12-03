@@ -9,6 +9,8 @@ import LoginPage from '../src/LoginPage';
 import ProtectedRoute from './authentication/ProtectedRoute';
 import Cookies from 'js-cookie';
 import EquipmentPage from '../src/EquipmentPage';
+import Cart from '../src/Cart';
+import ViewItem from '../src/ViewItem';
 
 // Function to get the access token from cookies
 const getAccessToken = () => {
@@ -53,12 +55,12 @@ const router = createBrowserRouter(
                     element: <EquipmentPage backendURL={backendURL} />,
                 },
                 {
-                    path: '/view-cart',
-                    // Add element: <Cart /> when page is added
+                    path: '/cart',
+                    element: <Cart backendURL={backendURL}/>
                 },
                 {
-                    path: '/view-item/{$id}'
-                    // Add element <ViewItem id={id} />
+                    path: '/view-item/:id',
+                    element: <ViewItem />
                 },
                 {
                     path: '/loaned-items',
