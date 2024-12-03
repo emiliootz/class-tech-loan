@@ -74,6 +74,8 @@ npm install dotenv
 GOOGLE_CLIENT_ID=<Your-Google-Client-ID>
 GOOGLE_CLIENT_SECRET=<Your-Google-Client-Secret>
 GOOGLE_CALLBACK_URL=http://localhost:3000/auth/callback
+MONGO_URL_PASSPORT_GOOGLE=mongodb://<localhost or 127.0.0.1>:27017/passport-google
+MONGO_URL_FACULTY_TECH_LENDING=mongodb://<localhost or 127.0.0.1>:27017/faculty-tech-lending
 ```
 To start your application:
 ```bash
