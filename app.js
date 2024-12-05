@@ -77,17 +77,22 @@ app.get('/auth/callback',
     });
     
 
-app.get('/protected', (req, res) => {
+app.get('/protected', async (req, res) => {
     if (req.isAuthenticated()) {
-        res.render("protectedJSX", {
-            name: req.user.name
-        })
+        try {
+            const items = await ItemModel.find();
+            res.render("protectedJSX", {
+                name: req.user.name,
+                items,
+            });
+            } catch (error) {
+                res.status(500).send({ error: error.message });
+            }
     } else {
-        res.status(401).send({ msg: "Unauthorized" })
-    }
-    console.log(req.session)
-    console.log(req.user)
-})
+        res.status(401).send({ msg: "Unauthorized" });
+     }
+    });
+    
 
 app.get('/cart', async (req, res) => {
     if (!req.isAuthenticated()) {
@@ -133,6 +138,25 @@ app.get('/items', async (req, res) => {
     try {
         const items = await ItemModel.find();
         res.status(200).json(items);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+app.get('/item/:itemId', async (req, res) => {
+    try {
+        const itemId = req.params.itemId;
+
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).send({ error: 'Invalid itemId' });
+        }
+
+        const item = await ItemModel.findById(itemId);
+        if (!item) {
+            return res.status(404).send({ error: 'Item not found' });
+        }
+
+        res.render('itemJSX', { item });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
