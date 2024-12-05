@@ -89,6 +89,27 @@ app.get('/protected', (req, res) => {
     console.log(req.user)
 })
 
+app.get('/cart', async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({ msg: "Unauthorized" });
+    }
+
+    try {
+        const user = await UserModel.findById(req.user._id).populate('cart');
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        res.render('cartJSX', {
+            cartItems: user.cart,
+            handleDelete: (itemId) => `/remove-from-cart/${itemId}`,
+            handleCheckout: '/checkout-cart',
+        });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
 // Add a new item
 app.post('/add-item', requireRole('admin') ,async (req, res) => {
     const { assetId, assetType, make, model, status } = req.body;
