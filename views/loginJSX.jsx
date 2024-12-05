@@ -41,7 +41,7 @@ const loginJSX = () => {
       </head>
       <body>
         <div className="text-center">
-        <img src="/images/Blue-UMB-logo-lockup.png" alt="UMass Logo" className="logo" />
+        <img src="/images/UMassBoston-Logo/Blue-logo-lockup/Blue-UMB-logo-lockup.png" alt="UMass Logo" className="logo" />
           <h1>Technology Loan System</h1>
           <a href="/auth/google">
             <button className="btn btn-primary mt-3">Login with Google</button>
