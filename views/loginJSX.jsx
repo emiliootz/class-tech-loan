@@ -19,12 +19,30 @@ const loginJSX = () => {
               font-family: Arial, sans-serif;
               background-color: #f8f9fa;
             }
+              .logo {
+              max-width: 500px;
+              margin-bottom: 10px;
+              }
+              h1 {
+              font-weight: bold;
+              color: #005A8B; /* umass logo color */
+            }
+              .btn-primary {
+              background-color: #005A8B;
+              border-color: #005A8B;
+              }
+              .btn-primary:hover {
+              background-color: #00436a;
+              border-color: #00436a;
+              }
+
           `}
         </style>
       </head>
       <body>
         <div className="text-center">
-          <h1>Welcome to the Login Page</h1>
+        <img src="/images/Blue-UMB-logo-lockup.png" alt="UMass Logo" className="logo" />
+          <h1>Technology Loan System</h1>
           <a href="/auth/google">
             <button className="btn btn-primary mt-3">Login with Google</button>
           </a>

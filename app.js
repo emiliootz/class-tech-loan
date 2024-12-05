@@ -7,6 +7,7 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
+app.use(express.static('public'));
 
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
