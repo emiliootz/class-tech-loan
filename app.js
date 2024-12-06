@@ -367,28 +367,46 @@ app.post('/checkout-cart', async (req, res) => {
     try {
         const user = await UserModel.findById(req.user._id).populate('cart');
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: "User not found" });
         }
 
-        // Logic to process checkout
+        console.log(`Processing checkout for user: ${user._id}`);
+        console.log(`Cart items: ${JSON.stringify(user.cart, null, 2)}`);
+
+        // Process each item in the cart
         for (const item of user.cart) {
-            // Update item status or process loans
-            item.status = 'Loaned';
-            await item.save();
+            const dbItem = await ItemModel.findById(item._id);
+            if (!dbItem) {
+                console.error(`Item not found in database: ${item._id}`);
+                return res.status(404).json({ error: `Item ${item.assetId} not found` });
+            }
+
+            // Update item status
+            dbItem.status = 'Loaned';
+            await dbItem.save();
+            console.log(`Item status updated to Loaned: ${dbItem.assetId}`);
         }
 
         // Clear the user's cart
         user.cart = [];
         await user.save();
+        console.log("Cart cleared successfully");
 
-        console.log("Checkout successful");
-        res.redirect('/cart'); // Redirect back to the cart page
+        // Redirect to the checkout success page
+        res.redirect('/checkout-success');
     } catch (error) {
         console.error("Error during checkout:", error);
         res.status(500).json({ error: "Failed to checkout cart" });
     }
 });
 
+
+app.get('/checkout-success', (req, res) => {
+    res.render('checkoutSuccessJSX', {
+        name: req.user ? req.user.name : 'Guest',
+        message: 'Your items are ready for pickup!',
+    });
+});
 
 // Manage user roles
 app.put('/assign-role/:userId', requireRole('admin'), async (req, res) => {

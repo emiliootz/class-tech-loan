@@ -63,7 +63,7 @@ const itemSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Available', 'Assigned To Location'],
+    enum: ['Available', 'Loaned', 'Assigned To Location'],
     required: true,
   },
   dateAdded: {
