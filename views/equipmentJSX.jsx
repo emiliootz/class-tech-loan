@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Form } from "react-bootstrap";
+import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import { ItemModel } from "../config/database";
 
-//import { Container } from "react-bootstrap";
-
 const jsxEquipment = ({ name, items }) => {
-  // Determines what items should be shown to the user
-  // - searchQuery: A textbox where the user can search for items by name
-  // - selectedBuilding: A dropdown where the user can select between the buildings available in the data.
   const [searchQuery, setSearchQuery] = useState("");
 
   const buildingsList = new Map([
@@ -20,7 +15,7 @@ const jsxEquipment = ({ name, items }) => {
   const [selectedBuilding, setSelectedBuilding] = useState(buildingsList[0]);
 
   const [filteredItems, setFilteredItems] = useState(() => {
-    items.filter((item) =>
+    return items.filter((item) =>
       item.assetType.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
@@ -29,7 +24,6 @@ const jsxEquipment = ({ name, items }) => {
     <div style={{ overflowX: "hidden" }}>
       {/* Navigation Bar */}
       <nav
-        className="navbar navbar-light"
         style={{
           backgroundColor: "#f8f9fa",
           padding: "10px 20px",
@@ -42,66 +36,155 @@ const jsxEquipment = ({ name, items }) => {
         </span>
         {/* Cart Button */}
         <a href="/cart">
-          <button className="btn btn-primary">View Cart</button>
+          <button
+            style={{
+              backgroundColor: "#007bff",
+              color: "white",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+            }}
+          >
+            View Cart
+          </button>
         </a>
         {/* Logout Button */}
         <a href="/logout">
-          <button className="btn btn-primary">Logout</button>
+          <button
+            style={{
+              backgroundColor: "#007bff",
+              color: "white",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+            }}
+          >
+            Logout
+          </button>
         </a>
       </nav>
-      {/* Settings Container */}
-      <Container>
-        {/* Building Dropdown */}
-        <Col sx={12} md={2} className={"mb-2"}>
-          <Form.Select
-            aria-label="Building Select"
-            onChange={(e) => setSelectedBuilding(e.target.value)}
-          >
-            {Array.from(buildingsList.keys()).map((building, index) => (
-              <option key={index}>{building}</option>
-            ))}
-          </Form.Select>
-        </Col>
 
-        {/* Search Bar */}
-        <Col xs={12} md={4} className={"mb-2"}>
-          <Form.Control
-            type="text"
-            placeholder="Search by Name...."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </Col>
+      {/* Settings Container */}
+      <Container style={{ marginTop: "10vh" }}>
+        <Row style={{ marginBottom: "10px", alignItems: "center" }}>
+          {/* Building Dropdown */}
+          <Col
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+            xs={12}
+            md={2}
+          >
+            <Form.Select
+              aria-label="Building Select"
+              onChange={(e) => setSelectedBuilding(e.target.value)}
+              style={{ padding: "10px", borderRadius: "5px" }}
+            >
+              {Array.from(buildingsList.keys()).map((building, index) => (
+                <option key={index}>{building}</option>
+              ))}
+            </Form.Select>
+          </Col>
+
+          {/* Search Bar */}
+          <Col
+            xs={12}
+            md={4}
+            style={{
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Form.Control
+              type="text"
+              placeholder="Search by Name...."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ padding: "10px", borderRadius: "5px" }}
+            />
+          </Col>
+        </Row>
       </Container>
 
       {/* Items List */}
-      <Container className="pt-3">
-        <div style={{ marginTop: "30px", overflowX: "hidden" }}>
-          <h1 style={{ textAlign: "center" }}>Available Items</h1>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            {items.map((item) => (
-              <li
-                key={item._id}
+      <Container style={{ paddingTop: "30px" }}>
+        <h1 style={{ textAlign: "center" }}>Available Items</h1>
+        <Row
+          style={{
+            paddingTop: "20px",
+            display: "flex",
+            height: "100%",
+            justifyContent: "space-evenly",
+          }}
+        >
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
+              <a
+                href={`/item/${item._id}`}
                 style={{
-                  border: "1px solid #ccc",
-                  padding: "10px",
-                  margin: "10px auto",
-                  maxWidth: "600px",
-                }}
+                  textDecoration: "none",
+                  display: "block",
+                  maxWidth: "33%",
+                  marginLeft: "10vw",
+                }} // Ensure <a> behaves as block-level element
+                key={item._id}
               >
-                <h3>
-                  {item.assetType} - {item.make} {item.model}
-                </h3>
-                <p>
-                  <strong>Asset ID:</strong> {item.assetId}
-                </p>
-                <a href={`/item/${item._id}`}>
-                  <button className="btn btn-info">View Details</button>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+                <Col
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={4}
+                  style={{
+                    marginBottom: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    maxWidth: "33%",
+                  }}
+                >
+                  <Card
+                    style={{
+                      cursor: "pointer",
+                      border: "1px solid #ccc",
+                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                      transition: "transform 0.3s ease-in-out",
+                      maxWidth: "50vw",
+                      display: "inline-block",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.05)"; // Scale up card on hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)"; // Reset scale when hover ends
+                    }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+                      style={{
+                        maxWidth: "25vw",
+                        maxHeight: "45vh",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Card.Body style={{ textAlign: "center" }}>
+                      <Card.Title>
+                        {item.assetType} - {item.make} {item.model}
+                      </Card.Title>
+                      <Card.Text>Quantity: 1</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </a>
+            ))
+          ) : (
+            <Col xs={12}>
+              <p style={{ textAlign: "center" }}>No items found.</p>
+            </Col>
+          )}
+        </Row>
       </Container>
     </div>
   );
