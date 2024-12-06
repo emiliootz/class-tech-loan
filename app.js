@@ -91,8 +91,7 @@ app.get('/protected', async (req, res) => {
     } else {
         res.status(401).send({ msg: "Unauthorized" });
      }
-    });
-    
+    });    
 
 app.get('/cart', async (req, res) => {
     if (!req.isAuthenticated()) {
@@ -406,10 +405,11 @@ app.put('/assign-role/:userId', requireRole('admin'), async (req, res) => {
 });
 
 // User management page
-app.get('/manage-users', requireRole('admin'), async (req, res) => {
+app.get('/admin', requireRole('admin'), async (req, res) => {
     try {
-        const users = await UserModel.find(); // Fetch all users
-        res.render('manage-users', { users });
+        const users = await UserModel.find();
+        const items = await ItemModel.find();
+        res.render('adminJSX', { users, items });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
