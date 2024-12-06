@@ -7,13 +7,15 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
+const methodOverride = require('method-override');
+
 app.use(express.static('public'));
 
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
-
+app.use(methodOverride('_method'));
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -115,22 +117,30 @@ app.get('/cart', async (req, res) => {
 });
 
 // Add a new item
-app.post('/add-item', requireRole('admin') ,async (req, res) => {
+app.post('/add-item', requireRole('admin'), async (req, res) => {
     const { assetId, assetType, make, model, status } = req.body;
+
     try {
         const newItem = new ItemModel({
             assetId,
             assetType,
             make,
             model,
-            status,
+            status: status || "Available", // Default to "Available" if not provided
         });
+
         await newItem.save();
-        res.status(201).send({ message: 'Item added successfully', item: newItem });
+
+        console.log(`Item added: ${newItem}`);
+
+        // Redirect to the admin page after successful addition
+        res.redirect('/admin');
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        console.error("Error adding item:", error);
+        res.status(500).json({ error: "Failed to add item" });
     }
 });
+
 
 // Get all items
 app.get('/items', async (req, res) => {
@@ -179,19 +189,38 @@ app.put('/update-item/:assetId', async (req, res) => {
     }
 });
 
-// Delete an item by asset ID
-app.delete('/delete-item/:assetId', async (req, res) => {
-    const assetId = req.params.assetId;
+// Delete an item by ID
+app.delete('/delete-item/:id', requireRole('admin'), async (req, res) => {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid ObjectId" });
+    }
+
     try {
-        const deletedItem = await ItemModel.findOneAndDelete({ assetId });
+        const deletedItem = await ItemModel.findByIdAndDelete(id);
         if (!deletedItem) {
-            return res.status(404).send({ error: 'Item not found' });
+            console.log(`Item not found for id: ${id}`);
+            return res.status(404).json({ error: "Item not found" });
         }
-        res.status(200).send({ message: 'Item deleted successfully' });
+
+        console.log(`Item deleted: ${deletedItem}`);
+
+        // Check if the item still exists in the database
+        const checkItem = await ItemModel.findById(id);
+        if (checkItem) {
+            console.error(`Item still exists after deletion: ${checkItem}`);
+        } else {
+            console.log(`Item successfully removed from database.`);
+        }
+
+        res.redirect('/admin'); // Redirect to the admin page
     } catch (error) {
-        res.status(500).send({ error: error.message });
+        console.error("Error deleting item:", error);
+        res.status(500).json({ error: "Failed to delete item" });
     }
 });
+
 
 // Add a loaned item
 app.post('/add-loan/', async (req, res) => {
@@ -313,70 +342,53 @@ app.get('/view-cart', async (req, res) => {
 // Remove an item from the user's cart
 app.delete('/remove-from-cart/:itemId', async (req, res) => {
     const itemId = req.params.itemId;
-    if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-    }
 
     try {
-        if (!mongoose.Types.ObjectId.isValid(itemId)) {
-            return res.status(400).send({ error: 'Invalid itemId' });
-        }
-        
         const user = await UserModel.findById(req.user._id);
         if (!user) {
-            return res.status(404).send({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        user.cart = user.cart.filter(item => item.toString() !== itemId);
+        // Remove the item from the cart
+        user.cart = user.cart.filter((id) => id.toString() !== itemId);
         await user.save();
 
-        res.status(200).send({ message: 'Item removed from cart', cart: user.cart });
+        console.log(`Item ${itemId} removed from cart`);
+        res.redirect('/cart'); // Redirect back to the cart page
     } catch (error) {
-        res.status(500).send({ error: error.message });
+        console.error("Error removing item from cart:", error);
+        res.status(500).json({ error: "Failed to remove item from cart" });
     }
 });
 
+
 // Checkout the user's cart
 app.post('/checkout-cart', async (req, res) => {
-    if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-    }
-
     try {
         const user = await UserModel.findById(req.user._id).populate('cart');
         if (!user) {
-            return res.status(404).send({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
+        // Logic to process checkout
         for (const item of user.cart) {
-            if (item.status !== 'Available') {
-                return res.status(400).send({ error: `Item ${item.assetId} is no longer available` });
-            }
-        }
-
-        // Create loan records and update item status
-        for (const item of user.cart) {
-            item.status = 'Assigned To Location';
+            // Update item status or process loans
+            item.status = 'Loaned';
             await item.save();
-
-            const newLoan = new LoanModel({
-                userId: user._id,
-                itemId: item._id,
-                status: 'Assigned to Location',
-                location: 'N/A'
-            });
-            await newLoan.save();
         }
 
         // Clear the user's cart
         user.cart = [];
         await user.save();
 
-        res.status(200).send({ message: 'Checkout successful' });
+        console.log("Checkout successful");
+        res.redirect('/cart'); // Redirect back to the cart page
     } catch (error) {
-        res.status(500).send({ error: error.message });
+        console.error("Error during checkout:", error);
+        res.status(500).json({ error: "Failed to checkout cart" });
     }
 });
+
 
 // Manage user roles
 app.put('/assign-role/:userId', requireRole('admin'), async (req, res) => {
