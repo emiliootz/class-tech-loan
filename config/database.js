@@ -1,11 +1,13 @@
 // database.js
 
+const config = require('./config'); // Import config.js
+
 const mongoose = require('mongoose');
 
 // Helper function
 const getTomorrow = () => new Date(Date.now() + 86400000);
 
-mongoose.connect(process.env.MONGO_URL_FACULTY_TECH_LENDING)
+mongoose.connect(config.db.mongoUrl) // Using the URL set in config.js
   .then(() => {
     console.log('MongoDB connected');
   })

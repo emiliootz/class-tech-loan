@@ -1,15 +1,16 @@
 // passport.js
 
-require('dotenv').config(); // Load environment variables
+const config = require('./config'); // Import config.js
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { UserModel } = require('./database');  // Destructure to get UserModel
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    clientID: config.passport.google.clientID,
+    clientSecret: config.passport.google.clientSecret,
+    callbackURL: config.passport.google.callbackURL,
 },
+
 async (accessToken, refreshToken, profile, cb) => {
     try {
         // Use async/await to find user
