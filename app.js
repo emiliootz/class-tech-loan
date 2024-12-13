@@ -6,7 +6,20 @@ const mongoose = require('mongoose');
 const config = require('./config/config'); // required file: config.js
 const methodOverride = require('method-override');
 
+/*****************************
+ *     Middleware Setup      *
+ *****************************/
+
+const { requireRole, requireRoles } = require('./middleware/auth'); // required role setup
+const errorHandler = require('./middleware/errorHandler');
+
+
+/*****************************
+ *        Model Setup        *
+ *****************************/
+
 const { UserModel, ItemModel, LoanModel } = require('./config/database');
+
 
 /*****************************
  *      Express app Setup    *
@@ -20,6 +33,7 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use(errorHandler);
 
 /*****************************/
 
@@ -49,32 +63,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 /*****************************/
-
-// check user role
-const requireRole = (role) => {
-    return (req, res, next) => {
-      if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-      }
-      if (req.user.role !== role) {
-        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
-      }
-      next();
-    };
-  };
-  
-  // allow multiple roles
-  const requireRoles = (roles) => {
-    return (req, res, next) => {
-      if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-      }
-      if (!roles.includes(req.user.role)) {
-        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
-      }
-      next();
-    };
-  };
   
 
 app.get('/login', (req, res) => {

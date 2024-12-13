@@ -76,6 +76,8 @@ GOOGLE_CLIENT_SECRET=<Your-Google-Client-Secret>
 GOOGLE_CALLBACK_URL=http://localhost:3000/auth/callback
 MONGO_URL_PASSPORT_GOOGLE=mongodb://<localhost or 127.0.0.1>:27017/passport-google
 MONGO_URL_FACULTY_TECH_LENDING=mongodb://<localhost or 127.0.0.1>:27017/faculty-tech-lending
+SESSION_SECRET=<secret>
+PORT=<port>
 ```
 To start your application:
 ```bash

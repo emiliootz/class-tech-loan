@@ -1,7 +1,14 @@
-// database.js
+/*****************************
+ *       Database Setup      *
+ *****************************/
+
+/*
+  This is the setup for the MongoDB. with all the item and user schemas set up.  
+
+*/
+
 
 const config = require('./config'); // Import config.js
-
 const mongoose = require('mongoose');
 
 // Helper function

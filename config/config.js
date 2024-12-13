@@ -1,3 +1,22 @@
+/*****************************
+ *       Configuration       *
+ *****************************/
+
+/*
+    This is the configuration file for setting up all the information needed in the .env file.
+    Create a .env file and input:
+
+    GOOGLE_CLIENT_ID=<Your-Google-Client-ID>
+    GOOGLE_CLIENT_SECRET=<Your-Google-Client-Secret>
+    GOOGLE_CALLBACK_URL=http://localhost:3000/auth/callback
+    MONGO_URL_PASSPORT_GOOGLE=mongodb://<localhost or 127.0.0.1>:27017/passport-google
+    MONGO_URL_FACULTY_TECH_LENDING=mongodb://<localhost or 127.0.0.1>:27017/faculty-tech-lending
+    SESSION_SECRET=<secret>
+    PORT=<port>
+
+*/
+/*****************************/
+
 require('dotenv').config(); // Load the .env
 
 const config = {
