@@ -1,0 +1,161 @@
+/*****************************
+ *        Style Sheet        *
+ *****************************/
+/*
+  This is the css style sheet for the pages within \views
+  to use include:
+  <link rel="stylesheet" href="/css/styles.css" />
+  within the \view page 
+
+*/
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #005a8b; /* UMass branding color */
+}
+
+/* Logo */
+.logo {
+  max-width: 500px;
+  margin-bottom: 10px;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #005a8b; /* UMass branding color */
+  color: white;
+}
+
+.navbar .navbar-brand {
+  color: white;
+  font-weight: bold;
+}
+
+.navbar a.btn {
+  margin-left: 10px;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #005a8b;
+  border-color: #005a8b;
+}
+
+.btn-primary:hover {
+  background-color: #00436a;
+  border-color: #00436a;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px auto;
+  max-width: 600px;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Lists */
+ul.list-unstyled {
+  padding: 0;
+}
+
+ul.list-unstyled li {
+  margin-bottom: 15px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+/* Forms */
+form {
+  margin: 20px 0;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+/* Miscellaneous */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+}

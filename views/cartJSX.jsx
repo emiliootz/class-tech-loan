@@ -1,54 +1,59 @@
-const React = require('react');
+const React = require("react");
 
 const CartJSX = ({ cartItems }) => {
-    return (
-        <html>
-            <head>
-                <title>Cart</title>
-            </head>
-            <body>
-                <h1>Your Cart</h1>
+  return (
+    <html>
+      <head>
+        <title>Cart</title>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+        />
+      </head>
+      <body className="container mt-4">
+        <h1>Your Cart</h1>
 
-                {cartItems.length > 0 ? (
-                    <ul>
-                        {cartItems.map((item) => (
-                            <li key={item._id}>
-                                <p>
-                                    <strong>Asset Type:</strong> {item.assetType} <br />
-                                    <strong>Asset ID:</strong> {item.assetId} <br />
-                                    <strong>Make:</strong> {item.make} <br />
-                                    <strong>Model:</strong> {item.model}
-                                </p>
-                                {/* Form to remove item from cart */}
-                                <form action={`/remove-from-cart/${item._id}?_method=DELETE`} method="POST">
-                                    <button type="submit">Remove</button>
-                                </form>
-                                {/* Form to specify loan time */}
-                                <form action={`/update-loan-time/${item._id}`} method="POST">
-                                    <label htmlFor={`loanTime-${item._id}`}>Loan Time:</label>
-                                    <input
-                                        type="date"
-                                        id={`loanTime-${item._id}`}
-                                        name="loanTime"
-                                        required
-                                    />
-                                    <button type="submit">Update Loan Time</button>
-                                </form>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>Your cart is empty!</p>
-                )}
+        {cartItems.length > 0 ? (
+          <ul className="list-group mb-4">
+            {cartItems.map((item) => (
+              <li key={item._id} className="list-group-item">
+                <p>
+                  <strong>Asset Type:</strong> {item.assetType} <br />
+                  <strong>Asset ID:</strong> {item.assetId} <br />
+                  <strong>Make:</strong> {item.make} <br />
+                  <strong>Model:</strong> {item.model}
+                </p>
+                <form
+                  action={`/remove-from-cart/${item._id}?_method=DELETE`}
+                  method="POST"
+                  className="d-inline"
+                >
+                  <button type="submit" className="btn btn-danger btn-sm">
+                    Remove
+                  </button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Your cart is empty!</p>
+        )}
 
-                {cartItems.length > 0 && (
-                    <form action="/checkout-cart" method="POST">
-                        <button type="submit">Checkout</button>
-                    </form>
-                )}
-            </body>
-        </html>
-    );
+        {cartItems.length > 0 && (
+          <div className="d-flex justify-content-between">
+            <a href="/protected" className="btn btn-secondary">
+              Continue Shopping
+            </a>
+            <form action="/checkout-cart" method="POST">
+              <button type="submit" className="btn btn-success">
+                Checkout
+              </button>
+            </form>
+          </div>
+        )}
+      </body>
+    </html>
+  );
 };
 
 module.exports = CartJSX;
