@@ -1,9 +1,16 @@
-// passport.js
+/*****************************
+ *       Passport Setup      *
+ *****************************/
 
 const config = require("./config"); // Import config.js
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const { UserModel } = require("./database"); // Destructure to get UserModel
+const passport = require("passport"); // Import passport
+const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import for google authentication
+const { UserModel } = require("./database"); // Using UserModel
+
+/*
+    Setting upp google authentication using passport Google Strategy parameters are passed in using
+    config.js and information should be setup in your .env file.
+ */
 
 passport.use(
   new GoogleStrategy(

@@ -1,29 +1,39 @@
+/*****************************
+ *       Application         *
+ *****************************/
+/*
+  app.js is the main application file. Here we call all the routes used in /routes
+  and sets up the Express application, sets up the session, and starts the server
+  any imports are placed under the import section, any routes wihtin the route section
+  and use routes under the use routes section. 
+
+*/
+
+/*****************************
+ *        Imports            *
+ *****************************/
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
-const methodOverride = require("method-override");
+const methodOverride = require("method-override"); // Used to override the methods to call POSTS we normally cant call within HTML files
 const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
 
-// Import routes
+/*****************************
+ *        Routes             *
+ *****************************/
+
+/*
+  This is the imports for the routes under the /routes directory
+  These are used to be able to use route files within this file.
+*/
+
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const loanRoutes = require("./routes/loanRoutes");
 const googleRoutes = require("./routes/googleRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-
-/*****************************
- *     Middleware Setup      *
- *****************************/
-
-const { requireRole, requireRoles } = require("./middleware/auth"); // required role setup
-
-/*****************************
- *        Model Setup        *
- *****************************/
-
-const { UserModel, ItemModel, LoanModel } = require("./config/database");
 
 /*****************************
  *      Express app Setup    *
@@ -57,8 +67,6 @@ app.use(
   })
 );
 
-/*****************************/
-
 /*****************************
  *      Passport Setup       *
  *****************************/
@@ -68,25 +76,29 @@ require("./config/passport"); // Use passport.js in config directory
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*****************************/
+/*****************************
+ *       Use Routes          *
+ *****************************/
+/*
+  These are to use the routes under the /routes directory
+  passing in the imports called in the Routes section. 
+  These are used to be able to use route files within this file.
+*/
 
-// Use routes
 app.use("/", userRoutes);
 app.use("/", itemRoutes);
 app.use("/", loanRoutes);
 app.use("/", googleRoutes);
 app.use("/", cartRoutes);
-
-// Error handling
 app.use(errorHandler);
 
 /*****************************
  *       Start Server        *
  *****************************/
-
-// Starting the server using the port in config.js
+/*
+  Starting the server the port in config.js which is passing in the 
+  port from the port set in the .env file
+*/
 app.listen(config.app.port, () => {
-  console.log(`Listening on port ${config.app.port}`); // Use backticks for proper string interpolation
+  console.log(`Listening on port ${config.app.port}`);
 });
-
-/*****************************/
