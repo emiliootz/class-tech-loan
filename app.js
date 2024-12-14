@@ -11,6 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const loanRoutes = require("./routes/loanRoutes");
 const googleRoutes = require("./routes/googleRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 /*****************************
  *     Middleware Setup      *
@@ -74,6 +75,7 @@ app.use("/", userRoutes);
 app.use("/", itemRoutes);
 app.use("/", loanRoutes);
 app.use("/", googleRoutes);
+app.use("/", cartRoutes);
 
 // Error handling
 app.use(errorHandler);

@@ -9,6 +9,14 @@
 
 */
 
+// Middleware to check authentication
+const isAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).send({ msg: "Unauthorized" });
+  }
+  next();
+};
+
 /*****************************
  *        Role Checker       *
  *****************************/
@@ -19,39 +27,42 @@
 */
 
 const requireRole = (role) => {
-    return (req, res, next) => {
-      if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-      }
-      if (req.user.role !== role) {
-        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
-      }
-      next();
-    };
+  return (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).send({ msg: "Unauthorized" });
+    }
+    if (req.user.role !== role) {
+      return res
+        .status(403)
+        .send({ msg: "Forbidden: Insufficient permissions" });
+    }
+    next();
   };
-  /*****************************/
-  
-  /*****************************
-   *   Multiple Role Checker   *
-   *****************************/
+};
+/*****************************/
 
-  /*
+/*****************************
+ *   Multiple Role Checker   *
+ *****************************/
+
+/*
     This is checking if a user is authenticated similar to requireRole but is checking if a user has
     multiple roles at the same time
   */
 
-  const requireRoles = (roles) => {
-    return (req, res, next) => {
-      if (!req.isAuthenticated()) {
-        return res.status(401).send({ msg: "Unauthorized" });
-      }
-      if (!roles.includes(req.user.role)) {
-        return res.status(403).send({ msg: "Forbidden: Insufficient permissions" });
-      }
-      next();
-    };
+const requireRoles = (roles) => {
+  return (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).send({ msg: "Unauthorized" });
+    }
+    if (!roles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .send({ msg: "Forbidden: Insufficient permissions" });
+    }
+    next();
   };
-  /*****************************/
-
+};
+/*****************************/
 
 module.exports = { requireRole, requireRoles };
