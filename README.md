@@ -1,6 +1,8 @@
 # Class Tech Loan System
 A web application designed to help faculty members track and lend out tech equipment for UMass Boston
 
+link: https://github.com/emiliootz/class-tech-loan
+
 ## Technologies Used
 - Node.js: Backend server
 - Express.js: Web framework
