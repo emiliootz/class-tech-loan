@@ -2,10 +2,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { UserModel, ItemModel } = require("../config/database");
-const { isAuthenticated, requireRole } = require("../middleware/auth");
+const {
+  isAuthenticated,
+  requireRole,
+  requireRoles,
+} = require("../middleware/auth");
 const passport = require("passport");
 
 const router = express.Router();
+
+console.log("isAuthenticated:", isAuthenticated);
 
 // Protected route
 router.get("/protected", isAuthenticated, async (req, res) => {

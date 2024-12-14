@@ -9,12 +9,12 @@
 
 */
 
-// Middleware to check authentication
+// Middleware to check if the user is authenticated
 const isAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    return res.status(401).send({ msg: "Unauthorized" });
+    return res.status(401).send({ msg: "Unauthorized" }); // Send 401 if not authenticated
   }
-  next();
+  next(); // Proceed to the next middleware or route handler
 };
 
 /*****************************
@@ -65,4 +65,5 @@ const requireRoles = (roles) => {
 };
 /*****************************/
 
-module.exports = { requireRole, requireRoles };
+// Export all middleware
+module.exports = { isAuthenticated, requireRole, requireRoles };

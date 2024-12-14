@@ -1,5 +1,6 @@
 // routes/itemRoutes.js
 const express = require("express");
+const mongoose = require("mongoose"); // Import mongoose
 const { ItemModel } = require("../config/database");
 const { requireRole } = require("../middleware/auth");
 
