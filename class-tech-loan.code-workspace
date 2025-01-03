@@ -36,7 +36,8 @@
       "eamodio.gitlens", // GitLens for better Git insights
       "esbenp.prettier-vscode", // Prettier for code formatting
       "dbaeumer.vscode-eslint", // ESLint for JavaScript linting
-      "github.vscode-pull-request-github" // GitHub Pull Requests for managing PRs
+      "github.vscode-pull-request-github", // GitHub Pull Requests for managing PRs
+      "sidthesloth.html5-boilerplate"
     ]
   }
 }
