@@ -52,9 +52,9 @@ router.get(
  *****************************/
 /*
   Login route foor loging into the application rendered using
-  loginJSX under /views/loginJSX.jsx
+  login under /views/login.jsx
 */
-router.get("/login", (req, res) => res.render("loginJSX"));
+router.get("/", (req, res) => res.render("index"));
 
 /*****************************
  *       Logout Route        *
