@@ -1,13 +1,11 @@
 const React = require("react");
 
-//const Navbar = require("../components/Navbar");
-
 function Navbar() {
   return (
     <>
       <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>Navbar</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,12 +41,38 @@ function Navbar() {
   );
 }
 
-function index() {
+function Index() {
   return (
     <>
-      <Navbar />
+      <head>
+        <link rel="stylesheet" href="/css/styles.css" />
+      </head>
+      <body>
+        <Navbar />
+        <div className="main-image-container">
+          <img
+            className="main__image"
+            src="/images/mainimage.png"
+            alt="Main Visual"
+          />
+        </div>
+        <section className="instructions">
+          <h2>How it works</h2>
+          <div className="steps">
+            <div className="step">
+              <img src="/images/step1.png" alt="Step 1" />
+            </div>
+            <div className="step">
+              <img src="/images/step2.png" alt="Step 2" />
+            </div>
+            <div className="step">
+              <img src="/images/step3.png" alt="Step 3" />
+            </div>
+          </div>
+        </section>
+      </body>
     </>
   );
 }
 
-module.exports = index;
+module.exports = Index;
