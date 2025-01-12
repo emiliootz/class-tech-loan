@@ -21,13 +21,13 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 30px 10%;
+  padding: 10px 10%;
 }
 
 .logo {
   cursor: pointer;
   margin-right: auto;
-  max-width: 150px;
+  max-width: 125px;
   margin-bottom: 10px;
 }
 

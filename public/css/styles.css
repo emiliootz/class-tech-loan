@@ -1,38 +1,22 @@
-/* Center the main image */
-.main-image-container {
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+.seperator {
+  width: 100%;
+  height: 70px;
+  background-color: #005a8b;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   justify-content: center;
-  margin: 20px 0;
 }
-
-.main__image {
-  width: 50%;
-}
-
-/* Instructions section */
-.instructions {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.instructions h2 {
-  font-family: "Open+Sans", sans-serif;
-  font-weight: 550;
-  font-size: 24px;
-  color: #005a8b;
-  margin-bottom: 20px;
-}
-
-/* Steps container */
-.steps {
+.seperator2 {
+  width: 100%;
+  height: 300px;
+  background-color: #005a8b;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   justify-content: center;
-  gap: 20px; /* Space between steps */
-}
-
-.step img {
-  width: 100%; /* Make image responsive */
-  max-width: 330px; /* Limit the image size */
-  height: auto;
-  display: block;
 }
