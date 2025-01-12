@@ -84,7 +84,48 @@ function Category() {
   );
 }
 
-function Index() {
+function AvailableItems({ items = [] }) {
+  const paddedItems = items.slice(0, 9).concat(
+    Array(Math.max(0, 9 - items.length)).fill({
+      label: "No Label",
+      picture: "placeholder-image.png",
+    })
+  );
+
+  return (
+    <>
+      <head>
+        <link rel="stylesheet" href="/css/availableItems.css" />
+      </head>
+      <section className="available-items">
+        <h2 className="section-title">AVAILABLE ITEMS</h2>
+        <div className="grid-container">
+          {paddedItems.map((item, index) => (
+            <div key={index} className="grid-item">
+              <div className="product-box">
+                <a href="#">
+                  <div className="product-img">
+                    <img src={item.picture} alt={item.label} />
+                  </div>
+                  <div className="product-headline">
+                    <div className="name">{item.label}</div>
+                  </div>
+                  <div className="add-to-cart">
+                    <button className="highlighted add_to_cart">
+                      Add To Cart
+                    </button>
+                  </div>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Index({ items }) {
   return (
     <>
       <head>
@@ -94,6 +135,7 @@ function Index() {
       <div className="seperator"></div>
       <Hero />
       <Category />
+      <AvailableItems items={items} />
     </>
   );
 }

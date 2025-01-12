@@ -93,8 +93,33 @@ app.use("/", cartRoutes);
 app.use(errorHandler);
 
 /*****************************
+ *       Fetch Items         *
+ *****************************/
+async function fetchItems() {
+  try {
+    // Fetch items from the database
+    const fetchedItems = await ItemModel.find({}, "make model");
+    // Map items to a structure with label and value
+    return fetchedItems.map((item, index) => ({
+      label: `Item ${index + 1}`,
+      value: `${item.make} ${item.model}`,
+    }));
+  } catch (err) {
+    console.error("Error fetching items:", err);
+    return []; // Return an empty array if an error occurs
+  }
+}
+
+/*****************************
  *       Start Server        *
  *****************************/
+app.get("/", async (req, res) => {
+  const items = await fetchItems();
+
+  console.log(items);
+
+  res.render("index", { items });
+});
 /*
   Starting the server the port in config.js which is passing in the 
   port from the port set in the .env file

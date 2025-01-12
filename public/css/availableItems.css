@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+.available-items {
+  padding: 30px 0; /* Reduced vertical padding */
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.section-title {
+  font-family: "Open Sans";
+  font-size: 22px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #005a8b;
+  padding-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Max 3 items per row */
+  gap: 15px; /* Reduced gap for a tighter layout */
+  justify-content: center; /* Center the grid */
+  max-width: 800px; /* Set a maximum width to constrain grid size */
+  margin: 0 auto; /* Center the grid container in the section */
+}
+
+.grid-item {
+  width: 250px; /* Fixed width for consistent box sizes */
+  height: 350px; /* Fixed height for boxes */
+  box-sizing: border-box;
+}
+
+.product-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.product-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  width: 100%;
+  height: 150px; /* Fixed height for uniform image sizes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.product-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* Ensures images fit inside the box */
+}
+
+.product-headline {
+  font-family: "Open Sans", sans-serif;
+  margin-top: 10px;
+}
+
+.product-headline .name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.add-to-cart {
+  margin-top: auto;
+}
+
+.add-to-cart .highlighted {
+  background-color: #005a8b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.add-to-cart .highlighted:hover {
+  background-color: #00446d;
+}
