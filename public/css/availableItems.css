@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
 .available-items {
-  padding: 30px 0; /* Reduced vertical padding */
+  padding: 30px 0;
   background-color: #ffffff;
   text-align: center;
 }
@@ -18,15 +18,15 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Max 3 items per row */
-  gap: 15px; /* Reduced gap for a tighter layout */
-  justify-content: center; /* Center the grid */
-  max-width: 800px; /* Set a maximum width to constrain grid size */
-  margin: 0 auto; /* Center the grid container in the section */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .grid-item {
-  width: 250px; /* Fixed width for consistent box sizes */
+  width: 250px;
   height: 350px; /* Fixed height for boxes */
   box-sizing: border-box;
 }
