@@ -62,3 +62,19 @@ button {
 button:hover {
   background-color: rgba(0, 49, 77, 0.8);
 }
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+
+}
+
+.cart-link img {
+  cursor: pointer;
+  /* Additional styling or sizes if needed */
+}
+
+.cart-link img:hover {
+  opacity: 0.8;
+  /* Slight visual feedback on hover */
+}

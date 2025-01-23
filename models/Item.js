@@ -47,6 +47,10 @@ const itemSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  picture: {
+    type: String,
+    default: 'placeholder-image.png', // Or a URL to a default image
+  },
 });
 
 const ItemModel = mongoose.model('Item', itemSchema);

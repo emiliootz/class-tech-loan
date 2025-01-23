@@ -88,7 +88,6 @@ app.use(passport.session());
 app.use("/", userRoutes);
 app.use("/", itemRoutes);
 app.use("/", loanRoutes);
-app.use("/", googleRoutes);
 app.use("/", cartRoutes);
 app.use(errorHandler);
 
@@ -97,12 +96,19 @@ app.use(errorHandler);
  *****************************/
 async function fetchItems() {
   try {
-    // Fetch items from the database
-    const fetchedItems = await ItemModel.find({}, "make model");
-    // Map items to a structure with label and value
-    return fetchedItems.map((item, index) => ({
-      label: `Item ${index + 1}`,
-      value: `${item.make} ${item.model}`,
+    // 1. Fetch only the fields you need. For example:
+    //    _id, make, model, assetType, and status.
+    const fetchedItems = await ItemModel.find({}, "_id make model assetType status").lean();
+
+    // 2. Transform each item into the shape your front end expects.
+    //    Here, we create a 'label' (combining make & model) and
+    //    set a placeholder 'picture'.
+    return fetchedItems.map((item) => ({
+      _id: item._id,
+      label: `${item.make} ${item.model}`,    // for display text
+      picture: item.imageUrl || "placeholder-image.png",       // or a real field if you store images
+      status: item.status,
+      assetType: item.assetType
     }));
   } catch (err) {
     console.error("Error fetching items:", err);
@@ -124,6 +130,9 @@ app.get("/", async (req, res) => {
   Starting the server the port in config.js which is passing in the 
   port from the port set in the .env file
 */
+
+app.use("/", googleRoutes);
+
 app.listen(config.app.port, () => {
   console.log(`Listening on port ${config.app.port}`);
 });

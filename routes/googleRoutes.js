@@ -48,15 +48,6 @@ router.get(
 );
 
 /*****************************
- *        Login Route        *
- *****************************/
-/*
-  Login route foor loging into the application rendered using
-  login under /views/login.jsx
-*/
-router.get("/", (req, res) => res.render("index"));
-
-/*****************************
  *       Logout Route        *
  *****************************/
 /*

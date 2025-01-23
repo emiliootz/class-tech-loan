@@ -103,7 +103,7 @@ function AvailableItems({ items = [] }) {
           {paddedItems.map((item, index) => (
             <div key={index} className="grid-item">
               <div className="product-box">
-                <a href="#">
+                <a href={`/item/${item._id}`}>
                   <div className="product-img">
                     <img src={item.picture} alt={item.label} />
                   </div>
