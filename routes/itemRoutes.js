@@ -19,6 +19,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { ItemModel } = require("../config/database");
 const { requireRole } = require("../middleware/auth");
+const { UserModel } = require("../config/database");
 const router = express.Router();
 
 /*****************************
@@ -48,9 +49,24 @@ router.get("/item/:itemId", async (req, res) => {
 
   try {
     const item = await ItemModel.findById(itemId);
-    if (!item) return res.status(404).send({ error: "Item not found" });
+    if (!item) {
+      return res.status(404).send({ error: "Item not found" });
+    }
 
-    res.render("itemJSX", { item });
+    // If user may or may not be logged in, we can check for isAuthenticated
+    const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
+    // If you want cartCount, you'd fetch it from the user's cart if they're logged in
+    let cartCount = 0;
+    if (isLoggedIn && req.user) {
+      const user = await UserModel.findById(req.user._id).populate("cart");
+      cartCount = user.cart.length;
+    }
+
+    res.render("item", {
+      item,
+      isLoggedIn,
+      cartCount,
+    });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
