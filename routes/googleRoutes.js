@@ -24,6 +24,7 @@ const router = express.Router();
  *****************************/
 const LOGIN_ROUTE = "/login";
 const PROTECTED_ROUTE = "/protected";
+const LOGOUT_ROUTE = "/";
 
 /*****************************
  *      Authentication       *
@@ -57,7 +58,7 @@ router.get(
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect(LOGIN_ROUTE);
+    res.redirect(LOGOUT_ROUTE);
   });
 });
 

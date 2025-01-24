@@ -45,8 +45,14 @@ router.get("/cart", isAuthenticated, async (req, res) => {
     const user = await UserModel.findById(req.user._id).populate("cart");
     if (!user) return res.status(404).send({ error: "User not found" });
 
-    res.render("cartJSX", {
-      cartItems: user.cart,
+    const cartItems = user.cart;
+    const cartCount = cartItems.length;
+    const isLoggedIn = req.isAuthenticated();
+
+    res.render("cart", {
+      cartItems,
+      cartCount,
+      isLoggedIn,
       handleDelete: (itemId) => `/remove-from-cart/${itemId}`,
       handleCheckout: "/checkout-cart",
     });

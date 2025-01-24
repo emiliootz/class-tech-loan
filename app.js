@@ -19,6 +19,7 @@ const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override"); // Used to override the methods to call POSTS we normally cant call within HTML files
 const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
+const { ItemModel } = require("./config/database");
 
 /*****************************
  *        Routes             *
@@ -98,17 +99,20 @@ async function fetchItems() {
   try {
     // 1. Fetch only the fields you need. For example:
     //    _id, make, model, assetType, and status.
-    const fetchedItems = await ItemModel.find({}, "_id make model assetType status").lean();
+    const fetchedItems = await ItemModel.find(
+      {},
+      "_id make model assetType status"
+    ).lean();
 
     // 2. Transform each item into the shape your front end expects.
     //    Here, we create a 'label' (combining make & model) and
     //    set a placeholder 'picture'.
     return fetchedItems.map((item) => ({
       _id: item._id,
-      label: `${item.make} ${item.model}`,    // for display text
-      picture: item.imageUrl || "placeholder-image.png",       // or a real field if you store images
+      label: `${item.make} ${item.model}`, // for display text
+      picture: item.imageUrl || "placeholder-image.png", // or a real field if you store images
       status: item.status,
-      assetType: item.assetType
+      assetType: item.assetType,
     }));
   } catch (err) {
     console.error("Error fetching items:", err);

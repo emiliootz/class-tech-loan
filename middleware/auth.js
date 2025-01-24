@@ -25,7 +25,7 @@
 
 const isAuthenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    return res.status(401).send({ msg: "Unauthorized" }); // Send 401 if not authenticated
+    return res.redirect("/auth/google"); // Send to login if not authenticated
   }
   next(); // Proceed to the next middleware or route handler
 };

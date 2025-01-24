@@ -1,18 +1,33 @@
+// views/CartPage.jsx
 const React = require("react");
+const Navbar = require("./components/Navbar");
 
-const CartJSX = ({ cartItems }) => {
+function CartPage({
+  cartItems,
+  handleDelete,
+  handleCheckout,
+  isLoggedIn,
+  cartCount,
+}) {
   return (
-    <html>
+    <>
+      {/* Head tags (like your protected page) */}
       <head>
-        <title>Cart</title>
+        {/* If you want a universal styles.css */}
+        <link rel="stylesheet" href="/css/styles.css" />
+        {/* You can also include Bootstrap here if you like */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
         />
       </head>
-      <body className="container mt-4">
-        <h1>Your Cart</h1>
 
+      {/* Reuse the Navbar */}
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
+
+      {/* Your cart content in a container */}
+      <div className="container mt-4">
+        <h1>Your Cart</h1>
         {cartItems.length > 0 ? (
           <ul className="list-group mb-4">
             {cartItems.map((item) => (
@@ -51,9 +66,9 @@ const CartJSX = ({ cartItems }) => {
             </form>
           </div>
         )}
-      </body>
-    </html>
+      </div>
+    </>
   );
-};
+}
 
-module.exports = CartJSX;
+module.exports = CartPage;
