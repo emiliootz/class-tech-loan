@@ -2,7 +2,7 @@
 const React = require("react");
 
 // === Duplicate or import these components from your existing code ===
-function Navbar() {
+function Navbar({ cartCount = 0 }) {
   return (
     <>
       <head>
@@ -28,18 +28,15 @@ function Navbar() {
             </li>
           </ul>
         </nav>
-        
+
         {/* Right-hand side of the navbar: Cart + Logout */}
         <div className="navbar-right">
           {/* Cart icon link */}
           <a href="/cart" className="cart-link">
             {/* Adjust the src to point to your actual cart icon image */}
-            <img
-              src="/images/cart.png"
-              alt="Cart"
-              width="50"
-              height="50"
-            />
+            <img src="/images/cart.png" alt="Cart" width="50" height="50" />
+            {/* If cartCount > 0, show a badge */}
+            {<span className="cart-count-badge">{cartCount}</span>}
           </a>
 
           {/* Log Out button */}
@@ -130,22 +127,26 @@ function AvailableItems({ items = [] }) {
                     <img src={item.picture} alt={item.label} />
                   </div>
                   <div className="product-headline">
-                    <div className="name">{item.make} {item.model}</div>
+                    <div className="name">
+                      {item.make} {item.model}
+                    </div>
                   </div>
                   <div className="add-to-cart">
-  {item._id ? (
-    <form action={`/add-to-cart/${item._id}`} method="POST">
-      <button type="submit" className="highlighted add_to_cart">
-        Add To Cart
-      </button>
-    </form>
-  ) : (
-    <button className="highlighted add_to_cart" disabled>
-      Unavailable
-    </button>
-  )}
-</div>
-
+                    {item._id ? (
+                      <form action={`/add-to-cart/${item._id}`} method="POST">
+                        <button
+                          type="submit"
+                          className="highlighted add_to_cart"
+                        >
+                          Add To Cart
+                        </button>
+                      </form>
+                    ) : (
+                      <button className="highlighted add_to_cart" disabled>
+                        Unavailable
+                      </button>
+                    )}
+                  </div>
                 </a>
               </div>
             </div>
@@ -157,13 +158,13 @@ function AvailableItems({ items = [] }) {
 }
 
 // === This is the main protected page component ===
-function ProtectedPage({ name, items }) {
+function ProtectedPage({ name, items, cartCount }) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
-      <Navbar />
+      <Navbar cartCount={cartCount} />
       <div className="seperator"></div>
       <Hero />
       <Category />

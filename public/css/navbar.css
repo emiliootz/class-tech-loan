@@ -66,7 +66,6 @@ button:hover {
 .navbar-right {
   display: flex;
   align-items: center;
-
 }
 
 .cart-link img {
@@ -77,4 +76,24 @@ button:hover {
 .cart-link img:hover {
   opacity: 0.8;
   /* Slight visual feedback on hover */
+}
+
+.cart-link {
+  position: relative; /* so the badge can be absolutely positioned relative to the icon */
+  display: inline-block;
+}
+
+.cart-count-badge {
+  position: absolute;
+  top: -8px; /* adjust to position the badge */
+  right: -8px; /* adjust to position the badge */
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  pointer-events: none; /* so clicks pass through to the icon/link if you want */
 }
