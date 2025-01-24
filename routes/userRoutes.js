@@ -39,10 +39,13 @@ router.get("/protected", isAuthenticated, async (req, res) => {
     const user = await UserModel.findById(req.user._id).populate("cart");
     const cartCount = user.cart.length;
     const items = await ItemModel.find();
-    res.render("protectedJSX", {
+    const isLoggedIn = req.isAuthenticated();
+
+    res.render("protected", {
       name: req.user.name,
       items,
       cartCount,
+      isLoggedIn,
     });
   } catch (error) {
     res.status(500).send({ error: error.message });
