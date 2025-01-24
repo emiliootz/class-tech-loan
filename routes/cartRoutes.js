@@ -84,7 +84,7 @@ router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
     user.cart.push(itemId);
     await user.save();
 
-    res.status(200).send({ message: "Item added to cart", cart: user.cart });
+    res.redirect("/protected");
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
