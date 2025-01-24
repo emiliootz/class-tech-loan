@@ -1,4 +1,3 @@
-// views/ItemDetailsPage.jsx
 const React = require("react");
 const Navbar = require("./components/Navbar"); // adjust path as needed
 
@@ -7,51 +6,78 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
     <>
       <head>
         <link rel="stylesheet" href="/css/styles.css" />
-        {/*
-          If you want Bootstrap or other CSS,
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
-        */}
       </head>
 
-      {/* Navbar at the top, just like ProtectedPage */}
+      {/* Navbar at the top */}
       <Navbar isLoggedIn={isLoggedIn} cartCount={cartCount} />
 
       {/* Main content */}
-      <div className="container mt-4">
-        <div className="card p-4 shadow-sm">
-          <h1>Item Details</h1>
-          <p>
-            <strong>Asset ID:</strong> {item.assetId}
-          </p>
-          <p>
-            <strong>Asset Type:</strong> {item.assetType}
-          </p>
-          <p>
-            <strong>Make:</strong> {item.make}
-          </p>
-          <p>
-            <strong>Model:</strong> {item.model}
-          </p>
-          <p>
-            <strong>Serial Number:</strong> {item.serialNumber}
-          </p>
-          <p>
-            <strong>UMB Tag Number:</strong> {item.umbTagNumber}
-          </p>
-          <p>
-            <strong>Description:</strong> {item.description}
-          </p>
-          <p>
-            <strong>Status:</strong> {item.status}
-          </p>
-          <p>
-            <strong>Date Added:</strong>{" "}
-            {new Date(item.dateAdded).toLocaleString()}
-          </p>
+      <div className="container-fluid item-details-page d-flex justify-content-center align-items-start min-vh-100">
+        <div className="row w-100">
+          
+          {/* Left Column - Image */}
+          <div className="col-md-4 d-flex justify-content-center align-items-center">
+            <img
+              src={item.imageUrl || "default-image-url.jpg"} // Ensure you have an image URL for the item
+              alt={item.model}
+              className="img-fluid shadow-sm rounded"
+            />
+          </div>
 
-          <a href="/protected" className="btn btn-secondary mt-3">
-            Back to Items
-          </a>
+          {/* Middle Column - Item Details */}
+          <div className="col-md-4">
+            <div className="card p-4 shadow-sm">
+              <h1>{item.model}</h1>
+              <p><strong>Asset ID:</strong> {item.assetId}</p>
+              <p><strong>Asset Type:</strong> {item.assetType}</p>
+              <p><strong>Make:</strong> {item.make}</p>
+              <p><strong>Model:</strong> {item.model}</p>
+              <p><strong>Serial Number:</strong> {item.serialNumber}</p>
+              <p><strong>UMB Tag Number:</strong> {item.umbTagNumber}</p>
+              <p><strong>Description:</strong> {item.description}</p>
+              <p><strong>Status:</strong> {item.status}</p>
+              <p><strong>Date Added:</strong> {new Date(item.dateAdded).toLocaleString()}</p>
+            </div>
+          </div>
+
+          {/* Right Column - Time pickers and Buttons */}
+          <div className="col-md-4">
+            <div className="card p-4 shadow-sm">
+              {/* Arrival Time */}
+              <div className="form-group mt-3">
+                <label htmlFor="arrivalDate"><strong>Arrival Time    </strong></label>
+                <input type="time" id="arrivalDate" className="form-control" />
+              </div>
+
+              {/* Return Time */}
+              <div className="form-group mt-3">
+                <label htmlFor="returnDate"><strong>Return Time    </strong></label>
+                <input type="time" id="returnDate" className="form-control" />
+              </div>
+
+              {/* Add to Cart Button */}
+              <form action={`/add-to-cart/${item._id}`} method="POST">
+                <button
+                  type="submit"
+                  className="btn w-100 mt-3"
+                  style={{ backgroundColor: 'green', color: 'white', border: 'none' }}
+                >
+                  Add to Cart
+                </button>
+              </form>
+
+              {/* Back to Items Button */}
+              <button
+                type="button"
+                onClick={() => window.location.href = '/protected'}
+                className="btn btn-secondary w-100 mt-3"
+                style={{ marginTop: '15px' }}  // Additional space between buttons
+              >
+                Back to Items
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </>

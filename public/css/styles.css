@@ -20,3 +20,209 @@
   display: flex;
   justify-content: center;
 }
+
+/* Global styles for the page */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.container-fluid {
+  /* Ensures that the container spans the full height */
+  height: 100%;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px; /* Adds some space from the top */
+}
+
+/* Centering the content */
+.d-flex {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;     /* Centers vertically */
+}
+
+.min-vh-100 {
+  min-height: 100vh; /* Makes the container take at least 100% of the viewport height */
+}
+
+.w-75 {
+  width: 75%; /* Adjust the width of the card */
+}
+
+/* Spacing and header styling */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #555;
+}
+
+/* Links and buttons */
+a {
+  text-decoration: none;
+}
+
+a.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  font-weight: 600;
+}
+
+a.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.scheduled-return, .arrival-date, .add-to-cart {
+  margin-bottom: 20px;
+}
+
+.schedule-date-field {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.add-to-cart button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.item-details {
+  padding-right: 20px;
+}
+
+.item-image-container img {
+  border-radius: 8px;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.calendar {
+  margin-top: 10px;
+  /* Adjust calendar styles if you're including one */
+}
+
+/* Global styles for the page */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.col-md-4 {
+  flex: 1; /* Ensures each column takes equal width */
+  padding: 10px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px; /* Adds some space from the top */
+}
+
+/* Image styling */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Form and button styling */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-size: 1.1rem;
+}
+
+input[type="date"] {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+input[type="date"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Styling for Add to Cart and Back to Items buttons */
+/* Custom Green "Add to Cart" Button */
+.item-details-page .add-to-cart button {
+  background-color: #28a745 !important; /* Green background */
+  color: white;
+  font-weight: bold;
+  border: none; /* Remove border if needed */
+  padding: 12px 0; /* Same height as other button */
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px; /* Rounded corners */
+  width: 100%; /* Full width button */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover effect */
+}
+
+.item-details-page .add-to-cart button:hover {
+  background-color: #218838 !important; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+
+.item-details-page .add-to-cart button {
+  background-color: #28a745; /* Green background */
+  color: white;
+  font-weight: bold;
+}
+
+.item-details-page .add-to-cart button:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.item-details-page .back-to-items a {
+  background-color: #6c757d; /* Gray background */
+  color: white;
+  font-weight: bold;
+}
+
+.item-details-page .back-to-items a:hover {
+  background-color: #5a6268; /* Darker gray on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Spacing between buttons */
+.item-details-page .add-to-cart,
+.item-details-page .back-to-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add space between the two buttons */
+  margin-top: 30px;
+}
