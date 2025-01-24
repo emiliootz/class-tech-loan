@@ -163,10 +163,22 @@ router.post("/checkout-cart", isAuthenticated, async (req, res) => {
 });
 
 // Success page for checkout
-router.get("/checkout-success", (req, res) => {
-  res.render("checkoutSuccessJSX", {
+router.get("/checkout-success", async (req, res) => {
+  // If user is guaranteed to be authenticated, `req.isAuthenticated()` should be true
+  const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+  let cartCount = 0;
+
+  // If user has a cart, you can do:
+  if (isLoggedIn && req.user) {
+    const user = await UserModel.findById(req.user._id).populate("cart");
+    cartCount = user.cart.length;
+  }
+
+  res.render("checkout", {
     name: req.user ? req.user.name : "Guest",
-    message: "Getting your items are ready for pickup!",
+    message: "Getting your items ready for pickup!",
+    isLoggedIn,
+    cartCount,
   });
 });
 
