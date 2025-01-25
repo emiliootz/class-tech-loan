@@ -92,6 +92,15 @@ router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
       return next(error);
     }
 
+    const alreadyInCart = user.cart.some(
+      (id) => id.toString() === itemId.toString()
+    );
+    if (alreadyInCart) {
+      const error = new Error("Item is already in the cart");
+      error.status = 400;
+      return next(error);
+    }
+
     const item = await ItemModel.findById(itemId);
     if (!item || item.status !== "Available") {
       const error = new Error("Item is not available");
