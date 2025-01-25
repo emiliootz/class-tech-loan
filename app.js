@@ -140,3 +140,30 @@ app.use("/", googleRoutes);
 app.listen(config.app.port, () => {
   console.log(`Listening on port ${config.app.port}`);
 });
+
+/*****************************
+ *       Fallback 404        *
+ *****************************/
+
+const { UserModel } = require("./config/database"); // If not already imported
+app.use("*", async (req, res, next) => {
+  try {
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    let cartCount = 0;
+
+    // If the user is logged in, fetch their cart count
+    if (isLoggedIn && req.user) {
+      const user = await UserModel.findById(req.user._id).populate("cart");
+      cartCount = user.cart.length;
+    }
+
+    // Render the 404 view with data
+    return res.status(404).render("404", {
+      isLoggedIn,
+      cartCount,
+    });
+  } catch (error) {
+    // If something goes wrong while rendering 404, pass to the error handler
+    next(error);
+  }
+});
