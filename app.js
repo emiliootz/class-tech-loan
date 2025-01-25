@@ -8,7 +8,6 @@
   and use routes under the use routes section. 
 
 */
-
 /*****************************
  *        Imports            *
  *****************************/
@@ -16,20 +15,16 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
-const methodOverride = require("method-override"); // Used to override the methods to call POSTS we normally cant call within HTML files
+const methodOverride = require("method-override");
 const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
-const { ItemModel } = require("./config/database");
+
+// Database imports to ensure connection & models are set up
+require("./config/database"); // This runs the mongoose.connect()
 
 /*****************************
  *        Routes             *
  *****************************/
-
-/*
-  This is the imports for the routes under the /routes directory
-  These are used to be able to use route files within this file.
-*/
-
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const loanRoutes = require("./routes/loanRoutes");
@@ -39,22 +34,17 @@ const cartRoutes = require("./routes/cartRoutes");
 /*****************************
  *      Express app Setup    *
  *****************************/
-
-const app = express(); // Set express() to a variable named app
-
-app.use(express.static("public"));
-app.set("view engine", "jsx");
+const app = express(); // Initialize Express
+app.use(express.static("public")); // Serve static files from /public
+app.set("view engine", "jsx"); // Use JSX for views
 app.engine("jsx", require("express-react-views").createEngine());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(methodOverride("_method"));
-
-/*****************************/
+app.use(express.urlencoded({ extended: true })); // For form data
+app.use(express.json()); // For JSON body parsing
+app.use(methodOverride("_method")); // For overriding methods in forms
 
 /*****************************
  *       Session Setup       *
  *****************************/
-
 app.use(
   session({
     secret: config.session.secret,
@@ -71,99 +61,108 @@ app.use(
 /*****************************
  *      Passport Setup       *
  *****************************/
-
-require("./config/passport"); // Use passport.js in config directory
-
+require("./config/passport"); // Initializes Passport config
 app.use(passport.initialize());
 app.use(passport.session());
 
 /*****************************
- *       Use Routes          *
+ *      Route Handlers       *
  *****************************/
-/*
-  These are to use the routes under the /routes directory
-  passing in the imports called in the Routes section. 
-  These are used to be able to use route files within this file.
-*/
 
-app.use("/", userRoutes);
-app.use("/", itemRoutes);
-app.use("/", loanRoutes);
-app.use("/", cartRoutes);
-app.use(errorHandler);
+/**
+ *  You can define any helper functions or common logic here.
+ */
+const { ItemModel, UserModel } = require("./config/database");
 
-/*****************************
- *       Fetch Items         *
- *****************************/
+// Example helper to fetch items for the homepage
 async function fetchItems() {
   try {
-    // 1. Fetch only the fields you need. For example:
-    //    _id, make, model, assetType, and status.
+    // Fetch only the fields you need
     const fetchedItems = await ItemModel.find(
       {},
-      "_id make model assetType status"
+      "_id make model assetType status picture"
     ).lean();
 
-    // 2. Transform each item into the shape your front end expects.
-    //    Here, we create a 'label' (combining make & model) and
-    //    set a placeholder 'picture'.
+    // Transform each item as needed
     return fetchedItems.map((item) => ({
       _id: item._id,
-      label: `${item.make} ${item.model}`, // for display text
-      picture: item.imageUrl || "placeholder-image.png", // or a real field if you store images
+      label: `${item.make} ${item.model}`,
+      picture: item.picture || "placeholder-image.png",
       status: item.status,
       assetType: item.assetType,
     }));
   } catch (err) {
     console.error("Error fetching items:", err);
-    return []; // Return an empty array if an error occurs
+    return [];
   }
 }
 
 /*****************************
- *       Start Server        *
+ *       Main Routes         *
  *****************************/
-app.get("/", async (req, res) => {
-  const items = await fetchItems();
-
-  console.log(items);
-
-  res.render("index", { items });
-});
-/*
-  Starting the server the port in config.js which is passing in the 
-  port from the port set in the .env file
-*/
-
-app.use("/", googleRoutes);
-
-app.listen(config.app.port, () => {
-  console.log(`Listening on port ${config.app.port}`);
-});
-
-/*****************************
- *       Fallback 404        *
- *****************************/
-
-const { UserModel } = require("./config/database"); // If not already imported
-app.use("*", async (req, res, next) => {
+app.get("/", async (req, res, next) => {
   try {
+    const items = await fetchItems();
+
+    // If user is logged in, you may want cartCount or other data
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
-
-    // If the user is logged in, fetch their cart count
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
     }
 
-    // Render the 404 view with data
+    res.render("index", {
+      items,
+      isLoggedIn,
+      cartCount,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/*****************************
+ *       Use Other Routes    *
+ *****************************/
+app.use("/", userRoutes);
+app.use("/", itemRoutes);
+app.use("/", loanRoutes);
+app.use("/", cartRoutes);
+app.use("/", googleRoutes);
+
+/*****************************
+ *     Fallback 404 Route    *
+ *****************************/
+// If no routes above match, this handles the request:
+app.use("*", async (req, res, next) => {
+  try {
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    let cartCount = 0;
+
+    if (isLoggedIn && req.user) {
+      const user = await UserModel.findById(req.user._id).populate("cart");
+      cartCount = user.cart.length;
+    }
+
     return res.status(404).render("404", {
       isLoggedIn,
       cartCount,
     });
   } catch (error) {
-    // If something goes wrong while rendering 404, pass to the error handler
+    // If something goes wrong while rendering 404, pass it to our global error handler
     next(error);
   }
+});
+
+/*****************************
+ *   Global Error Handler    *
+ *****************************/
+app.use(errorHandler);
+
+/*****************************
+ *       Start Server        *
+ *****************************/
+app.listen(config.app.port, () => {
+  console.log(`Listening on port ${config.app.port}`);
 });
