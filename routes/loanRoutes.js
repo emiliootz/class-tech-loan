@@ -35,13 +35,41 @@ router.get(
   requireRoles(["staff", "admin"]),
   async (req, res) => {
     try {
-      if (!mongoose.Types.ObjectId.isValid(itemId)) {
-        const error = new Error("Invalid itemId");
-        error.status = 400;
-        return next(error);
-      }
       const items = await LoanModel.find();
       res.status(200).json(items);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+/*
+  Get Loan by itemId
+*/
+
+router.get(
+  "/loaned-items/:itemId",
+  requireRoles(["staff", "admin"]),
+  async (req, res, next) => {
+    const { itemId } = req.params;
+
+    // Check if itemId is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(itemId)) {
+      const error = new Error("Invalid itemId");
+      error.status = 400;
+      return next(error);
+    }
+
+    try {
+      const loan = await LoanModel.findOne({ itemId }).exec();
+
+      if (!loan) {
+        const error = new Error("Loan not found");
+        error.status = 404;
+        return next(error);
+      }
+
+      return res.status(200).json(loan);
     } catch (error) {
       return next(error);
     }
