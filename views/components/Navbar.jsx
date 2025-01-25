@@ -1,4 +1,5 @@
 const React = require("react");
+const Cart = require("./Cart");
 
 function Navbar({ cartCount = 0, isLoggedIn = false }) {
   return (
@@ -28,12 +29,7 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
         </nav>
 
         <div className="navbar-right">
-          {/* Cart icon link */}
-          <a href="/cart" className="cart-link">
-            <img src="/images/cart.png" alt="Cart" width="50" height="50" />
-            <span className="cart-count-badge">{cartCount}</span>
-          </a>
-
+          <Cart cartCount={cartCount} />
           {/* Conditionally render Sign In or Log Out based on `isLoggedIn` */}
           {isLoggedIn ? (
             <a className="signout" href="/logout">
