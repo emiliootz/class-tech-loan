@@ -36,12 +36,14 @@ router.get(
   async (req, res) => {
     try {
       if (!mongoose.Types.ObjectId.isValid(itemId)) {
-        return res.status(400).send({ error: "Invalid itemId" });
+        const error = new Error("Invalid itemId");
+        error.status = 400;
+        return next(error);
       }
       const items = await LoanModel.find();
       res.status(200).json(items);
     } catch (error) {
-      res.status(500).send({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -57,13 +59,15 @@ router.put("/update-loan/:itemId", async (req, res) => {
       new: true,
     });
     if (!updatedLoan) {
-      return res.status(404).send({ error: "Loan not found" });
+      const error = new Error("Loan not found");
+      error.status = 404;
+      return next(error);
     }
     res
       .status(200)
       .send({ message: "Loan updated successfully", loan: updatedLoan });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -84,7 +88,9 @@ router.post("/add-loan/", async (req, res) => {
       !mongoose.Types.ObjectId.isValid(userId) ||
       !mongoose.Types.ObjectId.isValid(itemId)
     ) {
-      return res.status(400).send({ error: "Invalid userId or itemId" });
+      const error = new Error("Invalid userId or itemId");
+      error.status = 400;
+      return next(error);
     }
     const newLoan = new LoanModel({
       userId,
@@ -95,7 +101,7 @@ router.post("/add-loan/", async (req, res) => {
     await newLoan.save();
     res.status(201).send({ message: "Loan added successfully", loan: newLoan });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -106,15 +112,19 @@ router.delete("/delete-loan/:itemId", async (req, res) => {
   const itemId = req.params.itemId;
   try {
     if (!mongoose.Types.ObjectId.isValid(itemId)) {
-      return res.status(400).send({ error: "Invalid itemId" });
+      const error = new Error("Invalid itemId");
+      error.status = 400;
+      return next(error);
     }
     const deletedLoan = await LoanModel.findOneAndDelete({ itemId });
     if (!deletedLoan) {
-      return res.status(404).send({ error: "Loan not found" });
+      const error = new Error("Loan not found");
+      error.status = 404;
+      return next(error);
     }
     res.status(200).send({ message: "Loan deleted successfully" });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 

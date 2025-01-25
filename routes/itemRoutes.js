@@ -35,7 +35,7 @@ router.get("/items", async (req, res) => {
     const items = await ItemModel.find();
     res.status(200).json(items);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -44,13 +44,17 @@ router.get("/item/:itemId", async (req, res) => {
   const { itemId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
-    return res.status(400).send({ error: "Invalid itemId" });
+    const error = new Error("Invalid itemId");
+    error.status = 400;
+    return next(error);
   }
 
   try {
     const item = await ItemModel.findById(itemId);
     if (!item) {
-      return res.status(404).send({ error: "Item not found" });
+      const error = new Error("Item not found");
+      error.status = 404;
+      return next(error);
     }
 
     // If user may or may not be logged in, we can check for isAuthenticated
@@ -68,7 +72,7 @@ router.get("/item/:itemId", async (req, res) => {
       cartCount,
     });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -89,13 +93,15 @@ router.put("/update-item/:assetId", async (req, res) => {
       { new: true }
     );
     if (!updatedItem) {
-      return res.status(404).send({ error: "Item not found" });
+      const error = new Error("Item not found");
+      error.status = 404;
+      return next(error);
     }
     res
       .status(200)
       .send({ message: "Item updated successfully", item: updatedItem });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -127,7 +133,7 @@ router.post("/add-item", requireRole("admin"), async (req, res) => {
     res.redirect("/admin");
   } catch (error) {
     console.error("Error adding item:", error);
-    res.status(500).json({ error: "Failed to add item" });
+    return next(error);
   }
 });
 
@@ -140,14 +146,18 @@ router.delete("/delete-item/:id", requireRole("admin"), async (req, res) => {
   const id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid ObjectId" });
+    const error = new Error("Invalid ObjectId");
+    error.status = 400;
+    return next(error);
   }
 
   try {
     const deletedItem = await ItemModel.findByIdAndDelete(id);
     if (!deletedItem) {
       console.log(`Item not found for id: ${id}`);
-      return res.status(404).json({ error: "Item not found" });
+      const error = new Error("Item not found");
+      error.status = 404;
+      return next(error);
     }
 
     console.log(`Item deleted: ${deletedItem}`);
@@ -163,7 +173,7 @@ router.delete("/delete-item/:id", requireRole("admin"), async (req, res) => {
     res.redirect("/admin"); // Redirect to the admin page
   } catch (error) {
     console.error("Error deleting item:", error);
-    res.status(500).json({ error: "Failed to delete item" });
+    return next(error);
   }
 });
 

@@ -34,9 +34,15 @@ console.log("Debug - isAuthenticated:", isAuthenticated);
   The protected route can be edited within /views/protectedJSX.jsx
 */
 
-router.get("/protected", isAuthenticated, async (req, res) => {
+router.get("/protected", isAuthenticated, async (req, res, next) => {
   try {
     const user = await UserModel.findById(req.user._id).populate("cart");
+    if (!user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
+
     const cartCount = user.cart.length;
     const items = await ItemModel.find();
     const isLoggedIn = req.isAuthenticated();
@@ -48,7 +54,7 @@ router.get("/protected", isAuthenticated, async (req, res) => {
       isLoggedIn,
     });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -71,7 +77,14 @@ router.put("/assign-role/:userId", requireRole("admin"), async (req, res) => {
   const { role } = req.body;
 
   if (!["user", "staff", "admin"].includes(role)) {
-    return res.status(400).send({ error: "Invalid role" });
+    const error = new Error("Invalid role");
+    error.status = 400;
+    return next(error);
+  }
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    const error = new Error("Invalid userId");
+    error.status = 400;
+    return next(error);
   }
 
   try {
@@ -80,13 +93,17 @@ router.put("/assign-role/:userId", requireRole("admin"), async (req, res) => {
       { role },
       { new: true }
     );
-    if (!updatedUser) return res.status(404).send({ error: "User not found" });
+    if (!updatedUser) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
 
     res
       .status(200)
       .send({ message: `User role updated to ${role}`, user: updatedUser });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -100,7 +117,7 @@ router.get("/admin", requireRole("admin"), async (req, res) => {
     const items = await ItemModel.find();
     res.render("adminJSX", { users, items });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 

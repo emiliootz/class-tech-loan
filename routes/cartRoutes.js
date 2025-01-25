@@ -43,7 +43,11 @@ const router = express.Router();
 router.get("/cart", isAuthenticated, async (req, res) => {
   try {
     const user = await UserModel.findById(req.user._id).populate("cart");
-    if (!user) return res.status(404).send({ error: "User not found" });
+    if (!user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
 
     const cartItems = user.cart;
     const cartCount = cartItems.length;
@@ -57,7 +61,7 @@ router.get("/cart", isAuthenticated, async (req, res) => {
       handleCheckout: "/checkout-cart",
     });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -75,16 +79,24 @@ router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
   const itemId = req.params.itemId;
 
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
-    return res.status(400).send({ error: "Invalid itemId" });
+    const error = new Error("Invalid itemId");
+    error.status = 400;
+    return next(error);
   }
 
   try {
     const user = await UserModel.findById(req.user._id);
-    if (!user) return res.status(404).send({ error: "User not found" });
+    if (!user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
 
     const item = await ItemModel.findById(itemId);
     if (!item || item.status !== "Available") {
-      return res.status(400).send({ error: "Item is not available" });
+      const error = new Error("Item is not available");
+      error.status = 400;
+      return next(error);
     }
 
     user.cart.push(itemId);
@@ -92,7 +104,7 @@ router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
 
     res.redirect("/protected");
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return next(error);
   }
 });
 
@@ -114,7 +126,11 @@ router.delete(
 
     try {
       const user = await UserModel.findById(req.user._id);
-      if (!user) return res.status(404).send({ error: "User not found" });
+      if (!user) {
+        const error = new Error("User not found");
+        error.status = 404;
+        return next(error);
+      }
 
       user.cart = user.cart.filter((id) => id.toString() !== itemId);
       await user.save();
@@ -122,7 +138,7 @@ router.delete(
       console.log(`Item ${itemId} removed from cart`);
       res.redirect("/cart");
     } catch (error) {
-      res.status(500).json({ error: "Failed to remove item from cart" });
+      return next(error);
     }
   }
 );
@@ -140,14 +156,18 @@ router.delete(
 router.post("/checkout-cart", isAuthenticated, async (req, res) => {
   try {
     const user = await UserModel.findById(req.user._id).populate("cart");
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
 
     for (const item of user.cart) {
       const dbItem = await ItemModel.findById(item._id);
       if (!dbItem) {
-        return res
-          .status(404)
-          .json({ error: `Item ${item.assetId} not found` });
+        const error = new Error(`Item ${item.assetId} not found`);
+        error.status = 404;
+        return next(error);
       }
       dbItem.status = "Loaned";
       await dbItem.save();
@@ -158,28 +178,32 @@ router.post("/checkout-cart", isAuthenticated, async (req, res) => {
 
     res.redirect("/checkout-success"); // redirect to success page after succsesful checkout
   } catch (error) {
-    res.status(500).json({ error: "Failed to checkout cart" });
+    return next(error);
   }
 });
 
 // Success page for checkout
-router.get("/checkout-success", async (req, res) => {
-  // If user is guaranteed to be authenticated, `req.isAuthenticated()` should be true
-  const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
-  let cartCount = 0;
+router.get("/checkout-success", async (req, res, next) => {
+  try {
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    let cartCount = 0;
 
-  // If user has a cart, you can do:
-  if (isLoggedIn && req.user) {
-    const user = await UserModel.findById(req.user._id).populate("cart");
-    cartCount = user.cart.length;
+    if (isLoggedIn && req.user) {
+      const user = await UserModel.findById(req.user._id).populate("cart");
+      if (user) {
+        cartCount = user.cart.length;
+      }
+    }
+
+    res.render("checkout", {
+      name: req.user ? req.user.name : "Guest",
+      message: "Getting your items ready for pickup!",
+      isLoggedIn,
+      cartCount,
+    });
+  } catch (error) {
+    return next(error);
   }
-
-  res.render("checkout", {
-    name: req.user ? req.user.name : "Guest",
-    message: "Getting your items ready for pickup!",
-    isLoggedIn,
-    cartCount,
-  });
 });
 
 module.exports = router;
