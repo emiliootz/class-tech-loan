@@ -1,7 +1,4 @@
-
-const mongoose = require('mongoose');
-
-
+const mongoose = require("mongoose");
 
 // Item Schema and Model
 const itemSchema = new mongoose.Schema({
@@ -24,19 +21,19 @@ const itemSchema = new mongoose.Schema({
   },
   serialNumber: {
     type: String,
-    default: 'N/A',
+    default: "N/A",
   },
   umbTagNumber: {
     type: String,
-    default: 'N/A',
+    default: "N/A",
   },
   description: {
     type: String,
-    default: 'No description available',
+    default: "No description available",
   },
   status: {
     type: String,
-    enum: ['Available', 'Loaned', 'Assigned To Location'],
+    enum: ["Available", "Loaned", "Assigned To Location"],
     required: true,
   },
   dateAdded: {
@@ -49,10 +46,10 @@ const itemSchema = new mongoose.Schema({
   },
   picture: {
     type: String,
-    default: 'placeholder-image.png', // Or a URL to a default image
+    default: "/images/placeholder.jpg",
   },
 });
 
-const ItemModel = mongoose.model('Item', itemSchema);
+const ItemModel = mongoose.model("Item", itemSchema);
 
 module.exports = ItemModel;
