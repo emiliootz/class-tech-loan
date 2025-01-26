@@ -47,23 +47,7 @@
   margin: 0.5rem 0;
 }
 
-/* Button for secondary actions (e.g., Continue Shopping) */
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  border-radius: 5px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 550;
-  font-size: 18px;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-/* Styles for empty cart message */
+/* Empty cart message */
 .cart-empty {
   text-align: center;
   font-family: "Open Sans", sans-serif;
