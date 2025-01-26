@@ -1,0 +1,24 @@
+.item-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.col {
+  flex: 1;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}

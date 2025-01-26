@@ -1,28 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
-/* Separator styles */
-.seperator {
-  width: 100%;
-  height: 70px;
-  background-color: #005a8b;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-}
-
-.seperator2 {
-  width: 100%;
-  height: 300px;
-  background-color: #005a8b;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-}
-
 /* Global styles for the page */
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -113,44 +88,6 @@ input[type="time"]:focus {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-}
-
-/* Utility for spacing */
-.scheduled-return,
-.arrival-date,
-.add-to-cart {
-  margin-bottom: 20px;
-}
-
-.schedule-date-field {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  font-size: 16px;
-}
-
-/* Add to Cart button styles */
-.item-details-page .add-to-cart button {
-  background-color: #28a745; /* Green background */
-  color: white;
-  font-weight: bold;
-  border: none;
-  padding: 12px 0;
-  font-size: 16px;
-  text-align: center;
-  border-radius: 4px;
-  width: 100%; /* Full width button */
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.item-details-page .add-to-cart button:hover {
-  background-color: #218838; /* Darker green on hover */
-  transform: translateY(-2px); /* Slight lift effect on hover */
-}
-
-/* Spacing between buttons */
-.item-details-page .add-to-cart {
-  margin-top: 30px;
 }
 
 /* Column and row layout */
