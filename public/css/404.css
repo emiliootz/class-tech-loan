@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..700&display=swap");
+
+/* Container for the 404 page */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 20px;
+}
+
+/* Title style */
+.not-found-title {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #d9534f;
+  margin-bottom: 1rem;
+}
+
+/* Message style */
+.not-found-message {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Button style */
+.not-found-btn {
+  background-color: #0056b3;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.not-found-btn:hover {
+  background-color: #003f7f;
+}
