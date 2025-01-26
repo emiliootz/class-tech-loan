@@ -1,6 +1,7 @@
 const React = require("react");
 const Cart = require("./Cart");
 const AuthButton = require("./AuthButton");
+const Logo = require("./Logo");
 
 function Navbar({ cartCount = 0, isLoggedIn = false }) {
   return (
@@ -17,12 +18,7 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
 
         {/* Main Navigation Section */}
         <div className="navbar-main">
-          <img
-            className="logo"
-            href="/"
-            src="/images/UMassBoston-Logo/Blue-logo-lockup/Blue-UMB-logo-lockup.png"
-            alt="logo"
-          />
+          <Logo isLoggedIn={isLoggedIn} />
           <nav>
             <ul className="nav__links">
               <li>

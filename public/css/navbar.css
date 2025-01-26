@@ -29,20 +29,14 @@ header {
 /* Main Navigation Section */
 .navbar-main {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Space between logo and nav links */
   align-items: center;
   padding: 10px 10%;
 }
 
-.logo {
-  cursor: pointer;
-  margin-right: auto;
-  max-width: 125px;
-  margin-bottom: 10px;
-}
-
 .nav__links {
   list-style: none;
+  display: flex; /* Ensure the links are displayed inline */
 }
 
 .nav__links li {
