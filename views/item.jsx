@@ -21,10 +21,7 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
         <div className="row">
           {/* Left Column - Image */}
           <div className="col">
-            <ProductImage
-              picture={item.imageUrl || "default-image-url.jpg"}
-              label={item.model}
-            />
+            <ProductImage picture={item.picture} label={item.label} />
           </div>
 
           {/* Middle Column - Details */}

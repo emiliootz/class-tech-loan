@@ -102,7 +102,7 @@ async function fetchItems() {
  *****************************/
 app.get("/", async (req, res, next) => {
   try {
-    const items = await fetchItems();
+    const items = await ItemModel.find();
 
     // If user is logged in, you may want cartCount or other data
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
