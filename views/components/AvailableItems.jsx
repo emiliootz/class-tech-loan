@@ -2,8 +2,15 @@ const React = require("react");
 const AddToCartButton = require("./AddToCartButton");
 const ProductImage = require("./ProductImage");
 
+function shuffleArray(array) {
+  return array
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item);
+}
+
 function AvailableItems({ items = [] }) {
-  const displayedItems = items.slice(0, 8);
+  const displayedItems = shuffleArray(items).slice(0, 8);
 
   return (
     <>
