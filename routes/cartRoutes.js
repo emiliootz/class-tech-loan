@@ -185,7 +185,7 @@ router.post("/checkout-cart", isAuthenticated, async (req, res, next) => {
     user.cart = [];
     await user.save();
 
-    res.redirect("/checkout-success"); // redirect to success page after succsesful checkout
+    res.redirect("/checkout-success");
   } catch (error) {
     return next(error);
   }
