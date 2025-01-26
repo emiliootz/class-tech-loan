@@ -2,6 +2,7 @@ const React = require("react");
 const Navbar = require("./components/Navbar"); // Adjust path as needed
 const AddToCartButton = require("./components/AddToCartButton"); // Adjust path as needed
 const ProductImage = require("./components/ProductImage"); // Adjust path as needed
+const ItemDetails = require("./components/ItemDetails"); // Adjust path as needed
 
 function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
   return (
@@ -26,37 +27,7 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
 
           {/* Middle Column - Item Details */}
           <div className="col-md-4">
-            <div className="card p-4 shadow-sm">
-              <h1>{item.model}</h1>
-              <p>
-                <strong>Asset ID:</strong> {item.assetId}
-              </p>
-              <p>
-                <strong>Asset Type:</strong> {item.assetType}
-              </p>
-              <p>
-                <strong>Make:</strong> {item.make}
-              </p>
-              <p>
-                <strong>Model:</strong> {item.model}
-              </p>
-              <p>
-                <strong>Serial Number:</strong> {item.serialNumber}
-              </p>
-              <p>
-                <strong>UMB Tag Number:</strong> {item.umbTagNumber}
-              </p>
-              <p>
-                <strong>Description:</strong> {item.description}
-              </p>
-              <p>
-                <strong>Status:</strong> {item.status}
-              </p>
-              <p>
-                <strong>Date Added:</strong>{" "}
-                {new Date(item.dateAdded).toLocaleString()}
-              </p>
-            </div>
+            <ItemDetails item={item} />
           </div>
 
           {/* Right Column - Time pickers and Add to Cart Button */}
