@@ -3,11 +3,12 @@
 /* General container for the admin page */
 .admin-container {
   font-family: "Open Sans", sans-serif;
-  margin: 20px;
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: none;
+  border-radius: 0px;
 }
 
 /* Title styles */
