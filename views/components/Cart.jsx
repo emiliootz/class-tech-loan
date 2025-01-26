@@ -8,7 +8,7 @@ function Cart({ cartCount }) {
       </head>
 
       <a href="/cart" className="cart-link">
-        <img src="/images/cart.png" alt="Cart" width="50" height="50" />
+        <img src="/images/cart.png" alt="Cart" className="cart-image" />
         <span className="cart-count-badge">{cartCount}</span>
       </a>
     </>

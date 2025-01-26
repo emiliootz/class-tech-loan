@@ -3,17 +3,19 @@
 .signin button,
 .signout button {
   font-family: "Open Sans";
+  font-weight: 550;
+  font-size: 14px;
   margin-left: 20px;
   padding: 9px 25px;
-  background-color: rgba(0, 49, 77, 1);
+  background-color: #ffff;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-  color: #ffffff;
+  color: #005a8b;
 }
 
 .signin button:hover,
 .signout button:hover {
-  background-color: rgba(0, 49, 77, 0.8);
+  background-color: rgba(231, 231, 231, 0.8);
 }

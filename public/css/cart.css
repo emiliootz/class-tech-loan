@@ -4,8 +4,13 @@
 }
 
 .cart-link img:hover {
-  opacity: 0.8;
-  /* Slight visual feedback on hover */
+  opacity: 0.8; /* Slight visual feedback on hover */
+}
+
+/* Add width and height for the cart image */
+.cart-link .cart-image {
+  width: 40px;
+  height: 40px;
 }
 
 .cart-link {

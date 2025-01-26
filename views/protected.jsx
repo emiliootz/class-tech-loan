@@ -11,7 +11,6 @@ function ProtectedPage({ name, items, cartCount, isLoggedIn }) {
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
       <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
-      <div className="seperator"></div>
       <Hero />
       <Category />
       <AvailableItems items={items} />
