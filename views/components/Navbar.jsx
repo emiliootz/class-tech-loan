@@ -18,7 +18,7 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
         </div>
 
         {/* Main Navigation Section */}
-        <div className="navbar-main">
+        <div className="navbar-bottom">
           <Logo isLoggedIn={isLoggedIn} />
           <NavLinks />
         </div>

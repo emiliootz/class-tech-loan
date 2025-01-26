@@ -8,12 +8,12 @@ function AddToCartButton({ itemId, isAvailable }) {
       </head>
       {isAvailable ? (
         <form action={`/add-to-cart/${itemId}`} method="POST">
-          <button type="submit" className="highlighted">
+          <button type="submit" className="button">
             Add To Cart
           </button>
         </form>
       ) : (
-        <button className="highlighted" disabled>
+        <button className="button" disabled>
           Unavailable
         </button>
       )}

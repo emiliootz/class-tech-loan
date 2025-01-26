@@ -27,7 +27,7 @@ header {
 }
 
 /* Main Navigation Section */
-.navbar-main {
+.navbar-bottom {
   display: flex;
   justify-content: space-between; /* Space between logo and nav links */
   align-items: center;
