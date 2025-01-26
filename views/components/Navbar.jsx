@@ -9,29 +9,33 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
         <link rel="stylesheet" href="/css/navbar.css" />
       </head>
       <header>
-        <img
-          className="logo"
-          href="/"
-          src="/images/UMassBoston-Logo/Blue-logo-lockup/Blue-UMB-logo-lockup.png"
-          alt="logo"
-        />
-        <nav>
-          <ul className="nav__links">
-            <li>
-              <a href="#">Services</a>
-            </li>
-            <li>
-              <a href="#">Projects</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="navbar-right">
+        {/* Auth and Cart Section */}
+        <div className="navbar-top">
           <Cart cartCount={cartCount} />
           <AuthButton isLoggedIn={isLoggedIn} />
+        </div>
+
+        {/* Main Navigation Section */}
+        <div className="navbar-main">
+          <img
+            className="logo"
+            href="/"
+            src="/images/UMassBoston-Logo/Blue-logo-lockup/Blue-UMB-logo-lockup.png"
+            alt="logo"
+          />
+          <nav>
+            <ul className="nav__links">
+              <li>
+                <a href="#">Services</a>
+              </li>
+              <li>
+                <a href="#">Projects</a>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </header>
     </>

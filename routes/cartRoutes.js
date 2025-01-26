@@ -40,7 +40,7 @@ const router = express.Router();
 
  */
 
-router.get("/cart", isAuthenticated, async (req, res) => {
+router.get("/cart", isAuthenticated, async (req, res, next) => {
   try {
     const user = await UserModel.findById(req.user._id).populate("cart");
     if (!user) {
@@ -75,7 +75,7 @@ router.get("/cart", isAuthenticated, async (req, res) => {
 
  */
 
-router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
+router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res, next) => {
   const itemId = req.params.itemId;
 
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
@@ -130,7 +130,7 @@ router.post("/add-to-cart/:itemId", isAuthenticated, async (req, res) => {
 router.delete(
   "/remove-from-cart/:itemId",
   isAuthenticated,
-  async (req, res) => {
+  async (req, res, next) => {
     const itemId = req.params.itemId;
 
     try {
@@ -162,7 +162,7 @@ router.delete(
     within the cart route.
  */
 
-router.post("/checkout-cart", isAuthenticated, async (req, res) => {
+router.post("/checkout-cart", isAuthenticated, async (req, res, next) => {
   try {
     const user = await UserModel.findById(req.user._id).populate("cart");
     if (!user) {

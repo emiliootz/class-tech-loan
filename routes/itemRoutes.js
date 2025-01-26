@@ -30,7 +30,7 @@ const router = express.Router();
   for a specific item by ID 
 */
 // Get all items
-router.get("/items", async (req, res) => {
+router.get("/items", async (req, res, next) => {
   try {
     const items = await ItemModel.find();
     res.status(200).json(items);
@@ -40,7 +40,7 @@ router.get("/items", async (req, res) => {
 });
 
 // Get a specific item by ID
-router.get("/item/:itemId", async (req, res) => {
+router.get("/item/:itemId", async (req, res, next) => {
   const { itemId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
@@ -84,7 +84,7 @@ router.get("/item/:itemId", async (req, res) => {
   within the Item Model
 */
 
-router.put("/update-item/:assetId", async (req, res) => {
+router.put("/update-item/:assetId", async (req, res, next) => {
   const assetId = req.params.assetId;
   try {
     const updatedItem = await ItemModel.findOneAndUpdate(
@@ -113,7 +113,7 @@ router.put("/update-item/:assetId", async (req, res) => {
   are able to add new items to the database
 */
 
-router.post("/add-item", requireRole("admin"), async (req, res) => {
+router.post("/add-item", requireRole("admin"), async (req, res, next) => {
   const { assetId, assetType, make, model, status } = req.body;
 
   try {
@@ -142,39 +142,43 @@ router.post("/add-item", requireRole("admin"), async (req, res) => {
   are able to delete items from the database
 */
 
-router.delete("/delete-item/:id", requireRole("admin"), async (req, res) => {
-  const id = req.params.id;
+router.delete(
+  "/delete-item/:id",
+  requireRole("admin"),
+  async (req, res, next) => {
+    const id = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    const error = new Error("Invalid ObjectId");
-    error.status = 400;
-    return next(error);
-  }
-
-  try {
-    const deletedItem = await ItemModel.findByIdAndDelete(id);
-    if (!deletedItem) {
-      console.log(`Item not found for id: ${id}`);
-      const error = new Error("Item not found");
-      error.status = 404;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      const error = new Error("Invalid ObjectId");
+      error.status = 400;
       return next(error);
     }
 
-    console.log(`Item deleted: ${deletedItem}`);
+    try {
+      const deletedItem = await ItemModel.findByIdAndDelete(id);
+      if (!deletedItem) {
+        console.log(`Item not found for id: ${id}`);
+        const error = new Error("Item not found");
+        error.status = 404;
+        return next(error);
+      }
 
-    // Check if the item still exists in the database
-    const checkItem = await ItemModel.findById(id);
-    if (checkItem) {
-      console.error(`Item still exists after deletion: ${checkItem}`);
-    } else {
-      console.log(`Item successfully removed from database.`);
+      console.log(`Item deleted: ${deletedItem}`);
+
+      // Check if the item still exists in the database
+      const checkItem = await ItemModel.findById(id);
+      if (checkItem) {
+        console.error(`Item still exists after deletion: ${checkItem}`);
+      } else {
+        console.log(`Item successfully removed from database.`);
+      }
+
+      res.redirect("/admin"); // Redirect to the admin page
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      return next(error);
     }
-
-    res.redirect("/admin"); // Redirect to the admin page
-  } catch (error) {
-    console.error("Error deleting item:", error);
-    return next(error);
   }
-});
+);
 
 module.exports = router;

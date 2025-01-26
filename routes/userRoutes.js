@@ -72,46 +72,50 @@ router.get("/protected", isAuthenticated, async (req, res, next) => {
   Route to give the admin the ability to assign existing users roles using their
   userId. The roles can be changed to user, staff, or admin 
 */
-router.put("/assign-role/:userId", requireRole("admin"), async (req, res) => {
-  const userId = req.params.userId;
-  const { role } = req.body;
+router.put(
+  "/assign-role/:userId",
+  requireRole("admin"),
+  async (req, res, next) => {
+    const userId = req.params.userId;
+    const { role } = req.body;
 
-  if (!["user", "staff", "admin"].includes(role)) {
-    const error = new Error("Invalid role");
-    error.status = 400;
-    return next(error);
-  }
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    const error = new Error("Invalid userId");
-    error.status = 400;
-    return next(error);
-  }
-
-  try {
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      userId,
-      { role },
-      { new: true }
-    );
-    if (!updatedUser) {
-      const error = new Error("User not found");
-      error.status = 404;
+    if (!["user", "staff", "admin"].includes(role)) {
+      const error = new Error("Invalid role");
+      error.status = 400;
+      return next(error);
+    }
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      const error = new Error("Invalid userId");
+      error.status = 400;
       return next(error);
     }
 
-    res
-      .status(200)
-      .send({ message: `User role updated to ${role}`, user: updatedUser });
-  } catch (error) {
-    return next(error);
+    try {
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { role },
+        { new: true }
+      );
+      if (!updatedUser) {
+        const error = new Error("User not found");
+        error.status = 404;
+        return next(error);
+      }
+
+      res
+        .status(200)
+        .send({ message: `User role updated to ${role}`, user: updatedUser });
+    } catch (error) {
+      return next(error);
+    }
   }
-});
+);
 
 /*
   Route to admin page. This page is the admin settings page so they can 
   add items, delete items, add users, and manage users roles.
 */
-router.get("/admin", requireRole("admin"), async (req, res) => {
+router.get("/admin", requireRole("admin"), async (req, res, next) => {
   try {
     const users = await UserModel.find();
     const items = await ItemModel.find();

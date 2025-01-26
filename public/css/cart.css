@@ -1,6 +1,6 @@
 .cart-link img {
   cursor: pointer;
-  /* Additional styling or sizes if needed */
+  background-color: transparent;
 }
 
 .cart-link img:hover {

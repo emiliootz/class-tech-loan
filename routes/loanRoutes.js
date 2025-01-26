@@ -33,7 +33,7 @@ const router = express.Router();
 router.get(
   "/loaned-items/",
   requireRoles(["staff", "admin"]),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const items = await LoanModel.find();
       res.status(200).json(items);
@@ -80,7 +80,7 @@ router.get(
   Update loaned items by ID
 */
 
-router.put("/update-loan/:itemId", async (req, res) => {
+router.put("/update-loan/:itemId", async (req, res, next) => {
   const itemId = req.params.itemId;
   try {
     const updatedLoan = await LoanModel.findOneAndUpdate({ itemId }, req.body, {
@@ -109,7 +109,7 @@ router.put("/update-loan/:itemId", async (req, res) => {
 /*
    Add a new loan to the database
 */
-router.post("/add-loan/", async (req, res) => {
+router.post("/add-loan/", async (req, res, next) => {
   const { userId, itemId, status, location } = req.body;
   try {
     if (
@@ -136,7 +136,7 @@ router.post("/add-loan/", async (req, res) => {
 /*
    Delete a loan from the database by item ID
 */
-router.delete("/delete-loan/:itemId", async (req, res) => {
+router.delete("/delete-loan/:itemId", async (req, res, next) => {
   const itemId = req.params.itemId;
   try {
     if (!mongoose.Types.ObjectId.isValid(itemId)) {

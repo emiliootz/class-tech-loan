@@ -1,3 +1,4 @@
+/* General Styling */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 * {
@@ -7,16 +8,27 @@
   background-color: #ffffff;
 }
 
-li,
-a {
-  font-family: "Open+Sans", sans-serif;
-  font-weight: 550;
-  font-size: 18px;
-  color: #005a8b;
-  text-decoration: none;
+header {
+  display: flex;
+  flex-direction: column; /* Stack navbar-top and navbar-main */
 }
 
-header {
+/* Top Section: Auth and Cart */
+.navbar-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 10%;
+  background-color: #005a8b;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar-top a {
+  margin-left: 20px;
+}
+
+/* Main Navigation Section */
+.navbar-main {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -40,14 +52,14 @@ header {
 }
 
 .nav__links li a {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 550;
+  font-size: 18px;
+  color: #005a8b;
+  text-decoration: none;
   transition: all 0.3s ease 0s;
 }
 
 .nav__links li a:hover {
   color: #00314d;
-}
-
-.navbar-right {
-  display: flex;
-  align-items: center;
 }

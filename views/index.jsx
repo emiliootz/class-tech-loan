@@ -11,7 +11,6 @@ function Index({ items, isLoggedIn }) {
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
       <Navbar isLoggedIn={isLoggedIn} />
-      <div className="seperator"></div>
       <Hero />
       <Category />
       <AvailableItems items={items} />
