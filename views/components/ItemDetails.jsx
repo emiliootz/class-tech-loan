@@ -1,40 +1,34 @@
 const React = require("react");
 
-function ItemDetails({ item }) {
+function ItemDetails({ item, fields = [] }) {
+  const allFields = {
+    "Asset Type": item.assetType,
+    "Asset ID": item.assetId,
+    Make: item.make,
+    Model: item.model,
+    Serial: item.serialNumber,
+    Tag: item.umbTagNumber,
+    Description: item.description,
+    Status: item.status,
+    Added: new Date(item.dateAdded).toLocaleString(),
+  };
+
+  const fieldsToShow =
+    fields.length > 0
+      ? Object.keys(allFields).filter((key) => fields.includes(key))
+      : Object.keys(allFields);
+
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/itemDetails.css" />
       </head>
       <div className="details">
-        <h1>{item.model}</h1>
-        <p>
-          <strong>ID:</strong> {item.assetId}
-        </p>
-        <p>
-          <strong>Type:</strong> {item.assetType}
-        </p>
-        <p>
-          <strong>Make:</strong> {item.make}
-        </p>
-        <p>
-          <strong>Model:</strong> {item.model}
-        </p>
-        <p>
-          <strong>Serial:</strong> {item.serialNumber}
-        </p>
-        <p>
-          <strong>Tag:</strong> {item.umbTagNumber}
-        </p>
-        <p>
-          <strong>Description:</strong> {item.description}
-        </p>
-        <p>
-          <strong>Status:</strong> {item.status}
-        </p>
-        <p>
-          <strong>Added:</strong> {new Date(item.dateAdded).toLocaleString()}
-        </p>
+        {fieldsToShow.map((key) => (
+          <p key={key}>
+            <strong>{key}:</strong> {allFields[key]}
+          </p>
+        ))}
       </div>
     </>
   );
