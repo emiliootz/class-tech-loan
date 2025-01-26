@@ -1,5 +1,6 @@
 const React = require("react");
 const AddToCartButton = require("./AddToCartButton");
+const ProductImage = require("./ProductImage");
 
 function AvailableItems({ items = [] }) {
   const paddedItems = items.slice(0, 9).concat(
@@ -22,9 +23,7 @@ function AvailableItems({ items = [] }) {
             <div key={index} className="grid-item">
               <div className="product-box">
                 <a href={item._id ? `/item/${item._id}` : "#"}>
-                  <div className="product-img">
-                    <img src={item.picture} alt={item.label} />
-                  </div>
+                  <ProductImage picture={item.picture} label={item.label} />
                   <div className="product-headline">
                     <div className="name">
                       {item.make} {item.model}

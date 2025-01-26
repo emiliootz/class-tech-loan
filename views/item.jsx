@@ -1,6 +1,7 @@
 const React = require("react");
 const Navbar = require("./components/Navbar"); // Adjust path as needed
 const AddToCartButton = require("./components/AddToCartButton"); // Adjust path as needed
+const ProductImage = require("./components/ProductImage"); // Adjust path as needed
 
 function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
   return (
@@ -17,10 +18,9 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
         <div className="row w-100">
           {/* Left Column - Image */}
           <div className="col-md-4 d-flex justify-content-center align-items-center">
-            <img
-              src={item.imageUrl || "default-image-url.jpg"} // Ensure you have an image URL for the item
-              alt={item.model}
-              className="img-fluid shadow-sm rounded"
+            <ProductImage
+              picture={item.imageUrl || "default-image-url.jpg"}
+              label={item.model}
             />
           </div>
 
