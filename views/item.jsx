@@ -59,7 +59,7 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
             </div>
           </div>
 
-          {/* Right Column - Time pickers and Buttons */}
+          {/* Right Column - Time pickers and Add to Cart Button */}
           <div className="col-md-4">
             <div className="card p-4 shadow-sm">
               {/* Arrival Time */}
@@ -85,16 +85,6 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
                   isAvailable={item.status === "Available"}
                 />
               </div>
-
-              {/* Back to Items Button */}
-              <button
-                type="button"
-                onClick={() => (window.location.href = "/protected")}
-                className="btn btn-secondary w-100 mt-3"
-                style={{ marginTop: "15px" }} // Additional space between buttons
-              >
-                Back to Items
-              </button>
             </div>
           </div>
         </div>
