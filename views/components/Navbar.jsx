@@ -2,6 +2,7 @@ const React = require("react");
 const Cart = require("./Cart");
 const AuthButton = require("./AuthButton");
 const Logo = require("./Logo");
+const NavLinks = require("./NavLinks");
 
 function Navbar({ cartCount = 0, isLoggedIn = false }) {
   return (
@@ -19,19 +20,7 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
         {/* Main Navigation Section */}
         <div className="navbar-main">
           <Logo isLoggedIn={isLoggedIn} />
-          <nav>
-            <ul className="nav__links">
-              <li>
-                <a href="#">Services</a>
-              </li>
-              <li>
-                <a href="#">Projects</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-              </li>
-            </ul>
-          </nav>
+          <NavLinks />
         </div>
       </header>
     </>
