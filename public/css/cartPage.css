@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+/* General container for the cart page */
 .cart-container {
   display: flex;
   justify-content: center;
@@ -12,10 +13,11 @@
   max-width: 800px;
 }
 
+/* Cart page title */
 .cart-title {
   text-align: center;
   margin-bottom: 1.5rem;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 550;
   font-size: 2rem;
   color: #005a8b;
@@ -28,13 +30,14 @@
   margin: 0 0 2rem 0;
 }
 
+/* Individual cart item styles */
 .cart-item {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 1rem;
   margin-bottom: 1rem;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 550;
   font-size: 18px;
   color: #005a8b;
@@ -44,30 +47,14 @@
   margin: 0.5rem 0;
 }
 
-/* Buttons */
-.btn-remove {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Open Sans";
-  font-weight: 550;
-  font-size: 18px;
-}
-
-.btn-remove:hover {
-  background-color: #c82333;
-}
-
+/* Button for secondary actions (e.g., Continue Shopping) */
 .btn-secondary {
   background-color: #6c757d;
   color: white;
   padding: 0.5rem 1rem;
   text-decoration: none;
   border-radius: 5px;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 550;
   font-size: 18px;
 }
@@ -76,37 +63,29 @@
   background-color: #5a6268;
 }
 
-.btn-success {
-  background-color: #28a745;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Open Sans";
-  font-weight: 550;
-  font-size: 18px;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
-
-/* Empty cart message */
+/* Styles for empty cart message */
 .cart-empty {
   text-align: center;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 550;
   font-size: 1.2rem;
   color: #005a8b;
 }
 
-/* Cart actions */
+/* Cart action buttons container */
 .cart-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 550;
   font-size: 18px;
+}
+
+/* Remove button container (centers the button) */
+.remove-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
 }

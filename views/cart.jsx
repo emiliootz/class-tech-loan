@@ -1,6 +1,8 @@
 const React = require("react");
 const Navbar = require("./components/Navbar");
 const ItemDetails = require("./components/ItemDetails");
+const RemoveButton = require("./components/RemoveButton");
+const CheckoutButton = require("./components/CheckoutButton");
 
 function CartPage({
   cartItems,
@@ -26,15 +28,9 @@ function CartPage({
                     item={item}
                     fields={["Asset Type", "Asset ID", "Make", "Model"]}
                   />
-
-                  <form
-                    action={`/remove-from-cart/${item._id}?_method=DELETE`}
-                    method="POST"
-                  >
-                    <button type="submit" className="btn-remove">
-                      Remove
-                    </button>
-                  </form>
+                  <div className="remove-button-container">
+                    <RemoveButton itemId={item._id} />
+                  </div>
                 </li>
               ))}
             </ul>
@@ -47,11 +43,8 @@ function CartPage({
               <a href="/protected" className="btn-secondary">
                 Continue Shopping
               </a>
-              <form action="/checkout-cart" method="POST">
-                <button type="submit" className="btn-success">
-                  Checkout
-                </button>
-              </form>
+              {/* Use the CheckoutButton component */}
+              <CheckoutButton />
             </div>
           )}
         </div>
