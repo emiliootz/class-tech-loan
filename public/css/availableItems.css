@@ -81,19 +81,3 @@
 .add-to-cart {
   margin-top: auto;
 }
-
-.add-to-cart .highlighted {
-  background-color: #005a8b;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.add-to-cart .highlighted:hover {
-  background-color: #00446d;
-}

@@ -1,4 +1,5 @@
 const React = require("react");
+const AddToCartButton = require("./AddToCartButton");
 
 function AvailableItems({ items = [] }) {
   const paddedItems = items.slice(0, 9).concat(
@@ -20,9 +21,6 @@ function AvailableItems({ items = [] }) {
           {paddedItems.map((item, index) => (
             <div key={index} className="grid-item">
               <div className="product-box">
-                {/* 
-                  If _id is null for placeholders, you could disable the link or handle it.
-                */}
                 <a href={item._id ? `/item/${item._id}` : "#"}>
                   <div className="product-img">
                     <img src={item.picture} alt={item.label} />
@@ -32,23 +30,10 @@ function AvailableItems({ items = [] }) {
                       {item.make} {item.model}
                     </div>
                   </div>
-                  <div className="add-to-cart">
-                    {item._id ? (
-                      <form action={`/add-to-cart/${item._id}`} method="POST">
-                        <button
-                          type="submit"
-                          className="highlighted add_to_cart"
-                        >
-                          Add To Cart
-                        </button>
-                      </form>
-                    ) : (
-                      <button className="highlighted add_to_cart" disabled>
-                        Unavailable
-                      </button>
-                    )}
-                  </div>
                 </a>
+                <div className="add-to-cart">
+                  <AddToCartButton itemId={item._id} isAvailable={!!item._id} />
+                </div>
               </div>
             </div>
           ))}

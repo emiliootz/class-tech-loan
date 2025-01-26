@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+.highlighted {
+  background-color: #005a8b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.highlighted:hover {
+  background-color: #00446d;
+}
+
+.highlighted:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
