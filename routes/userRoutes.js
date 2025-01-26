@@ -117,11 +117,21 @@ router.put(
 */
 router.get("/admin", requireRole("admin"), async (req, res, next) => {
   try {
-    const users = await UserModel.find();
-    const items = await ItemModel.find();
-    res.render("adminJSX", { users, items });
+    const activeTab = req.query.tab || "users"; // Default tab is "users"
+    const users = activeTab === "users" ? await UserModel.find().lean() : [];
+    const items = activeTab === "items" ? await ItemModel.find().lean() : [];
+    const cartCount = req.user.cart?.length || 0; // Get cart count from the user
+    const isLoggedIn = req.isAuthenticated(); // Check if user is logged in
+
+    res.render("adminJSX", {
+      activeTab,
+      users,
+      items,
+      cartCount,
+      isLoggedIn,
+    });
   } catch (error) {
-    return next(error);
+    next(error);
   }
 });
 
