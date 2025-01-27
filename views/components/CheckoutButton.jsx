@@ -1,3 +1,14 @@
+/*
+
+This is rending a checkout button to be mainly used within the cart
+page 
+
+The stylesheet for this is under public/css/checkoutButton.css
+
+This can be called by using: "<CheckoutButton />"
+
+*/
+
 const React = require("react");
 
 function CheckoutButton() {

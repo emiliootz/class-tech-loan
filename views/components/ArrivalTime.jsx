@@ -1,3 +1,12 @@
+/*
+  
+  This function is rendering the arrival time component
+  the stylesheet for this is under public/css/arrivalTime.css
+
+  to call this within a page you will use: "<ArrivalTime />"
+  
+  */
+
 const React = require("react");
 
 function ArrivalTime() {

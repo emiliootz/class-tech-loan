@@ -1,3 +1,21 @@
+/*
+
+This is rending item details.
+
+The stylesheet for this is under public/css/itemDetails.css
+
+This can be called by using: "<ItemDetails item={item} />"
+
+doing that will call all the item details. 
+
+you can also call with some specific feilds 
+
+example:
+
+<ItemDetails item={item} fields={["Asset Type", "Asset ID", "Make", "Model"]} />
+
+*/
+
 const React = require("react");
 
 function ItemDetails({ item, fields = [] }) {

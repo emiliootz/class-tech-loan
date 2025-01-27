@@ -9,6 +9,12 @@
   const userRoutes = require("./routes/userRoutes");
    and 
   app.use("/", userRoutes);
+
+  The routes will use:
+
+  req: to request data
+  res: to render the data to the page
+  next: to pass and error to the error handler middleware
 */
 
 /*****************************
@@ -113,15 +119,18 @@ router.put(
 
 /*
   Route to admin page. This page is the admin settings page so they can 
-  add items, delete items, add users, and manage users roles.
+  add items, delete items, add users, and manage users roles. There are also
+  active tabs that fetch all users/ all items. Similar to other pages that have
+  the navbar fixed on top it will fetch the users cart count and check if the user
+  is logged in
 */
 router.get("/admin", requireRole("admin"), async (req, res, next) => {
   try {
-    const activeTab = req.query.tab || "users"; // Default tab is "users"
+    const activeTab = req.query.tab || "users"; // When the page is loaded the deafult tab is users
     const users = activeTab === "users" ? await UserModel.find().lean() : [];
     const items = activeTab === "items" ? await ItemModel.find().lean() : [];
-    const cartCount = req.user.cart?.length || 0; // Get cart count from the user
-    const isLoggedIn = req.isAuthenticated(); // Check if user is logged in
+    const cartCount = req.user.cart?.length || 0;
+    const isLoggedIn = req.isAuthenticated();
 
     res.render("adminJSX", {
       activeTab,

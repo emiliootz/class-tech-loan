@@ -1,6 +1,26 @@
+/*
+  
+  This function is rendering the available items list. This list
+  shows a max of 8 items in two rows of four. All items are shuffled
+  before they are rendered and then it shows the first 8 items.
+  the stylesheet for this is under public/css/availableItems.css
+
+  to call this within a page you will use: "<AvailableItems />"
+  
+  */
+
 const React = require("react");
 const AddToCartButton = require("./AddToCartButton");
 const ProductImage = require("./ProductImage");
+
+/* 
+
+Function to get all items and shuffling the items. 
+
+This is used to render 8 random items on the main page
+of the webpage, (index,protected)
+
+*/
 
 function shuffleArray(array) {
   return array

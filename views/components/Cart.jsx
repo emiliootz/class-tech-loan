@@ -1,3 +1,18 @@
+/*
+
+This function is rendering the cart icon 
+
+The stylesheet for this is under public/css/cart.css
+
+Passes in cartCount to keep track of the number of items 
+within a users cart
+
+the icon is saved under public/images/cart.png
+
+This can be usd by calling: "<Cart />"
+
+*/
+
 const React = require("react");
 
 function Cart({ cartCount }) {

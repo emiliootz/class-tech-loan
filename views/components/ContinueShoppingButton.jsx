@@ -1,3 +1,14 @@
+/*
+
+This is rending a continue shopping button to be mainly used within the cart
+page 
+
+The stylesheet for this is under public/css/continueShoppingButton.css
+
+This can be called by using: "<ContinueShoppingButton />"
+
+*/
+
 const React = require("react");
 
 function ContinueShoppingButton() {

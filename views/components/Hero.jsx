@@ -1,3 +1,14 @@
+/*
+
+This is rending the hero section to be used mainly in the index 
+and protected pages in the website
+
+The stylesheet for this is under public/css/hero.css
+
+This can be called by using: "<Hero />"
+
+*/
+
 const React = require("react");
 
 function Hero() {

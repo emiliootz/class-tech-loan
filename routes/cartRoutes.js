@@ -11,6 +11,12 @@
    and 
   app.use("/", cartRoutes);
 
+  The routes will use:
+
+  req: to request data
+  res: to render the data to the page
+  next: to pass and error to the error handler middleware
+
 */
 
 /*****************************
