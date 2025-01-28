@@ -1,20 +1,24 @@
 /*
-
-This is rending a category section that is used to navigate
-through the website by linking to specific pages
-
-This is a user friendly view of item categories
-
-The stylesheet for this is under public/css/category.css
-
-Passes in cartCount to keep track of the number of items 
-within a users cart
-
-the icon is saved under public/images/cart.png
-
-This can be called by using: "<Category />"
-
-*/
+ * Purpose:
+ * The `Category` component provides a user-friendly interface for navigating through
+ * different item categories on the website. It is designed to enhance the user experience
+ * by organizing items into clear and visually distinct categories.
+ *
+ * Dependencies:
+ * - React: Required to create the functional component.
+ * - CSS Stylesheet: The styles for this component are defined in `/public/css/category.css`,
+ *   and the stylesheet is dynamically linked within this component.
+ *
+ * Features:
+ * - Displays a section titled "CATEGORIES".
+ * - Includes clickable category boxes for navigating to specific item categories, such as "Video," "Audio," "Photo," and "Dongle."
+ * - Each category box contains a dark overlay and a heading.
+ *
+ * Usage:
+ * - This component can be used anywhere in the application by including:
+ *   `<Category />`
+ * - Replace `#` in the `href` attributes of the category links with actual URLs for each category.
+ */
 
 const React = require("react");
 
