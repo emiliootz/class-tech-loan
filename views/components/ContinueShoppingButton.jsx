@@ -20,20 +20,23 @@
  * - Ensure the `continueShoppingButton.css` file exists in `/public/css/` and contains the required styles.
  *
  * Notes:
- * - The `href` attribute points to `/protected`, which should be configured to display the shopping page.
+ * - The `href` attribute points to `/`, which should be configured to display the shopping page.
  * - The `btn-continue-shopping` class must be styled in the `continueShoppingButton.css`
  */
 
 const React = require("react");
 
-function ContinueShoppingButton() {
+function ContinueShoppingButton({
+  text = "Continue Shopping",
+  link = "/protected",
+}) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/continueShoppingButton.css" />
       </head>
-      <a href="/protected" className="btn-continue-shopping">
-        Continue Shopping
+      <a href={link} className="btn-continue-shopping">
+        {text}
       </a>
     </>
   );
