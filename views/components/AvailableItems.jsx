@@ -38,7 +38,7 @@
  */
 
 const React = require("react");
-const AddToCartButton = require("./AddToCartButton");
+const { AddToCartButton } = require("./Buttons");
 const ProductImage = require("./ProductImage");
 
 /*
@@ -77,12 +77,7 @@ function AvailableItems({ items = [] }) {
                       </div>
                     </div>
                   </a>
-                  <div className="add-to-cart">
-                    <AddToCartButton
-                      itemId={item._id}
-                      isAvailable={!!item._id}
-                    />
-                  </div>
+                  <AddToCartButton itemId={item._id} isAvailable={!!item._id} />
                 </div>
               </div>
             ))}

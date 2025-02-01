@@ -1,0 +1,78 @@
+/* Import Open Sans font */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+/* Base button */
+.button {
+  font-family: "Open Sans";
+  font-weight: 550;
+  font-size: 14px;
+  padding: 9px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Authentication Buttons */
+.signin,
+.signout {
+  background-color: #ffffff;
+  color: #005a8b;
+  margin-left: 20px;
+}
+
+.signin:hover,
+.signout:hover {
+  background-color: rgba(231, 231, 231, 0.8);
+}
+
+/* Home Button */
+.home {
+  background-color: #005a8b;
+  color: white;
+}
+
+.home:hover {
+  background-color: #003d5b;
+}
+
+/* Checkout Button */
+.checkout {
+  background-color: #28a745;
+  color: white;
+}
+
+.checkout:hover {
+  background-color: #1f7a34;
+}
+
+/* Remove Button */
+.remove {
+  background-color: #dc3545;
+  color: white;
+}
+
+.remove:hover {
+  background-color: #b02a37;
+}
+
+/* Add to Cart Button */
+.add-to-cart {
+  background-color: #005a8b;
+  color: white;
+}
+
+.add-to-cart:hover {
+  background-color: #00446d;
+}
+
+/* Disabled Button */
+.button:disabled,
+.unavailable {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
