@@ -90,11 +90,12 @@ router.put(
 */
 router.get("/admin", requireRole("admin"), async (req, res, next) => {
   try {
-    const activeTab = req.query.tab || "users"; // When the page is loaded the deafult tab is users
+    const activeTab = req.query.tab || "users";
     const users = activeTab === "users" ? await UserModel.find().lean() : [];
     const items = activeTab === "items" ? await ItemModel.find().lean() : [];
     const cartCount = req.user.cart?.length || 0;
     const isLoggedIn = req.isAuthenticated();
+    const isAdmin = req.user.role === "admin";
 
     res.render("adminJSX", {
       activeTab,
@@ -102,6 +103,7 @@ router.get("/admin", requireRole("admin"), async (req, res, next) => {
       items,
       cartCount,
       isLoggedIn,
+      isAdmin,
     });
   } catch (error) {
     next(error);

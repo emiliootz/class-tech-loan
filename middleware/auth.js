@@ -49,6 +49,7 @@ const requireRole = (role) => {
     if (!req.isAuthenticated()) {
       return res.status(401).send({ msg: "Unauthorized" });
     }
+
     if (req.user.role !== role) {
       return res
         .status(403)

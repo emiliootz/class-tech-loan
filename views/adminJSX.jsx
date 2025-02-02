@@ -1,7 +1,14 @@
 const React = require("react");
-const Navbar = require("./components/Navbar");
+const Navbar = require("./Navbar");
 
-const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
+const AdminPage = ({
+  activeTab,
+  users,
+  items,
+  cartCount,
+  isLoggedIn,
+  isAdmin,
+}) => {
   return (
     <html>
       <head>
@@ -9,8 +16,12 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
         <link rel="stylesheet" href="/css/adminPage.css" />
       </head>
       <body>
-        {/* Navbar */}
-        <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
+        {/* Navbar with isAdmin prop */}
+        <Navbar
+          cartCount={cartCount}
+          isLoggedIn={isLoggedIn}
+          isAdmin={isAdmin}
+        />
 
         {/* Admin Container */}
         <div className="admin-container">
@@ -34,12 +45,9 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
 
           {/* Tab Content */}
           <div className="tab-content">
-            {/* Manage Users */}
             {activeTab === "users" && (
               <div className="tab-pane">
                 <h2 className="tab-title">Manage Users</h2>
-
-                {/* Users Table */}
                 <table className="table">
                   <thead>
                     <tr>
@@ -57,7 +65,6 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
                         <td>{user.role}</td>
                         <td>
                           <div className="action-buttons">
-                            {/* Edit User Role */}
                             <form
                               action={`/admin/users/${user._id}?_method=PUT`}
                               method="POST"
@@ -87,7 +94,6 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
                               </button>
                             </form>
 
-                            {/* Disable User */}
                             <form
                               action={`/admin/users/disable/${user._id}?_method=PUT`}
                               method="POST"
@@ -97,7 +103,6 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
                               </button>
                             </form>
 
-                            {/* Delete User */}
                             <form
                               action={`/admin/users/${user._id}?_method=DELETE`}
                               method="POST"
@@ -112,14 +117,6 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            )}
-
-            {/* Manage Items (Placeholder, to be implemented similarly) */}
-            {activeTab === "items" && (
-              <div className="tab-pane">
-                <h2 className="tab-title">Manage Items</h2>
-                <p>Item management functionality will go here.</p>
               </div>
             )}
           </div>
