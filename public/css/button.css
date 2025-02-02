@@ -17,15 +17,13 @@
 }
 
 /* Authentication Buttons */
-.signin,
-.signout {
+.signin {
   background-color: #ffffff;
   color: #005a8b;
   margin-left: 20px;
 }
 
-.signin:hover,
-.signout:hover {
+.signin:hover {
   background-color: rgba(231, 231, 231, 0.8);
 }
 

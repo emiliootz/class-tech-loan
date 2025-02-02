@@ -11,11 +11,13 @@ function UserDropdown({ isAdmin, isLoggedIn }) {
         <button className="dropdown-toggle">Account</button>
         <div className="dropdown-menu">
           {isAdmin && (
-            <a href="/admin" className="dropdown-item">
-              Admin Dashboard
+            <a href="/admin" className="admin">
+              Admin
             </a>
           )}
-          <AuthButton isLoggedIn={isLoggedIn} />
+          <div className="logout">
+            <AuthButton isLoggedIn={isLoggedIn} />
+          </div>
         </div>
       </div>
     </>
