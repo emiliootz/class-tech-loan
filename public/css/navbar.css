@@ -17,6 +17,7 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 20px;
   padding: 10px 10%;
   background-color: #005a8b;
   border-bottom: 1px solid #ccc;
