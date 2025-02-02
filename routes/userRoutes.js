@@ -109,6 +109,85 @@ router.get("/admin", requireRole("admin"), async (req, res, next) => {
 });
 
 /*****************************
+ *       Manage Users        *
+ *****************************/
+
+// Update a user's role
+router.put("/admin/users/:id", requireRole("admin"), async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const { role } = req.body;
+
+    if (!["user", "staff", "admin"].includes(role)) {
+      return res.status(400).json({ message: "Invalid role selection." });
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { role },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res
+      .status(200)
+      .json({ message: "User role updated successfully", user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Disable a user (Prevent login)
+router.put(
+  "/admin/users/disable/:id",
+  requireRole("admin"),
+  async (req, res, next) => {
+    try {
+      const userId = req.params.id;
+
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { disabled: true },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found." });
+      }
+
+      res
+        .status(200)
+        .json({ message: "User disabled successfully", user: updatedUser });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Completely delete a user from MongoDB
+router.delete(
+  "/admin/users/:id",
+  requireRole("admin"),
+  async (req, res, next) => {
+    try {
+      const userId = req.params.id;
+      const deletedUser = await UserModel.findByIdAndDelete(userId);
+
+      if (!deletedUser) {
+        return res.status(404).json({ message: "User not found." });
+      }
+
+      res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/*****************************
  *       Staff Role          *
  *****************************/
 /*

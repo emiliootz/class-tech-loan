@@ -12,7 +12,7 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
         {/* Navbar */}
         <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
 
-        {/* Main Admin Content */}
+        {/* Admin Container */}
         <div className="admin-container">
           <h1 className="admin-title">Admin Dashboard</h1>
 
@@ -34,22 +34,80 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
 
           {/* Tab Content */}
           <div className="tab-content">
-            {/* Users Tab */}
+            {/* Manage Users */}
             {activeTab === "users" && (
               <div className="tab-pane">
                 <h2 className="tab-title">Manage Users</h2>
+
+                {/* Users Table */}
                 <table className="table">
                   <thead>
                     <tr>
                       <th>Name</th>
+                      <th>Email</th>
                       <th>Role</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.map((user) => (
                       <tr key={user._id}>
                         <td>{user.name}</td>
+                        <td>{user.email}</td>
                         <td>{user.role}</td>
+                        <td>
+                          <div className="action-buttons">
+                            {/* Edit User Role */}
+                            <form
+                              action={`/admin/users/${user._id}?_method=PUT`}
+                              method="POST"
+                            >
+                              <select name="role">
+                                <option
+                                  value="user"
+                                  selected={user.role === "user"}
+                                >
+                                  User
+                                </option>
+                                <option
+                                  value="staff"
+                                  selected={user.role === "staff"}
+                                >
+                                  Staff
+                                </option>
+                                <option
+                                  value="admin"
+                                  selected={user.role === "admin"}
+                                >
+                                  Admin
+                                </option>
+                              </select>
+                              <button type="submit" className="btn btn-update">
+                                Update
+                              </button>
+                            </form>
+
+                            {/* Disable User */}
+                            <form
+                              action={`/admin/users/disable/${user._id}?_method=PUT`}
+                              method="POST"
+                            >
+                              <button type="submit" className="btn btn-disable">
+                                {user.disabled ? "Enable" : "Disable"}
+                              </button>
+                            </form>
+
+                            {/* Delete User */}
+                            <form
+                              action={`/admin/users/${user._id}?_method=DELETE`}
+                              method="POST"
+                            >
+                              <button type="submit" className="btn btn-delete">
+                                Delete
+                              </button>
+                            </form>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -57,30 +115,11 @@ const AdminPage = ({ activeTab, users, items, cartCount, isLoggedIn }) => {
               </div>
             )}
 
-            {/* Items Tab */}
+            {/* Manage Items (Placeholder, to be implemented similarly) */}
             {activeTab === "items" && (
               <div className="tab-pane">
                 <h2 className="tab-title">Manage Items</h2>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Asset ID</th>
-                      <th>Asset Type</th>
-                      <th>Make</th>
-                      <th>Model</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items.map((item) => (
-                      <tr key={item._id}>
-                        <td>{item.assetId}</td>
-                        <td>{item.assetType}</td>
-                        <td>{item.make}</td>
-                        <td>{item.model}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <p>Item management functionality will go here.</p>
               </div>
             )}
           </div>
