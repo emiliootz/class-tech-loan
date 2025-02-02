@@ -2,7 +2,7 @@
 
 .category {
   width: 100;
-  padding: 60px 0;
+  padding: 50px 0;
   background-color: #ffffff;
   display: flex;
   justify-content: center;
@@ -11,20 +11,21 @@
 }
 
 .category p {
-  font-size: 22px;
+  font-size: 16px;
+  font-style: normal;
   line-height: 18px;
   color: #005a8b;
-  font-family: "Open+Sans";
+  font-family: "Open Sans";
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   flex-basis: 100%;
   text-transform: capitalize;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .category-box {
-  width: 200px;
-  height: 200px;
+  width: 275px;
+  height: 275px;
   background-color: #111;
   background-repeat: no-repeat;
   background-size: cover;
