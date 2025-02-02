@@ -3,8 +3,7 @@ const Navbar = require("./components/Navbar");
 const { AddToCartButton } = require("./components/Buttons");
 const ProductImage = require("./components/ProductImage");
 const ItemDetails = require("./components/ItemDetails");
-const ArrivalTime = require("./components/ArrivalTime");
-const ReturnTime = require("./components/ReturnTime");
+const TimePicker = require("./components/TimePicker");
 
 function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
   return (
@@ -32,8 +31,8 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
           {/* Right Column - Time Pickers and Add to Cart */}
           <div className="col">
             <div className="card">
-              <ArrivalTime />
-              <ReturnTime />
+              <TimePicker label="Arrival Time" id="arrivalDate" />
+              <TimePicker label="Return Time" id="returnDate" />
               <AddToCartButton
                 itemId={item._id}
                 isAvailable={item.status === "Available"}

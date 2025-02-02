@@ -1,14 +1,17 @@
-.return-time {
+/* General styling for all time pickers */
+.time-picker {
   margin-bottom: 20px;
 }
 
-.return-time label {
+/* Label styling */
+.time-picker label {
   display: block;
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 8px;
 }
 
+/* Input field styling */
 .time-input {
   width: 100%;
   padding: 8px;
@@ -18,6 +21,7 @@
   transition: border-color 0.2s ease-in-out;
 }
 
+/* Focus effect */
 .time-input:focus {
   border-color: #005a8b;
   outline: none;
