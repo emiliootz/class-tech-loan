@@ -12,7 +12,6 @@
 const express = require("express");
 const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
-const pageController = require("./controllers/userController");
 
 // Import route modules
 const userRoutes = require("./routes/userRoutes");
@@ -54,9 +53,6 @@ app.get("/", async (req, res, next) => {
     next(error);
   }
 });
-
-// Dashboard route
-app.get("/dashboard", pageController.dashboardPage);
 
 /*****************************
  *       Mount Routes        *

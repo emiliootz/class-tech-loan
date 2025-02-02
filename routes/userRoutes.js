@@ -71,9 +71,8 @@ router.delete(
 /*****************************
  *       Staff Role          *
  *****************************/
-/*
-  Additional routes for staff or admin can be added here.
-*/
+// Dashboard route
+router.get("/dashboard", userController.dashboardPage);
 
 /*****************************
  *   Redirect `/protected`   *
