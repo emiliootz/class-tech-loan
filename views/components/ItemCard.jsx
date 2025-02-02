@@ -9,9 +9,12 @@ function ItemCard({ item }) {
         <link rel="stylesheet" href="/css/itemCard.css" />
       </head>
       <section className="card">
-        <div className="image">
-          <ProductImage picture={item.picture} label={item.label} />
-        </div>
+        <ProductImage
+          className="image"
+          picture={item.picture}
+          label={item.label}
+        />
+
         <div className="text">
           {item.make} {item.model}
         </div>

@@ -31,13 +31,13 @@
 
 const React = require("react");
 
-function ProductImage({ picture, label }) {
+function ProductImage({ picture, label, className = "" }) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/productImage.css" />
       </head>
-      <div className="image">
+      <div className={`image ${className}`}>
         <img src={picture} alt={label} />
       </div>
     </>
