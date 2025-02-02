@@ -4,19 +4,37 @@ const Hero = require("./components/Hero");
 const Category = require("./components/Category");
 const AvailableItems = require("./components/AvailableItems");
 
-function Home({ items, isLoggedIn }) {
+/**
+ * Home Component
+ *
+ * - Displays the homepage for both logged-in and guest users.
+ * - Includes Navbar, Hero, Categories, and Available Items sections.
+ *
+ * Props:
+ * - `items` (array): List of available items.
+ * - `cartCount` (number): Number of items in the user's cart (if logged in).
+ * - `isLoggedIn` (boolean): Determines whether the user is logged in.
+ *
+ * Usage:
+ * - `<Home items={items} cartCount={cartCount} isLoggedIn={isLoggedIn} />`
+ */
+function Home({ items, cartCount = 0, isLoggedIn }) {
   return (
     <>
-      {/* Navbar (with login status) */}
-      <Navbar isLoggedIn={isLoggedIn} />
+      <head>
+        <link rel="stylesheet" href="/css/styles.css" />
+      </head>
 
-      {/* Hero Section */}
+      {/* ✅ Navbar with login state & cart count */}
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
+
+      {/* ✅ Hero Section */}
       <Hero />
 
-      {/* Categories Section */}
+      {/* ✅ Categories Section */}
       <Category />
 
-      {/* Available Items Section */}
+      {/* ✅ Available Items Section */}
       <AvailableItems items={items} />
     </>
   );

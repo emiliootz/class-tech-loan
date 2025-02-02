@@ -29,42 +29,6 @@ const router = express.Router();
 console.log("Debug - isAuthenticated:", isAuthenticated);
 
 /*****************************
- *        Protected          *
- *****************************/
-/*
-  The protected route that the application goes to after succsesful login
-  isAuthenticated is passed in from /middleware/auth
-  and is imported on the top of this page as:
-  const { isAuthenticated, requireRole } = require("../middleware/auth");
-
-  The protected route can be edited within /views/protectedJSX.jsx
-*/
-
-router.get("/protected", isAuthenticated, async (req, res, next) => {
-  try {
-    const user = await UserModel.findById(req.user._id).populate("cart");
-    if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      return next(error);
-    }
-
-    const cartCount = user.cart.length;
-    const items = await ItemModel.find();
-    const isLoggedIn = req.isAuthenticated();
-
-    res.render("protected", {
-      name: req.user.name,
-      items,
-      cartCount,
-      isLoggedIn,
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-/*****************************
  *       Admin Role          *
  *****************************/
 /*
@@ -151,5 +115,12 @@ router.get("/admin", requireRole("admin"), async (req, res, next) => {
   Here we're going to add some routes that only users with the
   staff or admin role can do.
 */
+
+/*****************************
+ *       Redirect `/protected` to `/`        *
+ *****************************/
+router.get("/protected", (req, res) => {
+  res.redirect("/");
+});
 
 module.exports = router;
