@@ -66,8 +66,8 @@ function AvailableItems({ items = [] }) {
         <h2 className="title">AVAILABLE ITEMS</h2>
         {displayedItems.length > 0 ? (
           <div className="grid">
-            {displayedItems.map((item, index) => (
-              <div key={index} className="item-card">
+            {displayedItems.map((item) => (
+              <div key={item._id} className="item-card">
                 <div className="item-content">
                   <a href={item._id ? `/item/${item._id}` : "#"}>
                     <ProductImage picture={item.picture} label={item.label} />

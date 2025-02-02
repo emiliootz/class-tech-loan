@@ -1,4 +1,3 @@
-// server.js
 const app = require("./app");
 const config = require("./config/config");
 
