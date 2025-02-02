@@ -1,6 +1,6 @@
 const React = require("react");
 const Navbar = require("./components/Navbar");
-const AddToCartButton = require("./components/AddToCartButton");
+const { AddToCartButton } = require("./components/Buttons");
 const ProductImage = require("./components/ProductImage");
 const ItemDetails = require("./components/ItemDetails");
 const ArrivalTime = require("./components/ArrivalTime");

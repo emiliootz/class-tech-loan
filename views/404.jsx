@@ -34,7 +34,7 @@
 
 const React = require("react");
 const Navbar = require("./components/Navbar");
-const ContinueShoppingButton = require("./components/ContinueShoppingButton");
+const { HomeButton } = require("./components/Buttons");
 
 function NotFoundPage({ isLoggedIn, cartCount }) {
   return (
@@ -51,7 +51,7 @@ function NotFoundPage({ isLoggedIn, cartCount }) {
         <p className="not-found-message">
           Oops! The page you're looking for doesn't exist.
         </p>
-        <ContinueShoppingButton text="Go Back Home" link="/" />
+        <HomeButton text="Go Back Home" link="/" />
       </div>
     </>
   );

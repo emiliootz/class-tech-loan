@@ -39,7 +39,7 @@
 
 const React = require("react");
 const Cart = require("./Cart");
-const AuthButton = require("./AuthButton");
+const { AuthButton } = require("./Buttons");
 const Logo = require("./Logo");
 const NavLinks = require("./NavLinks");
 

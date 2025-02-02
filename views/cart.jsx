@@ -1,9 +1,11 @@
 const React = require("react");
 const Navbar = require("./components/Navbar");
 const ItemDetails = require("./components/ItemDetails");
-const RemoveButton = require("./components/RemoveButton");
-const CheckoutButton = require("./components/CheckoutButton");
-const ContinueShoppingButton = require("./components/ContinueShoppingButton");
+const {
+  RemoveButton,
+  CheckoutButton,
+  HomeButton,
+} = require("./components/Buttons");
 
 function CartPage({
   cartItems,
@@ -42,7 +44,7 @@ function CartPage({
           {cartItems.length > 0 && (
             <div className="cart-actions">
               {/* Use the ContinueShoppingButton component */}
-              <ContinueShoppingButton />
+              <HomeButton text="Continue Shopping" link="/" />
               <CheckoutButton />
             </div>
           )}
