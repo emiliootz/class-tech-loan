@@ -29,7 +29,7 @@ function Category() {
         <link rel="stylesheet" href="/css/category.css" />
       </head>
       <section className="category">
-        <p>CATEGORIES</p>
+        <p>Categories</p>
         <a href="#" className="category-box">
           <div className="dark-overlay"></div>
           <h3>Video</h3>
