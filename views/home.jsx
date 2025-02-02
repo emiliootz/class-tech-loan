@@ -4,18 +4,22 @@ const Hero = require("./components/Hero");
 const Category = require("./components/Category");
 const AvailableItems = require("./components/AvailableItems");
 
-function Index({ items, isLoggedIn }) {
+function Home({ items, isLoggedIn }) {
   return (
     <>
-      <head>
-        <link rel="stylesheet" href="/css/styles.css" />
-      </head>
+      {/* Navbar (with login status) */}
       <Navbar isLoggedIn={isLoggedIn} />
+
+      {/* Hero Section */}
       <Hero />
+
+      {/* Categories Section */}
       <Category />
+
+      {/* Available Items Section */}
       <AvailableItems items={items} />
     </>
   );
 }
 
-module.exports = Index;
+module.exports = Home;

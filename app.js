@@ -112,7 +112,7 @@ app.get("/", async (req, res, next) => {
       cartCount = user.cart.length;
     }
 
-    res.render("index", {
+    res.render("home", {
       items,
       isLoggedIn,
       cartCount,

@@ -19,7 +19,7 @@
 /* Authentication Buttons */
 .signin,
 .signout {
-  background-color: #ffffff;
+  background-color: transparent;
   color: #005a8b;
   margin-left: 20px;
 }
