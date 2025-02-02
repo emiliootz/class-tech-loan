@@ -60,3 +60,10 @@
   font-weight: 600;
   color: #333;
 }
+
+.no-items-message {
+  font-size: 1.2rem;
+  color: #777;
+  text-align: center;
+  margin-top: 20px;
+}
