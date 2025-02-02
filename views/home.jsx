@@ -18,13 +18,13 @@ const AvailableItems = require("./components/AvailableItems");
  * Usage:
  * - `<Home items={items} cartCount={cartCount} isLoggedIn={isLoggedIn} />`
  */
-function Home({ items, cartCount = 0, isLoggedIn }) {
+function Home({ items, cartCount = 0, isLoggedIn, isAdmin = false }) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
-      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
       <Hero />
       <Category />
       <AvailableItems items={items} />

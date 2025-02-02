@@ -5,7 +5,7 @@ const ProductImage = require("./components/ProductImage");
 const ItemDetails = require("./components/ItemDetails");
 const TimePicker = require("./components/TimePicker");
 
-function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
+function ItemDetailsPage({ item, isLoggedIn, cartCount = 0, isAdmin = false }) {
   return (
     <>
       <head>
@@ -13,7 +13,7 @@ function ItemDetailsPage({ item, isLoggedIn, cartCount = 0 }) {
       </head>
 
       {/* Navbar */}
-      <Navbar isLoggedIn={isLoggedIn} cartCount={cartCount} />
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
 
       {/* Main Content */}
       <div className="item-page">

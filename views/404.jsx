@@ -36,7 +36,7 @@ const React = require("react");
 const Navbar = require("./components/Navbar");
 const { HomeButton } = require("./components/Buttons");
 
-function NotFoundPage({ isLoggedIn, cartCount }) {
+function NotFoundPage({ isLoggedIn, cartCount, isAdmin = false }) {
   return (
     <>
       <head>
@@ -44,7 +44,7 @@ function NotFoundPage({ isLoggedIn, cartCount }) {
         <link rel="stylesheet" href="/css/404.css" />
       </head>
 
-      <Navbar isLoggedIn={isLoggedIn} cartCount={cartCount} />
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
 
       <div className="not-found-container">
         <h1 className="not-found-title">404</h1>

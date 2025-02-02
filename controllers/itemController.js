@@ -32,15 +32,18 @@ exports.getItem = async (req, res, next) => {
     // Determine login status and fetch cart count if applicable.
     const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
     let cartCount = 0;
+    let isAdmin = false;
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
+      isAdmin = user.role === "admin";
     }
 
     res.render("item", {
       item,
       isLoggedIn,
       cartCount,
+      isAdmin,
     });
   } catch (error) {
     next(error);

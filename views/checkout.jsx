@@ -2,7 +2,13 @@
 const React = require("react");
 const Navbar = require("./components/Navbar");
 
-function CheckoutSuccessPage({ name, message, isLoggedIn, cartCount }) {
+function CheckoutSuccessPage({
+  name,
+  message,
+  isLoggedIn,
+  cartCount,
+  isAdmin = false,
+}) {
   return (
     <>
       <head>
@@ -14,7 +20,7 @@ function CheckoutSuccessPage({ name, message, isLoggedIn, cartCount }) {
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
 
-      <Navbar isLoggedIn={isLoggedIn} cartCount={cartCount} />
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
 
       <div
         className="d-flex align-items-center justify-content-center vh-100"

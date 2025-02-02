@@ -1,5 +1,5 @@
 const React = require("react");
-const Navbar = require("./Navbar");
+const Navbar = require("./components/Navbar");
 
 const AdminPage = ({
   activeTab,

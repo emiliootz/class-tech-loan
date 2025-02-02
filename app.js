@@ -40,11 +40,15 @@ app.get("/", async (req, res, next) => {
     const items = await ItemModel.find();
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
+    let isAdmin = false;
+
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
+      isAdmin = user.role === "admin"; // Check if the logged-in user has an admin role
     }
-    res.render("home", { items, isLoggedIn, cartCount });
+
+    res.render("home", { items, isLoggedIn, cartCount, isAdmin });
   } catch (error) {
     next(error);
   }
@@ -66,11 +70,13 @@ app.use("*", async (req, res, next) => {
   try {
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
+    let isAdmin = false;
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
+      isAdmin = user.role === "admin";
     }
-    res.status(404).render("404", { isLoggedIn, cartCount });
+    res.status(404).render("404", { isLoggedIn, cartCount, isAdmin });
   } catch (error) {
     next(error);
   }

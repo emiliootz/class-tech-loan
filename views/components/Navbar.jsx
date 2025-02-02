@@ -1,6 +1,6 @@
 const React = require("react");
 const CartIcon = require("./CartIcon");
-const UserDropdown = require("./UserDropdown"); // Import UserDropdown component
+const UserDropdown = require("./UserDropdown");
 const Logo = require("./Logo");
 const NavLinks = require("./NavLinks");
 const { AuthButton } = require("./Buttons");

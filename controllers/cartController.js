@@ -6,25 +6,17 @@ const { UserModel, ItemModel } = require("../config/database");
  */
 exports.getCart = async (req, res, next) => {
   try {
-    const user = await UserModel.findById(req.user._id).populate("cart");
-    if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      return next(error);
+    let cartItems = [];
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    let cartCount = 0;
+    let isAdmin = false;
+    if (isLoggedIn && req.user) {
+      const user = await UserModel.findById(req.user._id).populate("cart");
+      cartItems = user.cart;
+      cartCount = user.cart.length;
+      isAdmin = user.role === "admin";
     }
-
-    const cartItems = user.cart;
-    const cartCount = cartItems.length;
-    const isLoggedIn = req.isAuthenticated();
-
-    res.render("cart", {
-      cartItems,
-      cartCount,
-      isLoggedIn,
-      // These helper functions can be used in the view to generate URLs
-      handleDelete: (itemId) => `/remove-from-cart/${itemId}`,
-      handleCheckout: "/checkout-cart",
-    });
+    res.render("cart", { cartItems, isLoggedIn, cartCount, isAdmin });
   } catch (error) {
     next(error);
   }
@@ -132,19 +124,20 @@ exports.getCheckoutSuccess = async (req, res, next) => {
   try {
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
-
+    let isAdmin = false;
+    let userName = "Guest";
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
-      if (user) {
-        cartCount = user.cart.length;
-      }
+      cartCount = user.cart.length;
+      isAdmin = user.role === "admin";
+      userName = user.name;
     }
-
-    res.render("checkout", {
-      name: req.user ? req.user.name : "Guest",
-      message: "Getting your items ready for pickup!",
+    res.render("CheckoutSuccessPage", {
+      name: userName,
       isLoggedIn,
       cartCount,
+      isAdmin,
+      message: "Your items are ready for pickup!",
     });
   } catch (error) {
     next(error);

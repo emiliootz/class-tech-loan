@@ -13,13 +13,14 @@ function CartPage({
   handleCheckout,
   isLoggedIn,
   cartCount,
+  isAdmin = false,
 }) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/cartPage.css" />
       </head>
-      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
+      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
       <div className="cart-container">
         <div className="cart-content">
           <h1 className="cart-title">Your Cart</h1>
