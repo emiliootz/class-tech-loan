@@ -6,27 +6,29 @@ section {
   text-align: center;
 }
 
-h2 {
+.title {
   font-family: "Open Sans";
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
   color: #005a8b;
-  padding-bottom: 40px;
+  padding: 10px 0;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 30px;
   justify-content: center;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .card {
-  width: 250px;
-  height: 350px;
+  width: 255px;
+  height: 355px;
   box-sizing: border-box;
   border-radius: 4px;
   background-color: #fff;
@@ -52,6 +54,12 @@ h2 {
   font-size: 16px;
   font-weight: 600;
   color: #005a8b;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.card-button {
+  display: flex;
 }
 
 .no-items-message {
