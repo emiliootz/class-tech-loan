@@ -1,22 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // User Schema and Model
 const userSchema = mongoose.Schema({
   name: String,
-  googleId: String,
-  cart: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Item'
-  }],
+  googleId: {
+    type: String,
+    unique: true,
+  },
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
   role: {
     type: String,
-    enum: ['user', 'staff', 'admin'],
-    default: 'user'
-  }
+    enum: ["user", "staff", "admin"],
+    default: "user",
+  },
 });
 
-const UserModel = mongoose.model('User', userSchema);
-
-
+const UserModel = mongoose.model("User", userSchema);
 
 module.exports = UserModel;
