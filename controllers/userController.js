@@ -1,0 +1,139 @@
+// controllers/userController.js
+
+const { UserModel, ItemModel } = require("../config/database");
+
+/**
+ * Assign a role to an existing user.
+ * Accepts a userId parameter and a role in the request body.
+ */
+exports.assignRole = async (req, res, next) => {
+  const userId = req.params.userId;
+  const { role } = req.body;
+
+  if (!["user", "staff", "admin"].includes(role)) {
+    const error = new Error("Invalid role");
+    error.status = 400;
+    return next(error);
+  }
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { role },
+      { new: true }
+    );
+    if (!updatedUser) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
+    res.status(200).json({
+      message: `User role updated to ${role}`,
+      user: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Render the admin settings page.
+ * Displays either a list of users or items based on the active tab.
+ */
+exports.getAdminPage = async (req, res, next) => {
+  try {
+    const activeTab = req.query.tab || "users";
+    const users = activeTab === "users" ? await UserModel.find().lean() : [];
+    const items = activeTab === "items" ? await ItemModel.find().lean() : [];
+    const cartCount = req.user && req.user.cart ? req.user.cart.length : 0;
+    const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
+    const isAdmin = req.user && req.user.role === "admin";
+
+    res.render("adminJSX", {
+      activeTab,
+      users,
+      items,
+      cartCount,
+      isLoggedIn,
+      isAdmin,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Update a user's role via the admin panel.
+ */
+exports.updateUserRole = async (req, res, next) => {
+  const userId = req.params.id;
+  const { role } = req.body;
+
+  if (!["user", "staff", "admin"].includes(role)) {
+    return res.status(400).json({ message: "Invalid role selection." });
+  }
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { role },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    res
+      .status(200)
+      .json({ message: "User role updated successfully", user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Disable a user to prevent them from logging in.
+ * Note: Ensure your User schema includes a "disabled" field.
+ */
+exports.disableUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { disabled: true },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    res
+      .status(200)
+      .json({ message: "User disabled successfully", user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Delete a user from the database.
+ */
+exports.deleteUser = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const deletedUser = await UserModel.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Redirect the /protected route to the home page.
+ */
+exports.redirectProtected = (req, res) => {
+  res.redirect("/");
+};
