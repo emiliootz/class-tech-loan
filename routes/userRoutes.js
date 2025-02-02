@@ -2,25 +2,24 @@
  *       User Route          *
  *****************************/
 /*
-  Within this file is all the routes for users
+  Within this file are all the routes for user management.
 
-  within app.js this is imported using : 
-  
-  const userRoutes = require("./routes/userRoutes");
-   and 
-  app.use("/", userRoutes);
+  In app.js, this file is imported using:
+    const userRoutes = require("./routes/userRoutes");
+  and used as:
+    app.use("/", userRoutes);
 
   The routes will use:
-
-  req: to request data
-  res: to render the data to the page
-  next: to pass and error to the error handler middleware
+    req: to request data
+    res: to render data to the page
+    next: to pass any errors to the error handler middleware
 */
 
 /*****************************
  *        Imports            *
  *****************************/
 const express = require("express");
+const validateObjectId = require("../middleware/validateObjectId");
 const { UserModel, ItemModel } = require("../config/database");
 const { isAuthenticated, requireRole } = require("../middleware/auth");
 const router = express.Router();
@@ -32,30 +31,24 @@ console.log("Debug - isAuthenticated:", isAuthenticated);
  *       Admin Role          *
  *****************************/
 /*
-  This is a few of the management routes that require admin status 
-  requireRole is passed in from /middleware/auth
-  and is imported on the top of this page as:
-  const { isAuthenticated, requireRole } = require("../middleware/auth");
+  The following management routes require admin status. The admin can
+  assign roles to users, disable users, delete users, and view the admin page.
 */
 
 /*
-  Route to give the admin the ability to assign existing users roles using their
-  userId. The roles can be changed to user, staff, or admin 
+  Route to assign a role to an existing user using their userId.
+  Roles can be set to "user", "staff", or "admin".
 */
 router.put(
   "/assign-role/:userId",
   requireRole("admin"),
+  validateObjectId("userId"),
   async (req, res, next) => {
     const userId = req.params.userId;
     const { role } = req.body;
 
     if (!["user", "staff", "admin"].includes(role)) {
       const error = new Error("Invalid role");
-      error.status = 400;
-      return next(error);
-    }
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      const error = new Error("Invalid userId");
       error.status = 400;
       return next(error);
     }
@@ -82,11 +75,7 @@ router.put(
 );
 
 /*
-  Route to admin page. This page is the admin settings page so they can 
-  add items, delete items, add users, and manage users roles. There are also
-  active tabs that fetch all users/ all items. Similar to other pages that have
-  the navbar fixed on top it will fetch the users cart count and check if the user
-  is logged in
+  Route to render the admin settings page. This page allows the admin to manage users and items.
 */
 router.get("/admin", requireRole("admin"), async (req, res, next) => {
   try {
@@ -114,9 +103,14 @@ router.get("/admin", requireRole("admin"), async (req, res, next) => {
  *       Manage Users        *
  *****************************/
 
-// Update a user's role
-router.put("/admin/users/:id", requireRole("admin"), async (req, res, next) => {
-  try {
+/*
+  Update a user's role via the admin panel.
+*/
+router.put(
+  "/admin/users/:id",
+  requireRole("admin"),
+  validateObjectId("id"),
+  async (req, res, next) => {
     const userId = req.params.id;
     const { role } = req.body;
 
@@ -124,32 +118,38 @@ router.put("/admin/users/:id", requireRole("admin"), async (req, res, next) => {
       return res.status(400).json({ message: "Invalid role selection." });
     }
 
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      userId,
-      { role },
-      { new: true }
-    );
+    try {
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { role },
+        { new: true }
+      );
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found." });
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found." });
+      }
+
+      res
+        .status(200)
+        .json({ message: "User role updated successfully", user: updatedUser });
+    } catch (error) {
+      next(error);
     }
-
-    res
-      .status(200)
-      .json({ message: "User role updated successfully", user: updatedUser });
-  } catch (error) {
-    next(error);
   }
-});
+);
 
-// Disable a user (Prevent login)
+/*
+  Disable a user to prevent login.
+  Note: Ensure the User schema includes a "disabled" field.
+*/
 router.put(
   "/admin/users/disable/:id",
   requireRole("admin"),
+  validateObjectId("id"),
   async (req, res, next) => {
-    try {
-      const userId = req.params.id;
+    const userId = req.params.id;
 
+    try {
       const updatedUser = await UserModel.findByIdAndUpdate(
         userId,
         { disabled: true },
@@ -169,13 +169,17 @@ router.put(
   }
 );
 
-// Completely delete a user from MongoDB
+/*
+  Completely delete a user from the database.
+*/
 router.delete(
   "/admin/users/:id",
   requireRole("admin"),
+  validateObjectId("id"),
   async (req, res, next) => {
+    const userId = req.params.id;
+
     try {
-      const userId = req.params.id;
       const deletedUser = await UserModel.findByIdAndDelete(userId);
 
       if (!deletedUser) {
@@ -193,13 +197,15 @@ router.delete(
  *       Staff Role          *
  *****************************/
 /*
-  Here we're going to add some routes that only users with the
-  staff or admin role can do.
+  Additional routes for users with the staff or admin role can be added here.
 */
 
 /*****************************
- *       Redirect `/protected` to `/`        *
+ *   Redirect `/protected`   *
  *****************************/
+/*
+  Redirects requests to "/protected" to the home page.
+*/
 router.get("/protected", (req, res) => {
   res.redirect("/");
 });

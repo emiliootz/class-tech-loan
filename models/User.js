@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     enum: ["user", "staff", "admin"],
     default: "user",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const UserModel = mongoose.model("User", userSchema);
