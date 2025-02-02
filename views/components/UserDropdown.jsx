@@ -15,6 +15,11 @@ function UserDropdown({ isAdmin, isLoggedIn }) {
               Admin
             </a>
           )}
+          {isAdmin && (
+            <a href="/dashboard" className="staff">
+              Dashboard
+            </a>
+          )}
           <div className="logout">
             <AuthButton isLoggedIn={isLoggedIn} />
           </div>
