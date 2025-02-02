@@ -30,11 +30,11 @@
 
 const React = require("react");
 
-function Cart({ cartCount }) {
+function CartIcon({ cartCount }) {
   return (
     <>
       <head>
-        <link rel="stylesheet" href="/css/cart.css" />
+        <link rel="stylesheet" href="/css/cartIcon.css" />
       </head>
 
       <a href="/cart" className="cart-link">
@@ -45,4 +45,4 @@ function Cart({ cartCount }) {
   );
 }
 
-module.exports = Cart;
+module.exports = CartIcon;

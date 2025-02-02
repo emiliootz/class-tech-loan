@@ -62,16 +62,16 @@ function AvailableItems({ items = [] }) {
       <head>
         <link rel="stylesheet" href="/css/availableItems.css" />
       </head>
-      <section className="available-items">
-        <h2 className="section-title">AVAILABLE ITEMS</h2>
+      <section className="items-section">
+        <h2 className="title">AVAILABLE ITEMS</h2>
         {displayedItems.length > 0 ? (
-          <div className="grid-container">
+          <div className="grid">
             {displayedItems.map((item, index) => (
-              <div key={index} className="grid-item">
-                <div className="product-box">
+              <div key={index} className="item-card">
+                <div className="item-content">
                   <a href={item._id ? `/item/${item._id}` : "#"}>
                     <ProductImage picture={item.picture} label={item.label} />
-                    <div className="product-headline">
+                    <div className="item-details">
                       <div className="name">
                         {item.make} {item.model}
                       </div>

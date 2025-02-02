@@ -24,17 +24,9 @@ function Home({ items, cartCount = 0, isLoggedIn }) {
       <head>
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
-
-      {/* ✅ Navbar with login state & cart count */}
       <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} />
-
-      {/* ✅ Hero Section */}
       <Hero />
-
-      {/* ✅ Categories Section */}
       <Category />
-
-      {/* ✅ Available Items Section */}
       <AvailableItems items={items} />
     </>
   );

@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
-.available-items {
+.items-section {
   padding: 30px 0;
   background-color: #ffffff;
   text-align: center;
 }
 
-.section-title {
+.title {
   font-family: "Open Sans";
   font-size: 22px;
   line-height: 18px;
@@ -16,7 +16,7 @@
   text-transform: uppercase;
 }
 
-.grid-container {
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
@@ -25,13 +25,13 @@
   margin: 0 auto;
 }
 
-.grid-item {
+.item-card {
   width: 250px;
   height: 350px;
   box-sizing: border-box;
 }
 
-.product-box {
+.item-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,22 +45,18 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.product-box:hover {
+.item-content:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.product-headline {
+.item-details {
   font-family: "Open Sans", sans-serif;
   margin-top: 10px;
 }
 
-.product-headline .name {
+.item-details .name {
   font-size: 16px;
   font-weight: 600;
   color: #333;
-}
-
-.add-to-cart {
-  margin-top: auto;
 }

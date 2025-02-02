@@ -38,7 +38,7 @@
  */
 
 const React = require("react");
-const Cart = require("./Cart");
+const CartIcon = require("./CartIcon");
 const { AuthButton } = require("./Buttons");
 const Logo = require("./Logo");
 const NavLinks = require("./NavLinks");
@@ -52,7 +52,7 @@ function Navbar({ cartCount = 0, isLoggedIn = false }) {
       <header>
         {/* Auth and Cart Section */}
         <div className="navbar-top">
-          <Cart cartCount={cartCount} />
+          <CartIcon cartCount={cartCount} />
           <AuthButton isLoggedIn={isLoggedIn} />
         </div>
 
