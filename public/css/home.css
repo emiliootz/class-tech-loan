@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+.available-items h1 {
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  color: #005a8b;
+  padding: 10px 0;
+  text-transform: uppercase;
+  text-align: center;
+}

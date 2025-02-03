@@ -2,7 +2,7 @@ const React = require("react");
 const Navbar = require("./components/Navbar");
 const Hero = require("./components/Hero");
 const Category = require("./components/Category");
-const AvailableItems = require("./components/AvailableItems");
+const ItemGrid = require("./components/itemGrid");
 
 /**
  * Home Component
@@ -22,12 +22,15 @@ function Home({ items, cartCount = 0, isLoggedIn, isAdmin = false }) {
   return (
     <>
       <head>
-        <link rel="stylesheet" href="/css/styles.css" />
+        <link rel="stylesheet" href="/css/home.css" />
       </head>
       <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
       <Hero />
       <Category />
-      <AvailableItems items={items} />
+      <section className="available-items">
+        <h1>Available Items</h1>
+        <ItemGrid items={items} />
+      </section>
     </>
   );
 }
