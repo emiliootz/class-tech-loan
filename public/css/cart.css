@@ -1,63 +1,152 @@
+/* 
+ * cart.css
+ * 
+ * Stylesheet for the shopping cart page.
+ * Defines styling for:
+ * - The cart item list and actions
+ * - The time selection for arrival and return
+ */
+
+/* Importing Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+/*****************************
+ *      Main Container       *
+ *****************************/
+
+/* 
+ * Main cart container layout:
+ * - Displays cart contents and time selection side by side
+ */
 .container {
   display: flex;
-  flex-direction: row; /* Make the containers appear side by side */
-  justify-content: space-between; /* Distribute space between them */
-  align-items: flex-start; /* Align the top edges */
+  flex-direction: row; /* Makes the left and right sections appear side by side */
+  justify-content: space-between; /* Distributes space between sections */
+  align-items: flex-start; /* Aligns content to the top */
   font-family: "Open Sans", sans-serif;
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Left container (Cart Content) */
+/*****************************
+ *    Left: Cart Content     *
+ *****************************/
+
+/* 
+ * Left container:
+ * - Contains the cart title and item list
+ */
 .left-container {
   flex: 1;
   max-width: 60%;
 }
 
+/* 
+ * Cart title:
+ */
 .left-container h1 {
   text-align: center;
   padding-bottom: 10px;
 }
 
+/* Removes bullet points from cart items */
 .items {
   list-style: none;
 }
 
+/* 
+ * Individual cart item:
+ * - Displays as a row with image, name, and remove button
+ */
 .single-item {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  position: relative;
+  align-items: center;
   border-bottom: 2px solid #9f9f9f;
-  border-top: 2px solid #9f9f9f;
   padding: 10px;
   margin-bottom: 10px;
+  position: relative;
+}
+
+/* 
+ * Item image:
+ * - Small size
+ */
+.single-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain; /* Ensures image keeps proportions */
+}
+
+/* 
+ * Item title:
+ */
+.single-item h1 {
+  flex: 1;
   font-weight: 550;
   font-size: 16px;
   color: #000000;
 }
 
+/* 
+ * Remove button:
+ * - Positioned at the top-right of the item box
+ * - Styled as a red circular button
+ */
 .remove-button .remove {
   position: absolute;
   right: 10px;
   top: 10px;
   background-color: #dc3545;
   color: white;
-  font-weight: 800;
-  padding: 4px 9px;
+  font-weight: 400;
+  padding: 2px 7px;
   border-radius: 50%;
+  cursor: pointer;
 }
+
+/* 
+ * Remove button hover effect:
+ * - Darkens the background color
+ */
 .remove-button .remove:hover {
   background-color: #b02a37;
 }
 
-/* Right container (Time Display) */
+/* 
+ * Empty cart message:
+ * - Styled with UMASS Bston color
+ */
+.left-container p {
+  text-align: center;
+  font-weight: 550;
+  font-size: 1.2rem;
+  color: #005a8b;
+}
+
+/* 
+ * Cart actions:
+ * - Displays buttons for "Continue Shopping" and "Checkout"
+ */
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  font-size: 18px;
+}
+
+/*****************************
+ * Right: Time Selection Box *
+ *****************************/
+
+/* 
+ * Right container:
+ * - Contains the arrival and return time pickers
+ * - Styled as a light gray box with rounded corners
+ */
 .right-container {
-  flex: 1; /* Takes up the other half */
+  flex: 1;
   max-width: 35%;
   display: flex;
   justify-content: center;
@@ -72,22 +161,10 @@
   min-height: 200px;
 }
 
-.cart-item p {
-  margin: 0.5rem 0;
-}
-
-/* Empty cart message */
-.cart-empty {
-  text-align: center;
-  font-weight: 550;
-  font-size: 1.2rem;
-  color: #005a8b;
-}
-
-/* Cart action buttons */
-.cart-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-  font-size: 18px;
+/* 
+ * Time selection section:
+ * - Adds padding for proper spacing
+ */
+.times {
+  padding: 20px;
 }
