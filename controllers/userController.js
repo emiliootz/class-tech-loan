@@ -49,7 +49,7 @@ exports.getAdminPage = async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
     const isAdmin = req.user && req.user.role === "admin";
 
-    res.render("adminJSX", {
+    res.render("admin", {
       activeTab,
       users,
       items,
