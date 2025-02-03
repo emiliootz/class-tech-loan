@@ -65,11 +65,30 @@ header {
   pointer-events: none; /* so clicks pass through to the icon/link if you want */
 }
 
-/* Dropdown Container */
+/* General Dropdown Styling */
 .dropdown {
   position: relative;
   display: inline-block;
-  font-family: "Open Sans";
+}
+
+/* Hide dropdown menu by default */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 150px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 2000;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+  display: flex;
 }
 
 /* Dropdown Button */
@@ -89,32 +108,8 @@ header {
   text-decoration: none;
 }
 
-.dropdown-toggle:hover {
-  background-color: #e5e5e5;
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-  display: none; /* Initially hidden */
-  position: absolute;
-  right: 0;
-  background-color: #ffffff;
-  min-width: 150px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  z-index: 1000;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-menu {
-  display: flex;
-}
-
-/* Dropdown Items: Applies to both anchor links and div wrappers */
-.dropdown-menu a,
-.dropdown-menu div {
+/* Dropdown Items */
+.dropdown-menu a {
   display: block;
   width: 100%;
   padding: 10px;
@@ -125,8 +120,7 @@ header {
   box-sizing: border-box;
 }
 
-.dropdown-menu a:hover,
-.dropdown-menu div:hover {
+.dropdown-menu a:hover {
   background-color: #dddddd;
   color: #005a8b;
 }

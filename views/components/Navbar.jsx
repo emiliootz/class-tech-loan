@@ -1,7 +1,12 @@
 const React = require("react");
 const { AuthButton } = require("./Buttons");
 
-function Navbar({ cartCount = 0, isLoggedIn = false, isAdmin = false }) {
+function Navbar({
+  cartCount = 0,
+  isLoggedIn = false,
+  isAdmin = false,
+  isStaff = false,
+}) {
   return (
     <>
       <head>
@@ -14,7 +19,6 @@ function Navbar({ cartCount = 0, isLoggedIn = false, isAdmin = false }) {
             <span className="cart-count-badge">{cartCount}</span>
           </a>
 
-          {/* Show Dropdown if Logged In, Otherwise Show AuthButton */}
           {isLoggedIn ? (
             <div className="dropdown">
               <button className="dropdown-toggle">Account</button>
@@ -24,16 +28,14 @@ function Navbar({ cartCount = 0, isLoggedIn = false, isAdmin = false }) {
                     Admin
                   </a>
                 )}
-                {isAdmin && (
+                {(isAdmin || isStaff) && (
                   <a href="/dashboard" className="staff">
                     Dashboard
                   </a>
                 )}
-                {
-                  <a href="/logout" className="logout">
-                    Logout
-                  </a>
-                }
+                <a href="/logout" className="logout">
+                  Logout
+                </a>
               </div>
             </div>
           ) : (

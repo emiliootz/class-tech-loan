@@ -143,6 +143,7 @@ exports.dashboardPage = async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
+    let isStaff = false;
     // Calculate dashboard data (this is an example; you'll need to compute your own)
     const dashboardData = [
       { day: "Monday", loans: 5 },
@@ -158,8 +159,15 @@ exports.dashboardPage = async (req, res, next) => {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
       isAdmin = user.role === "admin";
+      isStaff = user.role === "staff";
     }
-    res.render("Dashboard", { isLoggedIn, cartCount, isAdmin, dashboardData });
+    res.render("Dashboard", {
+      isLoggedIn,
+      cartCount,
+      isAdmin,
+      isStaff,
+      dashboardData,
+    });
   } catch (error) {
     next(error);
   }
