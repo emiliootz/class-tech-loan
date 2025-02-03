@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+.container {
+  display: flex;
+  flex-direction: row; /* Make the containers appear side by side */
+  justify-content: space-between; /* Distribute space between them */
+  align-items: flex-start; /* Align the top edges */
+  font-family: "Open Sans", sans-serif;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Left container (Cart Content) */
+.left-container {
+  flex: 1;
+  max-width: 60%;
+}
+
+.left-container h1 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.items {
+  list-style: none;
+}
+
+.single-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  border-bottom: 2px solid #9f9f9f;
+  border-top: 2px solid #9f9f9f;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: 550;
+  font-size: 16px;
+  color: #000000;
+}
+
+.remove-button .remove {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #dc3545;
+  color: white;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 50%;
+}
+.remove-button .remove:hover {
+  background-color: #b02a37;
+}
+
+/* Right container (Time Display) */
+.right-container {
+  flex: 1; /* Takes up the other half */
+  max-width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  min-height: 200px;
+}
+
+.cart-item p {
+  margin: 0.5rem 0;
+}
+
+/* Empty cart message */
+.cart-empty {
+  text-align: center;
+  font-weight: 550;
+  font-size: 1.2rem;
+  color: #005a8b;
+}
+
+/* Cart action buttons */
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  font-size: 18px;
+}

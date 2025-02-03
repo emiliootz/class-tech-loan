@@ -19,7 +19,7 @@ function CartPage({
   return (
     <>
       <head>
-        <link rel="stylesheet" href="/css/cartPage.css" />
+        <link rel="stylesheet" href="/css/cart.css" />
       </head>
       <Navbar
         cartCount={cartCount}
@@ -27,18 +27,15 @@ function CartPage({
         isAdmin={isAdmin}
         isStaff={isStaff}
       />
-      <div className="cart-container">
-        <div className="cart-content">
-          <h1 className="cart-title">Your Cart</h1>
+      <section className="container">
+        <div className="left-container">
+          <h1>Your Cart</h1>
           {cartItems.length > 0 ? (
-            <ul className="cart-items">
+            <ul className="items">
               {cartItems.map((item) => (
-                <li key={item._id} className="cart-item">
-                  <ItemDetails
-                    item={item}
-                    fields={["Asset Type", "Asset ID", "Make", "Model"]}
-                  />
-                  <div className="remove-button-container">
+                <li key={item._id} className="single-item">
+                  <ItemDetails item={item} fields={["Make", "Model"]} />
+                  <div className="remove-button">
                     <RemoveButton itemId={item._id} />
                   </div>
                 </li>
@@ -50,13 +47,17 @@ function CartPage({
 
           {cartItems.length > 0 && (
             <div className="cart-actions">
-              {/* Use the ContinueShoppingButton component */}
               <HomeButton text="Continue Shopping" link="/" />
               <CheckoutButton />
             </div>
           )}
         </div>
-      </div>
+
+        {/* Right side - Time Display */}
+        <div className="right-container">
+          <div className="time-message">Time goes here</div>
+        </div>
+      </section>
     </>
   );
 }

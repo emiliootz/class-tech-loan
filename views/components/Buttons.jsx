@@ -76,7 +76,7 @@ function RemoveButton({ itemId }) {
         <link rel="stylesheet" href="/css/button.css" />
       </head>
       <Button
-        text="Remove"
+        text="X"
         onClick={`/remove-from-cart/${itemId}?_method=DELETE`}
         method="POST"
         className="remove"
