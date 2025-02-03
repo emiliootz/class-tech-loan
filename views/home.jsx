@@ -16,13 +16,24 @@ const ItemGrid = require("./components/itemGrid");
  * Usage:
  * - `<Home items={items} cartCount={cartCount} isLoggedIn={isLoggedIn} />`
  */
-function Home({ items, cartCount = 0, isLoggedIn, isAdmin = false }) {
+function Home({
+  items,
+  cartCount = 0,
+  isLoggedIn,
+  isAdmin = false,
+  isStaff = false,
+}) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/home.css" />
       </head>
-      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+      <Navbar
+        cartCount={cartCount}
+        isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
+        isStaff={isStaff}
+      />
       <section className="hero">
         <div className="dark-overlay"></div>
         <h1>

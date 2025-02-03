@@ -8,6 +8,7 @@ function CheckoutSuccessPage({
   isLoggedIn,
   cartCount,
   isAdmin = false,
+  isStaff = false,
 }) {
   return (
     <>
@@ -20,7 +21,12 @@ function CheckoutSuccessPage({
         <link rel="stylesheet" href="/css/styles.css" />
       </head>
 
-      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+      <Navbar
+        cartCount={cartCount}
+        isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
+        isStaff={isStaff}
+      />
 
       <div
         className="d-flex align-items-center justify-content-center vh-100"

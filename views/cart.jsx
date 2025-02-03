@@ -14,13 +14,19 @@ function CartPage({
   isLoggedIn,
   cartCount,
   isAdmin = false,
+  isStaff = false,
 }) {
   return (
     <>
       <head>
         <link rel="stylesheet" href="/css/cartPage.css" />
       </head>
-      <Navbar cartCount={cartCount} isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+      <Navbar
+        cartCount={cartCount}
+        isLoggedIn={isLoggedIn}
+        isAdmin={isAdmin}
+        isStaff={isStaff}
+      />
       <div className="cart-container">
         <div className="cart-content">
           <h1 className="cart-title">Your Cart</h1>

@@ -14,7 +14,13 @@ const Chart = require("./components/Chart"); // Chart component
  * - dashboardData (array): Data for the chart. Each item should be an object like:
  *       { day: "Monday", loans: 10 }
  */
-function Dashboard({ isLoggedIn, cartCount, isAdmin, dashboardData }) {
+function Dashboard({
+  isLoggedIn,
+  cartCount,
+  isAdmin,
+  isStaff = false,
+  dashboardData,
+}) {
   return (
     <>
       <head>
@@ -25,6 +31,7 @@ function Dashboard({ isLoggedIn, cartCount, isAdmin, dashboardData }) {
           cartCount={cartCount}
           isLoggedIn={isLoggedIn}
           isAdmin={isAdmin}
+          isStaff={isStaff}
         />
         <div className="dashboard-container">
           <Sidebar />
