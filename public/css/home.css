@@ -1,5 +1,116 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
+/*****************************
+ *       Hero Section        *
+ *****************************/
+
+.hero {
+  width: 100%;
+  height: calc(100vh - 450px);
+  background-image: url(/images/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero h1 {
+  font-family: "Open+Sans";
+  font-weight: 600;
+  font-size: 110px;
+  line-height: 106px;
+  color: #ffffff;
+  text-transform: uppercase;
+  background-color: transparent;
+  text-shadow: -1px 1px 1px;
+  z-index: 100;
+}
+
+/*****************************
+ *     Category Section      *
+ *****************************/
+
+.category {
+  width: 100;
+  padding: 50px 0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+  flex-wrap: wrap;
+}
+
+.category p {
+  font-size: 16px;
+  font-style: normal;
+  line-height: 18px;
+  color: #005a8b;
+  font-family: "Open Sans";
+  text-align: center;
+  padding-bottom: 20px;
+  flex-basis: 100%;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.category-box {
+  width: 275px;
+  height: 275px;
+  background-color: #111;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.category-box:nth-child(1) {
+  background-image: url(/images/categories/video.jpg);
+}
+.category-box:nth-child(2) {
+  background-image: url(/images/categories/audio.jpg);
+}
+.category-box:nth-child(3) {
+  background-image: url(/images/categories/photo.jpg);
+}
+.category-box:nth-child(4) {
+  background-image: url(/images/categories/dongle.jpg);
+}
+
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.5;
+  transition: all ease-in-out 200ms;
+}
+
+.category-box:hover .dark-overlay {
+  opacity: 0;
+}
+
+.category-box h3 {
+  font-family: "Open+Sans";
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: #ffffff;
+  text-transform: uppercase;
+  background-color: transparent;
+  text-align: center;
+  text-shadow: -1px 1px 2px #000;
+  z-index: 100;
+}
+
+/*****************************
+ *  Available Items Section  *
+ *****************************/
 .available-items h1 {
   font-family: "Open Sans";
   font-size: 16px;
