@@ -1,47 +1,69 @@
+/* 
+ * 404.css
+ * 
+ * Styles for the custom 404 error page.
+ * The page centers the error message and includes a styled "Go Back Home" button.
+ */
+
+/* Importing Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..700&display=swap");
 
-/* Container for the 404 page */
-.not-found-container {
+/* 
+ * Main container for the 404 page 
+ * - Centers content vertically and horizontally
+ * - Uses Open Sans font for all text
+ */
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  text-align: center;
+  height: 75vh;
   font-family: "Open Sans", sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  padding: 20px;
 }
 
-/* Title style */
-.not-found-title {
-  font-size: 6rem;
+/* 
+ * Styling for the large "404" heading 
+ * - Emphasizes the error with a bold, large font
+ * - Uses a primary blue UMASS Boston color
+ */
+.container h1 {
+  font-size: 350px;
   font-weight: 700;
   color: #0056b3;
-  margin-bottom: 1rem;
 }
 
-/* Message style */
-.not-found-message {
-  font-size: 1.5rem;
+/* 
+ * Message text styling 
+ * - Styles text
+ * - Provides spacing to separate elements
+ */
+.container p {
+  font-size: 30px;
   font-weight: 400;
-  margin-bottom: 2rem;
-  color: #555;
+  margin-bottom: 30px;
+  color: #000000;
 }
 
-/* Button style */
-.not-found-btn {
-  background-color: #0056b3;
+/* 
+ * Home button styling 
+ * - Uses a button-like design with padding and rounded corners
+ * - Applies a transition effect for hover interaction
+ */
+.container .home {
+  background-color: #005a8b;
   color: white;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  font-size: 18px;
+  padding: 9px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: background 0.3s ease-in-out;
 }
 
-.not-found-btn:hover {
-  background-color: #003f7f;
+/* 
+ * Hover effect for the Home button 
+ * - Darkens the background color on hover
+ */
+.container .home:hover {
+  background-color: #003d5b;
 }
