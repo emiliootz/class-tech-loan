@@ -132,7 +132,7 @@ exports.getCheckoutSuccess = async (req, res, next) => {
       isAdmin = user.role === "admin";
       userName = user.name;
     }
-    res.render("CheckoutSuccessPage", {
+    res.render("checkout", {
       name: userName,
       isLoggedIn,
       cartCount,

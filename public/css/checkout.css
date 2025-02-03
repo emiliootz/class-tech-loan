@@ -1,0 +1,77 @@
+/* 
+ * checkout.css
+ * 
+ * Stylesheet for the checkout success page.
+ * Defines styling for:
+ * - The success message layout
+ * - The continue shopping button
+ * Uses Open Sans font for a clean and professional design.
+ */
+
+/* Importing Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..700&display=swap");
+
+/*****************************
+ *    Checkout Page Styles   *
+ *****************************/
+
+/* 
+ * Checkout success page layout:
+ * - Centers the content vertically and horizontally
+ * - Uses Open Sans
+ */
+.checkout-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* 
+ * Success message title:
+ * - Large font size for emphasis
+ * - Uses UMASS Boston color
+ */
+.checkout-page h1 {
+  font-size: 64px;
+  font-weight: 700;
+  color: #0056b3;
+}
+
+/* 
+ * Success message text:
+ * - Balanced font size and weight for readability
+ * - Provides spacing between elements
+ */
+.checkout-page p {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: #000000;
+}
+
+/* 
+ * Continue Shopping button:
+ * - Styled as a rounded button
+ * - Uses primary brand color for consistency
+ */
+.checkout-page .home {
+  background-color: #005a8b;
+  color: white;
+  font-size: 18px;
+  padding: 9px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: background 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+/* 
+ * Hover effect for the Continue Shopping button:
+ * - Darkens the background color
+ */
+.checkout-page .home:hover {
+  background-color: #003d5b;
+}
