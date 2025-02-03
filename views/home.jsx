@@ -33,6 +33,7 @@ function Home({ items, cartCount = 0, isLoggedIn, isAdmin = false }) {
         </h1>
       </section>
       <section className="category">
+        <h1>Categories</h1>
         <a href="#" className="category-box">
           <div className="dark-overlay"></div>
           <h3>Video</h3>

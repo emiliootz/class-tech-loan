@@ -9,10 +9,13 @@
 
 header {
   display: flex;
-  flex-direction: column; /* Stack navbar-top and navbar-main */
+  flex-direction: column;
 }
 
-/* Top Section: Auth and Cart */
+/*****************************
+ *        Top Navbar         *
+ *****************************/
+
 .navbar-top {
   display: flex;
   justify-content: flex-end;
@@ -27,10 +30,147 @@ header {
   margin-left: 20px;
 }
 
-/* Main Navigation Section */
+.navbar-top .cart-link img {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.navbar-top .cart-link img:hover {
+  opacity: 0.8; /* Slight visual feedback on hover */
+}
+
+/* Add width and height for the cart image */
+.navbar-top .cart-link .cart-image {
+  width: 40px;
+  height: 40px;
+}
+
+.navbar-top .cart-link {
+  position: relative; /* so the badge can be absolutely positioned relative to the icon */
+  display: inline-block;
+}
+
+.navbar-top .cart-count-badge {
+  position: absolute;
+  top: -8px; /* adjust to position the badge */
+  right: -8px; /* adjust to position the badge */
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  pointer-events: none; /* so clicks pass through to the icon/link if you want */
+}
+
+/* Dropdown Container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: "Open Sans";
+}
+
+/* Dropdown Button */
+.dropdown-toggle {
+  background-color: #ffffff;
+  color: #0056b3;
+  font-family: "Open Sans";
+  font-weight: 550;
+  font-size: 14px;
+  padding: 9px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.dropdown-toggle:hover {
+  background-color: #e5e5e5;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 150px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1000;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+/* Dropdown Items: Applies to both anchor links and div wrappers */
+.dropdown-menu a,
+.dropdown-menu div {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: #0056b3;
+  text-decoration: none;
+  font-family: "Open Sans";
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu div:hover {
+  background-color: #dddddd;
+  color: #005a8b;
+}
+
+/*****************************
+ *      Bottom Navbar        *
+ *****************************/
+
+/* Bottom Navbar */
 .navbar-bottom {
   display: flex;
-  justify-content: space-between; /* Space between logo and nav links */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 10%;
+}
+
+/* Umass Boston Logo */
+.navbar-bottom .logo {
+  cursor: pointer;
+  margin-right: auto;
+  max-width: 125px;
+  margin-bottom: 10px;
+}
+
+/* Navbar Links */
+.navbar-bottom .nav__links {
+  list-style: none;
+  display: flex;
+}
+
+.navbar-bottom .nav__links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.navbar-bottom .nav__links li a {
+  font-family: "Open Sans";
+  font-weight: 550;
+  font-size: 18px;
+  color: #005a8b;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+}
+
+.navbar-bottom .nav__links li a:hover {
+  color: #00314d;
 }
