@@ -48,13 +48,45 @@
 }
 
 /* Remove Button */
-.remove {
-  background-color: #dc3545;
-  color: white;
+.single-item {
+  position: relative; /* Ensure the parent has relative positioning */
 }
 
-.remove:hover {
-  background-color: #b02a37;
+.single-item button.close {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.single-item button.close:hover {
+  opacity: 1;
+}
+
+/* Create the "X" using pseudo-elements */
+.single-item button.close::before,
+.single-item button.close::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  content: " ";
+  height: 20px; /* Adjust size */
+  width: 2px;
+  background-color: #333;
+  transform-origin: center;
+}
+
+.single-item button.close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.single-item button.close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* Add to Cart Button */

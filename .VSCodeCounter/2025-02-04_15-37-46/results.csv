@@ -1,0 +1,71 @@
+"filename", "language", "JavaScript", "JavaScript JSX", "JSON", "Markdown", "JSON with Comments", "CSS", "XML", "comment", "blank", "total"
+"/Users/emilioortiz/GitHub/class-tech-loan/README.md", "Markdown", 0, 0, 0, 118, 0, 0, 0, 0, 21, 139
+"/Users/emilioortiz/GitHub/class-tech-loan/app.js", "JavaScript", 50, 0, 0, 0, 0, 0, 0, 27, 14, 91
+"/Users/emilioortiz/GitHub/class-tech-loan/class-tech-loan.code-workspace", "JSON with Comments", 0, 0, 0, 0, 39, 0, 0, 4, 1, 44
+"/Users/emilioortiz/GitHub/class-tech-loan/config/config.js", "JavaScript", 23, 0, 0, 0, 0, 0, 0, 28, 9, 60
+"/Users/emilioortiz/GitHub/class-tech-loan/config/database.js", "JavaScript", 18, 0, 0, 0, 0, 0, 0, 9, 6, 33
+"/Users/emilioortiz/GitHub/class-tech-loan/config/expressMiddleware.js", "JavaScript", 29, 0, 0, 0, 0, 0, 0, 12, 8, 49
+"/Users/emilioortiz/GitHub/class-tech-loan/config/passport.js", "JavaScript", 39, 0, 0, 0, 0, 0, 0, 9, 7, 55
+"/Users/emilioortiz/GitHub/class-tech-loan/controllers/cartController.js", "JavaScript", 113, 0, 0, 0, 0, 0, 0, 16, 17, 146
+"/Users/emilioortiz/GitHub/class-tech-loan/controllers/googleController.js", "JavaScript", 19, 0, 0, 0, 0, 0, 0, 12, 6, 37
+"/Users/emilioortiz/GitHub/class-tech-loan/controllers/itemController.js", "JavaScript", 99, 0, 0, 0, 0, 0, 0, 23, 13, 135
+"/Users/emilioortiz/GitHub/class-tech-loan/controllers/loanController.js", "JavaScript", 78, 0, 0, 0, 0, 0, 0, 20, 7, 105
+"/Users/emilioortiz/GitHub/class-tech-loan/controllers/userController.js", "JavaScript", 135, 0, 0, 0, 0, 0, 0, 23, 17, 175
+"/Users/emilioortiz/GitHub/class-tech-loan/middleware/auth.js", "JavaScript", 33, 0, 0, 0, 0, 0, 0, 47, 13, 93
+"/Users/emilioortiz/GitHub/class-tech-loan/middleware/errorHandler.js", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 23, 4, 34
+"/Users/emilioortiz/GitHub/class-tech-loan/middleware/shuffle.js", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 0, 2, 9
+"/Users/emilioortiz/GitHub/class-tech-loan/middleware/validateObjectId.js", "JavaScript", 13, 0, 0, 0, 0, 0, 0, 4, 3, 20
+"/Users/emilioortiz/GitHub/class-tech-loan/models/Item.js", "JavaScript", 51, 0, 0, 0, 0, 0, 0, 1, 4, 56
+"/Users/emilioortiz/GitHub/class-tech-loan/models/Loan.js", "JavaScript", 32, 0, 0, 0, 0, 0, 0, 2, 5, 39
+"/Users/emilioortiz/GitHub/class-tech-loan/models/User.js", "JavaScript", 25, 0, 0, 0, 0, 0, 0, 1, 4, 30
+"/Users/emilioortiz/GitHub/class-tech-loan/package-lock.json", "JSON", 0, 0, 10736, 0, 0, 0, 0, 0, 1, 10737
+"/Users/emilioortiz/GitHub/class-tech-loan/package.json", "JSON", 0, 0, 38, 0, 0, 0, 0, 0, 1, 39
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/404.css", "CSS", 0, 0, 0, 0, 0, 32, 0, 31, 7, 70
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/adminPage.css", "CSS", 0, 0, 0, 0, 0, 141, 0, 14, 29, 184
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/button.css", "CSS", 0, 0, 0, 0, 0, 83, 0, 9, 17, 109
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/cart.css", "CSS", 0, 0, 0, 0, 0, 86, 0, 67, 18, 171
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/checkout.css", "CSS", 0, 0, 0, 0, 0, 33, 0, 37, 8, 78
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/dashboard.css", "CSS", 0, 0, 0, 0, 0, 30, 0, 0, 8, 38
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/home.css", "CSS", 0, 0, 0, 0, 0, 110, 0, 65, 16, 191
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/instructions.css", "CSS", 0, 0, 0, 0, 0, 39, 0, 1, 6, 46
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/itemCard.css", "CSS", 0, 0, 0, 0, 0, 35, 0, 0, 6, 41
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/itemDetails.css", "CSS", 0, 0, 0, 0, 0, 17, 0, 0, 4, 21
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/itemDetailsPage.css", "CSS", 0, 0, 0, 0, 0, 21, 0, 0, 4, 25
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/itemGrid.css", "CSS", 0, 0, 0, 0, 0, 13, 0, 0, 2, 15
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/navbar.css", "CSS", 0, 0, 0, 0, 0, 131, 0, 16, 24, 171
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/productImage.css", "CSS", 0, 0, 0, 0, 0, 6, 0, 0, 2, 8
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/styles.css", "CSS", 0, 0, 0, 0, 0, 83, 0, 8, 19, 110
+"/Users/emilioortiz/GitHub/class-tech-loan/public/css/timePicker.css", "CSS", 0, 0, 0, 0, 0, 21, 0, 4, 4, 29
+"/Users/emilioortiz/GitHub/class-tech-loan/public/images/UMassBoston-Logo/Black-logo-lockup/Black-UMB-logo-lockup.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/public/images/UMassBoston-Logo/Blue-logo-lockup/Blue-UMB-logo-lockup.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/public/images/UMassBoston-Logo/white-logo-lockup/White-UMB-logo-lockup.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/public/js/scripts.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 10, 1, 11
+"/Users/emilioortiz/GitHub/class-tech-loan/routes/cartRoutes.js", "JavaScript", 21, 0, 0, 0, 0, 0, 0, 14, 8, 43
+"/Users/emilioortiz/GitHub/class-tech-loan/routes/googleRoutes.js", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 12, 6, 25
+"/Users/emilioortiz/GitHub/class-tech-loan/routes/itemRoutes.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 23, 8, 47
+"/Users/emilioortiz/GitHub/class-tech-loan/routes/loanRoutes.js", "JavaScript", 28, 0, 0, 0, 0, 0, 0, 37, 9, 74
+"/Users/emilioortiz/GitHub/class-tech-loan/routes/userRoutes.js", "JavaScript", 34, 0, 0, 0, 0, 0, 0, 41, 11, 86
+"/Users/emilioortiz/GitHub/class-tech-loan/start.js", "JavaScript", 5, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/integration/cartRoutes.test.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/integration/googleRoutes.test.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/integration/itemRoutes.test.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/integration/loanRoutes.test.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/integration/userRoutes.test.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/tests/setup.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/emilioortiz/GitHub/class-tech-loan/views/404.jsx", "JavaScript JSX", 0, 29, 0, 0, 0, 0, 0, 28, 7, 64
+"/Users/emilioortiz/GitHub/class-tech-loan/views/admin.jsx", "JavaScript JSX", 0, 118, 0, 0, 0, 0, 0, 4, 8, 130
+"/Users/emilioortiz/GitHub/class-tech-loan/views/cart.jsx", "JavaScript JSX", 0, 67, 0, 0, 0, 0, 0, 30, 9, 106
+"/Users/emilioortiz/GitHub/class-tech-loan/views/checkout.jsx", "JavaScript JSX", 0, 35, 0, 0, 0, 0, 0, 29, 7, 71
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/Buttons.jsx", "JavaScript JSX", 0, 108, 0, 0, 0, 0, 0, 14, 10, 132
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/Chart.jsx", "JavaScript JSX", 0, 48, 0, 0, 0, 0, 0, 4, 5, 57
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/ItemCard.jsx", "JavaScript JSX", 0, 26, 0, 0, 0, 0, 0, 0, 3, 29
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/ItemDetails.jsx", "JavaScript JSX", 0, 33, 0, 0, 0, 0, 0, 32, 6, 71
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/Navbar.jsx", "JavaScript JSX", 0, 69, 0, 0, 0, 0, 0, 0, 5, 74
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/ProductImage.jsx", "JavaScript JSX", 0, 14, 0, 0, 0, 0, 0, 30, 4, 48
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/Sidebar.jsx", "JavaScript JSX", 0, 22, 0, 0, 0, 0, 0, 1, 3, 26
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/TimePicker.jsx", "JavaScript JSX", 0, 17, 0, 0, 0, 0, 0, 14, 4, 35
+"/Users/emilioortiz/GitHub/class-tech-loan/views/components/itemGrid.jsx", "JavaScript JSX", 0, 25, 0, 0, 0, 0, 0, 0, 4, 29
+"/Users/emilioortiz/GitHub/class-tech-loan/views/dashboard.jsx", "JavaScript JSX", 0, 35, 0, 0, 0, 0, 0, 12, 3, 50
+"/Users/emilioortiz/GitHub/class-tech-loan/views/home.jsx", "JavaScript JSX", 0, 57, 0, 0, 0, 0, 0, 32, 8, 97
+"/Users/emilioortiz/GitHub/class-tech-loan/views/item.jsx", "JavaScript JSX", 0, 48, 0, 0, 0, 0, 0, 5, 7, 60
+"Total", "-", 882, 751, 10774, 118, 39, 881, 3, 885, 481, 14814

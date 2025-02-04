@@ -68,9 +68,12 @@ function CartPage({
                   <h1>
                     {item.make} {item.model}
                   </h1>
-                  <div className="remove-button">
-                    <RemoveButton itemId={item._id} />
-                  </div>
+                  <button
+                    className="close"
+                    onClick={() =>
+                      fetch(`/remove-from-cart/${itemId}`, { method: "POST" })
+                    }
+                  ></button>
                 </li>
               ))}
             </ul>
