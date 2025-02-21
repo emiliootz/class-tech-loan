@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
     type: String,
     unique: true,
   },
+  phone: String,
   cart: [
     {
       type: mongoose.Schema.Types.ObjectId,
