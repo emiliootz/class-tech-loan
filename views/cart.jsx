@@ -68,12 +68,12 @@ function CartPage({
                   <h1>
                     {item.make} {item.model}
                   </h1>
-                  <button
-                    className="close"
-                    onClick={() =>
-                      fetch(`/remove-from-cart/${itemId}`, { method: "POST" })
-                    }
-                  ></button>
+                  <form
+                    action={`/remove-from-cart/${item._id}?_method=DELETE`}
+                    method="POST"
+                  >
+                    <button className="close"></button>
+                  </form>
                 </li>
               ))}
             </ul>

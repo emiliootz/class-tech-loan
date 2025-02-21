@@ -12,6 +12,7 @@
 const express = require("express");
 const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
+const methodOverride = require("method-override");
 
 // Import route modules
 const userRoutes = require("./routes/userRoutes");
@@ -26,6 +27,8 @@ const app = express();
 // Import our updated middleware configuration and set it up
 const { configureExpressMiddleware } = require("./config/expressMiddleware");
 configureExpressMiddleware(app);
+
+app.use(methodOverride("_method"));
 
 // Example helper imports (if needed)
 const { ItemModel, UserModel } = require("./config/database");
