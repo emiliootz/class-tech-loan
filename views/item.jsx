@@ -30,17 +30,17 @@ function ItemDetailsPage({
       <div className="item-page">
         <div className="row">
           {/* Left Column - Image */}
-          <div className="col">
+          <div className="left-column">
             <ProductImage picture={item.picture} label={item.label} />
           </div>
 
           {/* Middle Column - Details */}
-          <div className="col">
+          <div className="middle-column">
             <ItemDetails item={item} />
           </div>
 
           {/* Right Column - Time Pickers and Add to Cart */}
-          <div className="col">
+          <div className="right-column">
             <div className="card">
               <TimePicker label="Arrival Time" id="arrivalDate" />
               <TimePicker label="Return Time" id="returnDate" />

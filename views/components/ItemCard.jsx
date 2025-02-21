@@ -8,20 +8,22 @@ function ItemCard({ item }) {
       <head>
         <link rel="stylesheet" href="/css/itemCard.css" />
       </head>
-      <section className="card">
-        <ProductImage
-          className="image"
-          picture={item.picture}
-          label={item.label}
-        />
+      <a href={`/item/${item._id}`} className="card-link">
+        <section className="card">
+          <ProductImage
+            className="image"
+            picture={item.picture}
+            label={item.label}
+          />
 
-        <div className="text">
-          {item.make} {item.model}
-        </div>
-        <div className="button">
-          <AddToCartButton itemId={item._id} isAvailable={!!item._id} />
-        </div>
-      </section>
+          <div className="text">
+            {item.make} {item.model}
+          </div>
+          <div className="button">
+            <AddToCartButton itemId={item._id} isAvailable={!!item._id} />
+          </div>
+        </section>
+      </a>
     </>
   );
 }
