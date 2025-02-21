@@ -48,6 +48,32 @@ const AdminPage = ({
             {activeTab === "users" && (
               <div className="tab-pane">
                 <h2 className="tab-title">Manage Users</h2>
+
+                {/* Add New User Form */}
+                {/* Add New User Form (Manual Google Auth User) */}
+                <form
+                  action="/users/add"
+                  method="POST"
+                  className="add-user-form"
+                >
+                  <input type="text" name="name" placeholder="Name" required />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                  <select name="role" required>
+                    <option value="user">User</option>
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                  <button type="submit" className="btn btn-add">
+                    Add User
+                  </button>
+                </form>
+
+                {/* Existing Users Table */}
                 <table className="table">
                   <thead>
                     <tr>
@@ -126,4 +152,4 @@ const AdminPage = ({
   );
 };
 
-module.exports = AdminPage;
+module.exports = AdminPage; // export

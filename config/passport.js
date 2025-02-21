@@ -1,16 +1,7 @@
-/*****************************
- *       Passport Setup      *
- *****************************/
-
-const config = require("./config"); // Import config.js
-const passport = require("passport"); // Import passport
-const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import for google authentication
-const { UserModel } = require("./database"); // Using UserModel
-
-/*
-    Setting upp google authentication using passport Google Strategy parameters are passed in using
-    config.js and information should be setup in your .env file.
- */
+const config = require("./config");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const { UserModel } = require("./database");
 
 passport.use(
   new GoogleStrategy(
@@ -19,19 +10,31 @@ passport.use(
       clientSecret: config.passport.google.clientSecret,
       callbackURL: config.passport.google.callbackURL,
     },
-
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        // Use async/await to find user
-        let user = await UserModel.findOne({ googleId: profile.id });
-        if (!user) {
-          // If user doesn't exist, create a new one
+        const email = profile.emails[0].value;
+
+        // Check if user exists by email first (including manually added users)
+        let user = await UserModel.findOne({ email });
+
+        if (user) {
+          // If user exists but has no googleId, update it
+          if (!user.googleId) {
+            user.googleId = profile.id;
+            await user.save();
+          }
+        } else {
+          // If user does not exist, create a new one
           user = new UserModel({
             googleId: profile.id,
             name: profile.displayName,
+            email: email,
+            role: "user", // Default role, can be changed later by an admin
+            disabled: false,
           });
           await user.save();
         }
+
         return cb(null, user);
       } catch (err) {
         return cb(err, null);
@@ -40,11 +43,11 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(async function (id, done) {
+passport.deserializeUser(async (id, done) => {
   try {
     const user = await UserModel.findById(id);
     done(null, user);

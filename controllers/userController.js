@@ -172,3 +172,45 @@ exports.dashboardPage = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Add a new user manually (for Google Auth users).
+ */
+exports.addUser = async (req, res, next) => {
+  const { name, email, role } = req.body;
+
+  if (!name || !email || !role) {
+    return res.redirect("/admin?tab=users");
+  }
+
+  if (!["user", "staff", "admin"].includes(role)) {
+    return res.redirect("/admin?tab=users");
+  }
+
+  try {
+    let existingUser = await UserModel.findOne({ email });
+
+    if (existingUser) {
+      // If user exists but has no googleId, update their role
+      if (!existingUser.googleId) {
+        existingUser.role = role;
+        await existingUser.save();
+      }
+      return res.redirect("/admin?tab=users");
+    }
+
+    // Create a new user
+    const newUser = new UserModel({
+      name,
+      email,
+      role,
+      googleId: null, // Will be updated when they log in via Google
+      disabled: false,
+    });
+
+    await newUser.save();
+    res.redirect("/admin?tab=users"); // Redirect to admin page
+  } catch (error) {
+    res.redirect("/admin?tab=users");
+  }
+};

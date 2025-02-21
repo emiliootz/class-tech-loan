@@ -68,6 +68,8 @@ router.delete(
   userController.deleteUser
 );
 
+router.post("/users/add", userController.addUser);
+
 /*****************************
  *       Staff Role          *
  *****************************/
