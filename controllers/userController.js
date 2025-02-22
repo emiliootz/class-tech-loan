@@ -125,7 +125,7 @@ exports.deleteUser = async (req, res, next) => {
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found." });
     }
-    res.status(200).json({ message: "User deleted successfully" });
+    res.redirect("/admin?tab=users");
   } catch (error) {
     next(error);
   }
@@ -177,9 +177,9 @@ exports.dashboardPage = async (req, res, next) => {
  * Add a new user manually (for Google Auth users).
  */
 exports.addUser = async (req, res, next) => {
-  const { name, email, role } = req.body;
+  let { name, email, phone, role } = req.body;
 
-  if (!name || !email || !role) {
+  if (!name || !email || !role || !phone) {
     return res.redirect("/admin?tab=users");
   }
 
@@ -187,13 +187,31 @@ exports.addUser = async (req, res, next) => {
     return res.redirect("/admin?tab=users");
   }
 
+  // Format phone number before saving
+  const formatPhoneNumber = (phone) => {
+    const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
+    if (cleaned.length === 10) {
+      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+    }
+    return phone;
+  };
+
+  phone = formatPhoneNumber(phone); // Apply formatting
+
+  if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+    return res
+      .status(400)
+      .json({ message: "Invalid phone number format. Use 999-999-9999." });
+  }
+
   try {
     let existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
-      // If user exists but has no googleId, update their role
+      // If user exists but has no googleId, update their role and phone
       if (!existingUser.googleId) {
         existingUser.role = role;
+        existingUser.phone = phone;
         await existingUser.save();
       }
       return res.redirect("/admin?tab=users");
@@ -204,6 +222,7 @@ exports.addUser = async (req, res, next) => {
       name,
       email,
       role,
+      phone, // Now formatted before saving
       googleId: null, // Will be updated when they log in via Google
       disabled: false,
     });
@@ -212,5 +231,85 @@ exports.addUser = async (req, res, next) => {
     res.redirect("/admin?tab=users"); // Redirect to admin page
   } catch (error) {
     res.redirect("/admin?tab=users");
+  }
+};
+
+const formatPhoneNumber = (phone) => {
+  const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
+  if (cleaned.length === 10) {
+    return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+  }
+  return phone; // If not 10 digits, return as-is
+};
+
+exports.updateUserPhone = async (req, res, next) => {
+  const userId = req.params.id;
+  let { phone } = req.body;
+
+  // Ensure phone is a string and format it
+  if (!phone || typeof phone !== "string") {
+    return res.status(400).json({ message: "Invalid phone number format." });
+  }
+
+  phone = formatPhoneNumber(phone); // Apply formatting before saving
+
+  if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+    return res
+      .status(400)
+      .json({ message: "Invalid phone number format. Use 999-999-9999." });
+  }
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { phone },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.redirect("/admin?tab=users"); // Redirect back to admin page
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateUserDetails = async (req, res, next) => {
+  const userId = req.params.id;
+  let { phone, role } = req.body;
+
+  // Format the phone number before saving
+  const formatPhoneNumber = (phone) => {
+    const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
+    if (cleaned.length === 10) {
+      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+    }
+    return phone;
+  };
+
+  if (!phone || typeof phone !== "string") {
+    return res.status(400).json({ message: "Invalid phone number." });
+  }
+
+  phone = formatPhoneNumber(phone);
+
+  if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+    return res
+      .status(400)
+      .json({ message: "Invalid phone number format. Use 999-999-9999." });
+  }
+
+  if (!["user", "staff", "admin"].includes(role)) {
+    return res.status(400).json({ message: "Invalid role selection." });
+  }
+
+  try {
+    await UserModel.findByIdAndUpdate(userId, { phone, role }, { new: true });
+
+    res.redirect("/admin?tab=users"); // Redirect back to admin page
+  } catch (error) {
+    next(error);
   }
 };

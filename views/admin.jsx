@@ -16,7 +16,7 @@ const AdminPage = ({
         <link rel="stylesheet" href="/css/adminPage.css" />
       </head>
       <body>
-        {/* Navbar with isAdmin prop */}
+        {/* Navbar */}
         <Navbar
           cartCount={cartCount}
           isLoggedIn={isLoggedIn}
@@ -43,83 +43,93 @@ const AdminPage = ({
             </a>
           </div>
 
-          {/* Tab Content */}
-          <div className="tab-content">
-            {activeTab === "users" && (
-              <div className="tab-pane">
-                <h2 className="tab-title">Manage Users</h2>
+          {/* Users Management */}
+          {activeTab === "users" && (
+            <div className="tab-pane">
+              <h2 className="tab-title">Manage Users</h2>
 
-                {/* Add New User Form */}
-                {/* Add New User Form (Manual Google Auth User) */}
-                <form
-                  action="/users/add"
-                  method="POST"
-                  className="add-user-form"
-                >
-                  <input type="text" name="name" placeholder="Name" required />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                  />
-                  <select name="role" required>
-                    <option value="user">User</option>
-                    <option value="staff">Staff</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                  <button type="submit" className="btn btn-add">
-                    Add User
-                  </button>
-                </form>
+              {/* Add New User Form */}
+              <form action="/users/add" method="POST" className="add-user-form">
+                <input type="text" name="name" placeholder="Name" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  required
+                />
+                <select name="role" required>
+                  <option value="user">User</option>
+                  <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <button type="submit" className="btn btn-add">
+                  Add User
+                </button>
+              </form>
 
-                {/* Existing Users Table */}
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map((user) => (
-                      <tr key={user._id}>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.role}</td>
+              {/* Existing Users Table */}
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+
+                      {/* Phone & Role Inputs in the same form */}
+                      <form
+                        action={`/admin/users/update/${user._id}?_method=PUT`}
+                        method="POST"
+                      >
+                        <td>
+                          <input
+                            type="text"
+                            name="phone"
+                            defaultValue={user.phone}
+                            required
+                          />
+                        </td>
+
+                        <td>
+                          <select name="role">
+                            <option
+                              value="user"
+                              selected={user.role === "user"}
+                            >
+                              User
+                            </option>
+                            <option
+                              value="staff"
+                              selected={user.role === "staff"}
+                            >
+                              Staff
+                            </option>
+                            <option
+                              value="admin"
+                              selected={user.role === "admin"}
+                            >
+                              Admin
+                            </option>
+                          </select>
+                        </td>
+
+                        {/* Actions Column */}
                         <td>
                           <div className="action-buttons">
-                            <form
-                              action={`/admin/users/${user._id}?_method=PUT`}
-                              method="POST"
-                            >
-                              <select name="role">
-                                <option
-                                  value="user"
-                                  selected={user.role === "user"}
-                                >
-                                  User
-                                </option>
-                                <option
-                                  value="staff"
-                                  selected={user.role === "staff"}
-                                >
-                                  Staff
-                                </option>
-                                <option
-                                  value="admin"
-                                  selected={user.role === "admin"}
-                                >
-                                  Admin
-                                </option>
-                              </select>
-                              <button type="submit" className="btn btn-update">
-                                Update
-                              </button>
-                            </form>
+                            <button type="submit" className="btn btn-update">
+                              Update
+                            </button>
 
+                            {/* Disable/Enable User */}
                             <form
                               action={`/admin/users/disable/${user._id}?_method=PUT`}
                               method="POST"
@@ -129,6 +139,7 @@ const AdminPage = ({
                               </button>
                             </form>
 
+                            {/* Delete User */}
                             <form
                               action={`/admin/users/${user._id}?_method=DELETE`}
                               method="POST"
@@ -139,17 +150,17 @@ const AdminPage = ({
                             </form>
                           </div>
                         </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+                      </form>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </body>
     </html>
   );
 };
 
-module.exports = AdminPage; // export
+module.exports = AdminPage;

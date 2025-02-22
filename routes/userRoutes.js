@@ -70,6 +70,20 @@ router.delete(
 
 router.post("/users/add", userController.addUser);
 
+router.put(
+  "/admin/users/phone/:id",
+  requireRole("admin"),
+  validateObjectId("id"),
+  userController.updateUserPhone
+);
+
+router.put(
+  "/admin/users/update/:id",
+  requireRole("admin"),
+  validateObjectId("id"),
+  userController.updateUserDetails
+);
+
 /*****************************
  *       Staff Role          *
  *****************************/
