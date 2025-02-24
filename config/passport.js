@@ -18,17 +18,22 @@ passport.use(
       clientID: config.passport.google.clientID,
       clientSecret: config.passport.google.clientSecret,
       callbackURL: config.passport.google.callbackURL,
+      // scope: ["profile", "email"],
     },
 
     async (accessToken, refreshToken, profile, cb) => {
       try {
         // Use async/await to find user
-        let user = await UserModel.findOne({ googleId: profile.id });
+        let user = await UserModel.findOne(
+          { googleId: profile.id }
+          // { email: profile.emails[0].value }
+        );
         if (!user) {
           // If user doesn't exist, create a new one
           user = new UserModel({
             googleId: profile.id,
             name: profile.displayName,
+            // email: profile.emails[0].value,
           });
           await user.save();
         }
