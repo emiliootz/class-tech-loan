@@ -18,7 +18,6 @@ function Navbar({
             <img src="/images/cart.png" alt="Cart" className="cart-image" />
             <span className="cart-count-badge">{cartCount}</span>
           </a>
-
           {isLoggedIn ? (
             <div className="dropdown">
               <button className="dropdown-toggle">Account</button>
