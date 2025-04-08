@@ -101,31 +101,10 @@ function AuthButton({ isLoggedIn }) {
   );
 }
 
-// Add to Cart Button
-function AddToCartButton({ itemId, isAvailable }) {
-  return (
-    <>
-      <head>
-        <link rel="stylesheet" href="/css/button.css" />
-      </head>
-      {isAvailable ? (
-        <form action={`/add-to-cart/${itemId}`} method="POST">
-          <button className="button add-to-cart">Add To Cart</button>
-        </form>
-      ) : (
-        <button className="button unavailable" disabled>
-          Unavailable
-        </button>
-      )}
-    </>
-  );
-}
-
 module.exports = {
   Button,
   HomeButton,
   CheckoutButton,
   RemoveButton,
   AuthButton,
-  AddToCartButton,
 };

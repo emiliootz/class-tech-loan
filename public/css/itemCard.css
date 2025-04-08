@@ -1,11 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-.card-link {
-  text-decoration: none;
-  display: block;
-  width: fit-content;
-}
-
 .card {
   width: 255px;
   height: 355px;
@@ -34,13 +28,18 @@
   padding: 20px 0;
 }
 
-.text {
-  font-family: "Open Sans";
-  font-size: 16px;
+.card-title {
+  font-size: 1rem;
   font-weight: 600;
-  color: #000000;
 }
 
-.button {
-  display: flex;
+.btn-umb {
+  background-color: #005a8b;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-umb:hover {
+  background-color: #003f66;
+  color: white;
 }
