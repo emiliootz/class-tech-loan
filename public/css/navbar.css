@@ -1,170 +1,24 @@
-/* General Styling */
+/**
+ * @file navbar.css
+ * @description Minimal custom styles for branding and logo size
+ *              used in conjunction with Bootstrap navbar component.
+ */
+
+/* ===============================
+   Brand Styling
+   =============================== */
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+body {
+  font-family: "Open Sans", sans-serif;
 }
-
-header {
-  display: flex;
-  flex-direction: column;
-}
-
-/*****************************
- *        Top Navbar         *
- *****************************/
-
-.navbar-top {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 20px;
-  padding: 10px 10%;
-  background-color: #005a8b;
-  border-bottom: 1px solid #ccc;
-}
-
-.navbar-top a {
-  margin-left: 20px;
-}
-
-.navbar-top .cart-link img {
-  cursor: pointer;
-  background-color: transparent;
-}
-
-.navbar-top .cart-link img:hover {
-  opacity: 0.8; /* Slight visual feedback on hover */
-}
-
-/* Add width and height for the cart image */
-.navbar-top .cart-link .cart-image {
-  width: 40px;
-  height: 40px;
-}
-
-.navbar-top .cart-link {
-  position: relative; /* so the badge can be absolutely positioned relative to the icon */
-  display: inline-block;
-}
-
-.navbar-top .cart-count-badge {
-  position: absolute;
-  top: -8px; /* adjust to position the badge */
-  right: -8px; /* adjust to position the badge */
-  background-color: red;
-  color: white;
-  font-size: 0.8rem;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 20px;
-  pointer-events: none; /* so clicks pass through to the icon/link if you want */
-}
-
-/* General Dropdown Styling */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Hide dropdown menu by default */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #ffffff;
-  min-width: 150px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  z-index: 2000;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-menu,
-.dropdown:focus-within .dropdown-menu {
-  display: flex;
-}
-
-/* Dropdown Button */
-.dropdown-toggle {
-  background-color: #ffffff;
-  color: #0056b3;
-  font-family: "Open Sans";
-  font-weight: 550;
-  font-size: 14px;
-  padding: 9px 25px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-align: center;
-  display: inline-block;
-  text-decoration: none;
-}
-
-/* Dropdown Items */
-.dropdown-menu a {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  color: #0056b3;
-  text-decoration: none;
-  font-family: "Open Sans";
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.dropdown-menu a:hover {
-  background-color: #dddddd;
-  color: #005a8b;
-}
-
-/*****************************
- *      Bottom Navbar        *
- *****************************/
-
-/* Bottom Navbar */
-.navbar-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 10%;
-}
-
-/* Umass Boston Logo */
-.navbar-bottom .logo {
-  cursor: pointer;
-  margin-right: auto;
+/* UMass Boston logo sizing */
+.logo {
   max-width: 125px;
-  margin-bottom: 10px;
 }
 
-/* Navbar Links */
-.navbar-bottom .nav__links {
-  list-style: none;
-  display: flex;
-}
-
-.navbar-bottom .nav__links li {
-  display: inline-block;
-  padding: 0px 20px;
-}
-
-.navbar-bottom .nav__links li a {
-  font-family: "Open Sans";
-  font-weight: 550;
-  font-size: 18px;
-  color: #005a8b;
-  text-decoration: none;
-  transition: all 0.3s ease 0s;
-}
-
-.navbar-bottom .nav__links li a:hover {
-  color: #00314d;
+/* UMass Boston logo color */
+.bg-umb-blue {
+  background-color: #005a8b;
 }
