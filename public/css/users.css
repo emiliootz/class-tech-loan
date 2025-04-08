@@ -1,0 +1,7 @@
+/* users.css */
+
+/* Custom color for thead row */
+.table thead.custom-thead {
+  background-color: #005a8b; /* UMass Blue */
+  color: white;
+}

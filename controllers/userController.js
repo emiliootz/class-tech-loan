@@ -313,3 +313,34 @@ exports.updateUserDetails = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.usersPage = async (req, res, next) => {
+  try {
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    const isAdmin = req.user?.role === "admin";
+    const isStaff = req.user?.role === "staff" || isAdmin;
+    const cartCount = req.user?.cart?.length || 0;
+
+    if (!isStaff && !isAdmin) {
+      return res.status(403).render("users", {
+        users: [],
+        isLoggedIn,
+        isAdmin,
+        isStaff,
+        cartCount,
+      });
+    }
+
+    const users = await UserModel.find({}, "name email phone role").lean();
+
+    res.render("users", {
+      users,
+      isLoggedIn,
+      isAdmin,
+      isStaff,
+      cartCount,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -10,7 +10,11 @@
 
 const express = require("express");
 const validateObjectId = require("../middleware/validateObjectId");
-const { isAuthenticated, requireRole } = require("../middleware/auth");
+const {
+  isAuthenticated,
+  requireRole,
+  requireRoles,
+} = require("../middleware/auth");
 const userController = require("../controllers/userController");
 const router = express.Router();
 
@@ -82,6 +86,16 @@ router.put(
   requireRole("admin"),
   validateObjectId("id"),
   userController.updateUserDetails
+);
+
+/**
+ * Render the User Management page.
+ */
+router.get(
+  "/users",
+  isAuthenticated,
+  requireRoles(["admin", "staff"]),
+  userController.usersPage
 );
 
 /*****************************
