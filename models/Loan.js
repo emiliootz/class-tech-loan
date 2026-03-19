@@ -7,10 +7,12 @@ const getTomorrow = () => new Date(Date.now() + 86400000);
 const loaningSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   itemId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Item",
     required: true,
   },
   startTime: {
@@ -23,7 +25,7 @@ const loaningSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Available", "Assigned to Location"],
+    enum: ["Available", "Loaned", "Assigned to Location"],
     required: true,
   },
   location: {
