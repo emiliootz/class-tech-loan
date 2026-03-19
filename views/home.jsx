@@ -37,6 +37,8 @@ function Home({
   isAdmin = false,
   isStaff = false,
   activeCategory = null,
+  currentPage = 1,
+  totalPages = 1,
 }) {
   return (
     <>
@@ -87,6 +89,37 @@ function Home({
       <section className="available-items">
         <h1>Available Items</h1>
         <ItemGrid items={items} />
+
+        {/* Pagination controls */}
+        {totalPages > 1 && (
+          <div className="pagination">
+            {currentPage > 1 && (
+              <a
+                href={`/?${activeCategory ? `category=${activeCategory}&` : ""}page=${currentPage - 1}`}
+                className="page-btn"
+              >
+                &laquo; Prev
+              </a>
+            )}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <a
+                key={p}
+                href={`/?${activeCategory ? `category=${activeCategory}&` : ""}page=${p}`}
+                className={`page-btn${p === currentPage ? " active" : ""}`}
+              >
+                {p}
+              </a>
+            ))}
+            {currentPage < totalPages && (
+              <a
+                href={`/?${activeCategory ? `category=${activeCategory}&` : ""}page=${currentPage + 1}`}
+                className="page-btn"
+              >
+                Next &raquo;
+              </a>
+            )}
+          </div>
+        )}
       </section>
     </>
   );

@@ -12,6 +12,7 @@ const express = require("express");
 const validateObjectId = require("../middleware/validateObjectId");
 const { requireRole } = require("../middleware/auth");
 const itemController = require("../controllers/itemController");
+const upload = require("../config/multer");
 const router = express.Router();
 
 /*****************************
@@ -24,16 +25,23 @@ router.get("/items", itemController.getItems);
 router.get("/item/:itemId", validateObjectId("itemId"), itemController.getItem);
 
 /*****************************
- *       Update Item         *
- *****************************/
-// Update item using assetId (assetId is a custom identifier, not a MongoDB ObjectId)
-router.put("/update-item/:assetId", itemController.updateItem);
-
-/*****************************
  *     Add/Delete Item       *
  *****************************/
-// Add a new item (requires admin role)
-router.post("/add-item", requireRole("admin"), itemController.addItem);
+// Add a new item (requires admin role, optional image upload)
+router.post(
+  "/add-item",
+  requireRole("admin"),
+  upload.single("picture"),
+  itemController.addItem
+);
+
+// Update item using assetId with optional image upload
+router.put(
+  "/update-item/:assetId",
+  requireRole("admin"),
+  upload.single("picture"),
+  itemController.updateItem
+);
 
 // Delete an item (requires admin role, ObjectId validated)
 router.delete(

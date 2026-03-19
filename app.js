@@ -10,10 +10,7 @@
 */
 
 const express = require("express");
-const config = require("./config/config");
 const errorHandler = require("./middleware/errorHandler");
-const methodOverride = require("method-override");
-
 // Import route modules
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
@@ -28,8 +25,6 @@ const app = express();
 const { configureExpressMiddleware } = require("./config/expressMiddleware");
 configureExpressMiddleware(app);
 
-app.use(methodOverride("_method"));
-
 // Example helper imports (if needed)
 const { ItemModel, UserModel } = require("./config/database");
 
@@ -41,10 +36,20 @@ const { ItemModel, UserModel } = require("./config/database");
 app.get("/", async (req, res, next) => {
   try {
     const { category } = req.query;
+    const PAGE_SIZE = 12;
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+
     const query = category
       ? { assetType: { $regex: new RegExp(category, "i") } }
       : {};
-    const items = await ItemModel.find(query);
+
+    const [items, totalItems] = await Promise.all([
+      ItemModel.find(query).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE),
+      ItemModel.countDocuments(query),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
@@ -55,7 +60,15 @@ app.get("/", async (req, res, next) => {
       isAdmin = user.role === "admin";
     }
 
-    res.render("home", { items, isLoggedIn, cartCount, isAdmin, activeCategory: category || null });
+    res.render("home", {
+      items,
+      isLoggedIn,
+      cartCount,
+      isAdmin,
+      activeCategory: category || null,
+      currentPage: page,
+      totalPages,
+    });
   } catch (error) {
     next(error);
   }
@@ -92,6 +105,18 @@ app.use("*", async (req, res, next) => {
 /*****************************
  *   Global Error Handler    *
  *****************************/
+
+// Handle multer errors (invalid file type, file too large) before the generic handler
+app.use((err, req, res, next) => {
+  if (err.code === "LIMIT_FILE_SIZE") {
+    err.status = 400;
+    err.message = "Image must be 5 MB or smaller.";
+  } else if (err.message && err.message.includes("Only JPEG")) {
+    err.status = 400;
+  }
+  next(err);
+});
+
 app.use(errorHandler);
 
 module.exports = app;

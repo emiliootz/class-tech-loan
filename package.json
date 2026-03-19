@@ -4,6 +4,8 @@
   "description": "React and MySQL-based rental system for UMass Boston",
   "main": "index.js",
   "scripts": {
+    "start": "node start.js",
+    "dev": "npx nodemon start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,13 +22,16 @@
     "bootstrap": "^5.3.3",
     "class-tech-loan": "file:",
     "connect-mongo": "^5.1.0",
+    "csurf": "^1.11.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.3.1",
     "express-react-views": "^0.11.0",
     "express-session": "^1.18.1",
     "method-override": "^3.0.0",
     "mongoose": "^8.9.0",
+    "multer": "^2.1.1",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",

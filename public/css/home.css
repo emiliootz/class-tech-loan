@@ -188,3 +188,36 @@
   text-transform: uppercase;
   text-align: center;
 }
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 0 40px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #005a8b;
+  border-radius: 4px;
+  color: #005a8b;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  transition: background 0.15s, color 0.15s;
+}
+
+.page-btn:hover {
+  background: #005a8b;
+  color: #fff;
+}
+
+.page-btn.active {
+  background: #005a8b;
+  color: #fff;
+  pointer-events: none;
+}

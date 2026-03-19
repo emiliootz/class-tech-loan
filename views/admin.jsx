@@ -43,6 +43,70 @@ const AdminPage = ({
             </a>
           </div>
 
+          {/* Items Management */}
+          {activeTab === "items" && (
+            <div className="tab-pane">
+              <h2 className="tab-title">Manage Items</h2>
+
+              {/* Add New Item Form */}
+              <form
+                action="/add-item"
+                method="POST"
+                encType="multipart/form-data"
+                className="add-user-form"
+              >
+                <input type="text" name="assetId" placeholder="Asset ID" required />
+                <input type="text" name="assetType" placeholder="Type (e.g. Video, Audio)" required />
+                <input type="text" name="make" placeholder="Make" required />
+                <input type="text" name="model" placeholder="Model" required />
+                <select name="status" required>
+                  <option value="Available">Available</option>
+                  <option value="Loaned">Loaned</option>
+                  <option value="Assigned To Location">Assigned To Location</option>
+                </select>
+                <label style={{ fontSize: "13px", color: "#555" }}>
+                  Item Image (optional)
+                  <input type="file" name="picture" accept="image/jpeg,image/png,image/webp" style={{ display: "block", marginTop: "4px" }} />
+                </label>
+                <button type="submit" className="btn btn-add">Add Item</button>
+              </form>
+
+              {/* Existing Items Table */}
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Asset ID</th>
+                    <th>Type</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((item) => (
+                    <tr key={item._id}>
+                      <td>{item.assetId}</td>
+                      <td>{item.assetType}</td>
+                      <td>{item.make}</td>
+                      <td>{item.model}</td>
+                      <td>{item.status}</td>
+                      <td>
+                        <form
+                          action={`/delete-item/${item._id}?_method=DELETE`}
+                          method="POST"
+                          style={{ display: "inline" }}
+                        >
+                          <button type="submit" className="btn btn-delete">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {/* Users Management */}
           {activeTab === "users" && (
             <div className="tab-pane">

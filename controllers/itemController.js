@@ -68,7 +68,10 @@ exports.updateItem = async (req, res, next) => {
   if (make !== undefined) updates.make = make;
   if (model !== undefined) updates.model = model;
   if (status !== undefined) updates.status = status;
-  if (picture !== undefined) updates.picture = picture;
+  // Prefer an uploaded file over a URL string
+  const uploadedPicture = req.file ? `/uploads/${req.file.filename}` : undefined;
+  if (uploadedPicture) updates.picture = uploadedPicture;
+  else if (picture !== undefined) updates.picture = picture;
   if (location !== undefined) updates.location = location;
   try {
     const updatedItem = await ItemModel.findOneAndUpdate(
@@ -96,13 +99,15 @@ exports.updateItem = async (req, res, next) => {
  */
 exports.addItem = async (req, res, next) => {
   const { assetId, assetType, make, model, status } = req.body;
+  const picture = req.file ? `/uploads/${req.file.filename}` : undefined;
   try {
     const newItem = new ItemModel({
       assetId,
       assetType,
       make,
       model,
-      status: status || "Available", // Default to "Available" if not provided
+      status: status || "Available",
+      ...(picture && { picture }),
     });
     await newItem.save();
     res.redirect("/admin");
