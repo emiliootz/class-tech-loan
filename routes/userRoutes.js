@@ -18,8 +18,6 @@ const {
 const userController = require("../controllers/userController");
 const router = express.Router();
 
-// Optional debug print
-console.log("Debug - isAuthenticated:", isAuthenticated);
 
 /*****************************
  *       Admin Role          *
@@ -72,7 +70,7 @@ router.delete(
   userController.deleteUser
 );
 
-router.post("/users/add", userController.addUser);
+router.post("/users/add", requireRole("admin"), userController.addUser);
 
 router.put(
   "/admin/users/phone/:id",
@@ -102,7 +100,7 @@ router.get(
  *       Staff Role          *
  *****************************/
 // Dashboard route
-router.get("/dashboard", userController.dashboardPage);
+router.get("/dashboard", requireRoles(["staff", "admin"]), userController.dashboardPage);
 
 /*****************************
  *   Redirect `/protected`   *
