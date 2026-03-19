@@ -11,6 +11,7 @@
 
 const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
+const shuffle = require("./middleware/shuffle");
 // Import route modules
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
@@ -61,7 +62,7 @@ app.get("/", async (req, res, next) => {
     }
 
     res.render("home", {
-      items,
+      items: shuffle(items),
       isLoggedIn,
       cartCount,
       isAdmin,

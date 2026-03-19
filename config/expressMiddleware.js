@@ -37,9 +37,8 @@ module.exports.configureExpressMiddleware = (app) => {
   // Serve static files from the "public" directory
   app.use(express.static("public"));
 
-  // Set up the view engine (using express-react-views)
-  app.set("view engine", "jsx");
-  app.engine("jsx", require("express-react-views").createEngine());
+  // Set up the view engine (EJS)
+  app.set("view engine", "ejs");
 
   // Parse URL-encoded bodies and JSON bodies
   app.use(express.urlencoded({ extended: true }));

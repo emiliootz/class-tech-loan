@@ -1,0 +1,44 @@
+<%- include('partials/head', { title: 'Your Cart', styles: ['cart.css', 'timePicker.css', 'button.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
+
+<section class="container">
+  <div class="left-container">
+    <h1>Your Cart</h1>
+
+    <% if (cartItems.length > 0) { %>
+    <ul class="items">
+      <% cartItems.forEach(function(item) { %>
+      <li class="single-item">
+        <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" />
+        <h1><%= item.make %> <%= item.model %></h1>
+        <form action="/remove-from-cart/<%= item._id %>?_method=DELETE" method="POST">
+          <button class="close"></button>
+        </form>
+      </li>
+      <% }); %>
+    </ul>
+    <div class="cart-actions">
+      <a href="/" class="button home">Continue Shopping</a>
+    </div>
+    <% } else { %>
+    <p>Your cart is empty!</p>
+    <% } %>
+  </div>
+
+  <div class="right-container">
+    <% if (cartItems.length > 0) { %>
+    <form action="/checkout-cart" method="POST" class="times">
+      <%- include('partials/timepicker', { label: 'Arrival Time', id: 'arrivalDate' }) %>
+      <%- include('partials/timepicker', { label: 'Return Time', id: 'returnDate' }) %>
+      <button type="submit" class="button checkout" style="width: 100%; margin-top: 1rem">Checkout</button>
+    </form>
+    <% } else { %>
+    <div class="times">
+      <%- include('partials/timepicker', { label: 'Arrival Time', id: 'arrivalDate' }) %>
+      <%- include('partials/timepicker', { label: 'Return Time', id: 'returnDate' }) %>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

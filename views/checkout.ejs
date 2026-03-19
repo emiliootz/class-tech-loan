@@ -1,0 +1,11 @@
+<%- include('partials/head', { title: 'Checkout Successful', styles: ['checkout.css', 'button.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
+
+<section class="checkout-page">
+  <h1>Checkout Successful!</h1>
+  <p>Thank you, <strong><%= name %></strong>! Your items have been successfully processed.</p>
+  <p><%= message %></p>
+  <a href="/" class="button home">Continue Shopping</a>
+</section>
+
+<%- include('partials/foot') %>

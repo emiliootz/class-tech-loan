@@ -8,8 +8,7 @@ jest.mock("../../config/expressMiddleware", () => ({
     const express = require("express");
     const methodOverride = require("method-override");
     app.use(express.static("public"));
-    app.set("view engine", "jsx");
-    app.engine("jsx", require("express-react-views").createEngine());
+    app.set("view engine", "ejs");
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     app.use(methodOverride("_method"));

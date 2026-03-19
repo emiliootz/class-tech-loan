@@ -1,0 +1,17 @@
+<nav class="col-md-3 col-lg-2 bg-light border-end sidebar p-3">
+  <h4 class="mb-4 text-primary">Admin</h4>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link <%= activeLink === 'dashboard' ? 'active' : '' %>" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <%= activeLink === 'users' ? 'active' : '' %>" href="/users">Users</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <%= activeLink === 'loans' ? 'active' : '' %>" href="/loaned-items">Loans</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link <%= activeLink === 'items' ? 'active' : '' %>" href="/admin?tab=items">Items</a>
+    </li>
+  </ul>
+</nav>

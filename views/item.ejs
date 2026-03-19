@@ -1,0 +1,44 @@
+<%- include('partials/head', { title: item.make + ' ' + item.model, styles: ['itemDetailsPage.css', 'itemDetails.css', 'productImage.css', 'timePicker.css', 'button.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
+
+<div class="item-page">
+  <div class="row">
+    <div class="left-column">
+      <div class="image">
+        <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" />
+      </div>
+    </div>
+
+    <div class="middle-column">
+      <div class="details">
+        <% if (item.assetType) { %><p><strong>Asset Type:</strong> <%= item.assetType %></p><% } %>
+        <% if (item.assetId) { %><p><strong>Asset ID:</strong> <%= item.assetId %></p><% } %>
+        <% if (item.make) { %><p><strong>Make:</strong> <%= item.make %></p><% } %>
+        <% if (item.model) { %><p><strong>Model:</strong> <%= item.model %></p><% } %>
+        <% if (item.serialNumber) { %><p><strong>Serial:</strong> <%= item.serialNumber %></p><% } %>
+        <% if (item.umbTagNumber) { %><p><strong>Tag:</strong> <%= item.umbTagNumber %></p><% } %>
+        <% if (item.description) { %><p><strong>Description:</strong> <%= item.description %></p><% } %>
+        <% if (item.status) { %><p><strong>Status:</strong> <%= item.status %></p><% } %>
+        <% if (item.dateAdded) { %><p><strong>Added:</strong> <%= new Date(item.dateAdded).toLocaleString() %></p><% } %>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="card">
+        <%- include('partials/timepicker', { label: 'Arrival Time', id: 'arrivalDate' }) %>
+        <%- include('partials/timepicker', { label: 'Return Time', id: 'returnDate' }) %>
+        <form action="/add-to-cart/<%= item._id %>" method="POST">
+          <button
+            class="button checkout"
+            <% if (item.status !== 'Available') { %>disabled<% } %>
+            style="width: 100%; margin-top: 1rem"
+          >
+            <%= item.status === 'Available' ? 'Add to Cart' : 'Unavailable' %>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,10 @@
+<%- include('partials/head', { title: '404 - Page Not Found', styles: ['404.css', 'button.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: false }) %>
+
+<section class="container">
+  <h1>404</h1>
+  <p>Oops! The page you're looking for doesn't exist.</p>
+  <a href="/" class="button home">Go Back Home</a>
+</section>
+
+<%- include('partials/foot') %>

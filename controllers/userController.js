@@ -168,7 +168,7 @@ exports.dashboardPage = async (req, res, next) => {
       ItemModel.countDocuments({ status: "Available" }),
     ]);
 
-    res.render("Dashboard", {
+    res.render("dashboard", {
       isLoggedIn,
       cartCount,
       isAdmin,

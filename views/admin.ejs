@@ -1,0 +1,134 @@
+<%- include('partials/head', { title: 'Admin Dashboard', styles: ['adminPage.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: false }) %>
+
+<div class="admin-container">
+  <h1 class="admin-title">Admin Dashboard</h1>
+
+  <% if (flash.success && flash.success.length > 0) { %>
+  <div class="alert alert-success" role="alert"><%= flash.success[0] %></div>
+  <% } %>
+  <% if (flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger" role="alert"><%= flash.error[0] %></div>
+  <% } %>
+
+  <div class="admin-tabs">
+    <a href="/admin?tab=users" class="tab-button <%= activeTab === 'users' ? 'active' : '' %>">Manage Users</a>
+    <a href="/admin?tab=items" class="tab-button <%= activeTab === 'items' ? 'active' : '' %>">Manage Items</a>
+  </div>
+
+  <% if (activeTab === 'items') { %>
+  <div class="tab-pane">
+    <h2 class="tab-title">Manage Items</h2>
+
+    <form action="/add-item" method="POST" enctype="multipart/form-data" class="add-user-form">
+      <input type="text" name="assetId" placeholder="Asset ID" required />
+      <input type="text" name="assetType" placeholder="Type (e.g. Video, Audio)" required />
+      <input type="text" name="make" placeholder="Make" required />
+      <input type="text" name="model" placeholder="Model" required />
+      <select name="status" required>
+        <option value="Available">Available</option>
+        <option value="Loaned">Loaned</option>
+        <option value="Assigned To Location">Assigned To Location</option>
+      </select>
+      <label style="font-size: 13px; color: #555">
+        Item Image (optional)
+        <input type="file" name="picture" accept="image/jpeg,image/png,image/webp" style="display: block; margin-top: 4px" />
+      </label>
+      <button type="submit" class="btn btn-add">Add Item</button>
+    </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Asset ID</th>
+          <th>Type</th>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach(function(item) { %>
+        <tr>
+          <td><%= item.assetId %></td>
+          <td><%= item.assetType %></td>
+          <td><%= item.make %></td>
+          <td><%= item.model %></td>
+          <td><%= item.status %></td>
+          <td>
+            <form action="/delete-item/<%= item._id %>?_method=DELETE" method="POST" style="display: inline">
+              <button type="submit" class="btn btn-delete">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+
+  <% if (activeTab === 'users') { %>
+  <div class="tab-pane">
+    <h2 class="tab-title">Manage Users</h2>
+
+    <form action="/users/add" method="POST" class="add-user-form">
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="text" name="phone" placeholder="Phone Number" required />
+      <select name="role" required>
+        <option value="user">User</option>
+        <option value="staff">Staff</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit" class="btn btn-add">Add User</button>
+    </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function(user) { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%# Update form — phone input is associated via form id attribute %>
+            <form id="update-<%= user._id %>" action="/admin/users/update/<%= user._id %>?_method=PUT" method="POST">
+              <input type="text" name="phone" value="<%= user.phone %>" required />
+            </form>
+          </td>
+          <td>
+            <select name="role" form="update-<%= user._id %>">
+              <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+              <option value="staff" <%= user.role === 'staff' ? 'selected' : '' %>>Staff</option>
+              <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+            </select>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button type="submit" form="update-<%= user._id %>" class="btn btn-update">Update</button>
+              <form action="/admin/users/disable/<%= user._id %>?_method=PUT" method="POST" style="display: inline">
+                <button type="submit" class="btn btn-disable"><%= user.disabled ? 'Enable' : 'Disable' %></button>
+              </form>
+              <form action="/admin/users/<%= user._id %>?_method=DELETE" method="POST" style="display: inline">
+                <button type="submit" class="btn btn-delete">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/foot') %>

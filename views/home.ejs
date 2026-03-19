@@ -1,0 +1,87 @@
+<%- include('partials/head', { title: 'UMass Boston Equipment Borrowing', styles: ['home.css', 'itemGrid.css', 'itemCard.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
+
+<section class="hero">
+  <div class="dark-overlay"></div>
+  <h1>
+    Borrow<br />
+    &nbsp;&nbsp;&nbsp;Equipment at<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Umass Boston
+  </h1>
+</section>
+
+<section class="category">
+  <h1>Categories</h1>
+  <a href="/" class="category-box<%= !activeCategory ? ' active' : '' %>">
+    <div class="dark-overlay"></div>
+    <h3>All</h3>
+  </a>
+  <% ['Video', 'Audio', 'Photo', 'Dongle'].forEach(function(cat) { %>
+  <a
+    href="/?category=<%= cat %>"
+    class="category-box<%= activeCategory && activeCategory.toLowerCase() === cat.toLowerCase() ? ' active' : '' %>"
+  >
+    <div class="dark-overlay"></div>
+    <h3><%= cat %></h3>
+  </a>
+  <% }); %>
+</section>
+
+<section class="available-items">
+  <h1>Available Items</h1>
+
+  <% if (items.length > 0) { %>
+  <section class="item-grid">
+    <div class="grid">
+      <% items.forEach(function(item) { %>
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="/item/<%= item._id %>" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm">
+            <div class="image">
+              <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" />
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title"><%= item.make %> <%= item.model %></h5>
+              <% if (item.status === 'Available') { %>
+              <form action="/add-to-cart/<%= item._id %>" method="POST">
+                <button type="submit" class="btn btn-umb w-100">Add to Cart</button>
+              </form>
+              <% } else { %>
+              <button class="btn btn-secondary w-100" disabled>Unavailable</button>
+              <% } %>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% }); %>
+    </div>
+  </section>
+  <% } else { %>
+  <p>No items available at the moment.</p>
+  <% } %>
+
+  <% if (totalPages > 1) { %>
+  <div class="pagination">
+    <% if (currentPage > 1) { %>
+    <a
+      href="/?<%= activeCategory ? 'category=' + activeCategory + '&' : '' %>page=<%= currentPage - 1 %>"
+      class="page-btn"
+    >&laquo; Prev</a>
+    <% } %>
+    <% for (let p = 1; p <= totalPages; p++) { %>
+    <a
+      href="/?<%= activeCategory ? 'category=' + activeCategory + '&' : '' %>page=<%= p %>"
+      class="page-btn<%= p === currentPage ? ' active' : '' %>"
+    ><%= p %></a>
+    <% } %>
+    <% if (currentPage < totalPages) { %>
+    <a
+      href="/?<%= activeCategory ? 'category=' + activeCategory + '&' : '' %>page=<%= currentPage + 1 %>"
+      class="page-btn"
+    >Next &raquo;</a>
+    <% } %>
+  </div>
+  <% } %>
+</section>
+
+<%- include('partials/foot') %>

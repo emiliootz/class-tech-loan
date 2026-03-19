@@ -1,0 +1,41 @@
+<%- include('partials/head', { title: 'Dashboard', styles: ['dashboard.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff }) %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <%- include('partials/sidebar', { activeLink: 'dashboard' }) %>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <h1 class="mb-4">Dashboard</h1>
+
+      <div class="row">
+        <div class="col-12 col-lg-4 mb-4">
+          <div class="card shadow-sm text-center">
+            <div class="card-body">
+              <h5 class="card-title">Active Loans</h5>
+              <p class="display-6 fw-bold text-primary"><%= activeLoans %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-4">
+          <div class="card shadow-sm text-center">
+            <div class="card-body">
+              <h5 class="card-title">Total Users</h5>
+              <p class="display-6 fw-bold text-success"><%= totalUsers %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-4">
+          <div class="card shadow-sm text-center">
+            <div class="card-body">
+              <h5 class="card-title">Available Items</h5>
+              <p class="display-6 fw-bold text-info"><%= availableItems %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

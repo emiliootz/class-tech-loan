@@ -1,0 +1,59 @@
+<%- include('partials/head', { title: 'Edit User', styles: ['users.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: false }) %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <%- include('partials/sidebar', { activeLink: 'users' }) %>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <div class="d-flex align-items-center mb-4 gap-3">
+        <a href="/users" class="btn btn-outline-secondary btn-sm">&larr; Back</a>
+        <h1 class="mb-0">Edit User</h1>
+      </div>
+
+      <div class="card" style="max-width: 500px">
+        <div class="card-body">
+          <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label fw-semibold">Name</label>
+              <input type="text" id="name" class="form-control" value="<%= user.name || '' %>" readonly />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label fw-semibold">Email</label>
+              <input type="email" id="email" class="form-control" value="<%= user.email || '' %>" readonly />
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label fw-semibold">Phone</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                class="form-control"
+                value="<%= user.phone || '' %>"
+                placeholder="999-999-9999"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="role" class="form-label fw-semibold">Role</label>
+              <select id="role" name="role" class="form-select">
+                <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                <option value="staff" <%= user.role === 'staff' ? 'selected' : '' %>>Staff</option>
+                <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+              </select>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <a href="/users" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<%- include('partials/foot') %>
