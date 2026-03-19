@@ -1,6 +1,7 @@
 // controllers/userController.js
 
 const { UserModel, ItemModel } = require("../config/database");
+const formatPhoneNumber = require("../utils/formatPhone");
 
 /**
  * Assign a role to an existing user.
@@ -187,16 +188,7 @@ exports.addUser = async (req, res, next) => {
     return res.redirect("/admin?tab=users");
   }
 
-  // Format phone number before saving
-  const formatPhoneNumber = (phone) => {
-    const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
-    if (cleaned.length === 10) {
-      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-    }
-    return phone;
-  };
-
-  phone = formatPhoneNumber(phone); // Apply formatting
+  phone = formatPhoneNumber(phone);
 
   if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
     return res
@@ -232,14 +224,6 @@ exports.addUser = async (req, res, next) => {
   } catch (error) {
     res.redirect("/admin?tab=users");
   }
-};
-
-const formatPhoneNumber = (phone) => {
-  const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
-  if (cleaned.length === 10) {
-    return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-  }
-  return phone; // If not 10 digits, return as-is
 };
 
 exports.updateUserPhone = async (req, res, next) => {
@@ -279,15 +263,6 @@ exports.updateUserPhone = async (req, res, next) => {
 exports.updateUserDetails = async (req, res, next) => {
   const userId = req.params.id;
   let { phone, role } = req.body;
-
-  // Format the phone number before saving
-  const formatPhoneNumber = (phone) => {
-    const cleaned = phone.replace(/\D/g, ""); // Remove non-numeric characters
-    if (cleaned.length === 10) {
-      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-    }
-    return phone;
-  };
 
   if (!phone || typeof phone !== "string") {
     return res.status(400).json({ message: "Invalid phone number." });
