@@ -8,6 +8,7 @@ const AdminPage = ({
   cartCount,
   isLoggedIn,
   isAdmin,
+  flash = {},
 }) => {
   return (
     <html>
@@ -26,6 +27,17 @@ const AdminPage = ({
         {/* Admin Container */}
         <div className="admin-container">
           <h1 className="admin-title">Admin Dashboard</h1>
+
+          {flash.success && flash.success.length > 0 && (
+            <div className="alert alert-success" role="alert">
+              {flash.success[0]}
+            </div>
+          )}
+          {flash.error && flash.error.length > 0 && (
+            <div className="alert alert-danger" role="alert">
+              {flash.error[0]}
+            </div>
+          )}
 
           {/* Navigation Tabs */}
           <div className="admin-tabs">

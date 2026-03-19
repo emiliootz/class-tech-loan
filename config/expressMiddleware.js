@@ -6,6 +6,7 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const MongoStore = require("connect-mongo");
 const rateLimit = require("express-rate-limit");
+const flash = require("connect-flash");
 const config = require("./config");
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -77,4 +78,7 @@ module.exports.configureExpressMiddleware = (app) => {
   require("../config/passport"); // Ensure Passport configuration is loaded
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // Flash messages (requires session middleware above)
+  app.use(flash());
 };

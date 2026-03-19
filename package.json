@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node start.js",
     "dev": "npx nodemon start.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "class-tech-loan": "file:",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.7",
@@ -38,6 +39,8 @@
     "react": "^16.14.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "jest": "^30.3.0",
+    "nodemon": "^3.1.7",
+    "supertest": "^7.2.2"
   }
 }

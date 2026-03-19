@@ -50,6 +50,11 @@ exports.getAdminPage = async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
     const isAdmin = req.user && req.user.role === "admin";
 
+    const flash = {
+      success: req.flash("success"),
+      error: req.flash("error"),
+    };
+
     res.render("admin", {
       activeTab,
       users,
@@ -57,6 +62,7 @@ exports.getAdminPage = async (req, res, next) => {
       cartCount,
       isLoggedIn,
       isAdmin,
+      flash,
     });
   } catch (error) {
     next(error);
@@ -124,8 +130,10 @@ exports.deleteUser = async (req, res, next) => {
   try {
     const deletedUser = await UserModel.findByIdAndDelete(userId);
     if (!deletedUser) {
-      return res.status(404).json({ message: "User not found." });
+      req.flash("error", "User not found.");
+      return res.redirect("/admin?tab=users");
     }
+    req.flash("success", "User deleted successfully.");
     res.redirect("/admin?tab=users");
   } catch (error) {
     next(error);
@@ -181,10 +189,12 @@ exports.addUser = async (req, res, next) => {
   let { name, email, phone, role } = req.body;
 
   if (!name || !email || !role || !phone) {
+    req.flash("error", "All fields are required.");
     return res.redirect("/admin?tab=users");
   }
 
   if (!["user", "staff", "admin"].includes(role)) {
+    req.flash("error", "Invalid role selected.");
     return res.redirect("/admin?tab=users");
   }
 
@@ -214,14 +224,16 @@ exports.addUser = async (req, res, next) => {
       name,
       email,
       role,
-      phone, // Now formatted before saving
-      googleId: null, // Will be updated when they log in via Google
+      phone,
+      googleId: null,
       disabled: false,
     });
 
     await newUser.save();
-    res.redirect("/admin?tab=users"); // Redirect to admin page
+    req.flash("success", `User "${name}" added successfully.`);
+    res.redirect("/admin?tab=users");
   } catch (error) {
+    req.flash("error", "Failed to add user. Please try again.");
     res.redirect("/admin?tab=users");
   }
 };

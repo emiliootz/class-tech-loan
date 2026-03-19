@@ -110,6 +110,7 @@ exports.addItem = async (req, res, next) => {
       ...(picture && { picture }),
     });
     await newItem.save();
+    req.flash("success", `Item "${assetId}" added successfully.`);
     res.redirect("/admin");
   } catch (error) {
     next(error);
@@ -125,10 +126,10 @@ exports.deleteItem = async (req, res, next) => {
   try {
     const deletedItem = await ItemModel.findByIdAndDelete(id);
     if (!deletedItem) {
-      const error = new Error("Item not found");
-      error.status = 404;
-      return next(error);
+      req.flash("error", "Item not found.");
+      return res.redirect("/admin");
     }
+    req.flash("success", "Item deleted successfully.");
     res.redirect("/admin");
   } catch (error) {
     next(error);
