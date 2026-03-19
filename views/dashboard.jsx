@@ -11,6 +11,9 @@ function Dashboard({
   isLoggedIn = true,
   isAdmin = true,
   isStaff = true,
+  activeLoans = 0,
+  totalUsers = 0,
+  availableItems = 0,
 }) {
   return (
     <html>
@@ -39,29 +42,16 @@ function Dashboard({
               <h4 className="mb-4 text-primary">Admin</h4>
               <ul className="nav flex-column">
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">
-                    Dashboard
-                  </a>
+                  <a className="nav-link active" href="/dashboard">Dashboard</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/users">
-                    Users
-                  </a>
+                  <a className="nav-link" href="/users">Users</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Loans
-                  </a>
+                  <a className="nav-link" href="/loaned-items">Loans</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Items
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Reports
-                  </a>
+                  <a className="nav-link" href="/admin?tab=items">Items</a>
                 </li>
               </ul>
             </nav>
@@ -71,32 +61,28 @@ function Dashboard({
               <h1 className="mb-4">Dashboard</h1>
 
               <div className="row">
-                {/* Chart Section */}
-                <div className="col-12 col-lg-8 mb-4">
-                  <div className="card shadow-sm">
+                {/* Summary Cards */}
+                <div className="col-12 col-lg-4 mb-4">
+                  <div className="card shadow-sm text-center">
                     <div className="card-body">
-                      <h5 className="card-title">Usage Overview</h5>
-                      <div className="chart-placeholder mt-3 rounded"></div>
+                      <h5 className="card-title">Active Loans</h5>
+                      <p className="display-6 fw-bold text-primary">{activeLoans}</p>
                     </div>
                   </div>
                 </div>
-
-                {/* Summary Panel */}
                 <div className="col-12 col-lg-4 mb-4">
-                  <div className="card shadow-sm">
+                  <div className="card shadow-sm text-center">
                     <div className="card-body">
-                      <h5 className="card-title">Quick Stats</h5>
-                      <ul className="list-unstyled mt-3">
-                        <li>
-                          <strong>Active Loans:</strong> 24
-                        </li>
-                        <li>
-                          <strong>Total Users:</strong> 85
-                        </li>
-                        <li>
-                          <strong>Available Items:</strong> 130
-                        </li>
-                      </ul>
+                      <h5 className="card-title">Total Users</h5>
+                      <p className="display-6 fw-bold text-success">{totalUsers}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mb-4">
+                  <div className="card shadow-sm text-center">
+                    <div className="card-body">
+                      <h5 className="card-title">Available Items</h5>
+                      <p className="display-6 fw-bold text-info">{availableItems}</p>
                     </div>
                   </div>
                 </div>

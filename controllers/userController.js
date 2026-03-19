@@ -145,16 +145,6 @@ exports.dashboardPage = async (req, res, next) => {
     let cartCount = 0;
     let isAdmin = false;
     let isStaff = false;
-    // Calculate dashboard data (this is an example; you'll need to compute your own)
-    const dashboardData = [
-      { day: "Monday", loans: 5 },
-      { day: "Tuesday", loans: 8 },
-      { day: "Wednesday", loans: 6 },
-      { day: "Thursday", loans: 10 },
-      { day: "Friday", loans: 7 },
-      { day: "Saturday", loans: 4 },
-      { day: "Sunday", loans: 3 },
-    ];
 
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
@@ -162,12 +152,22 @@ exports.dashboardPage = async (req, res, next) => {
       isAdmin = user.role === "admin";
       isStaff = user.role === "staff";
     }
+
+    const { LoanModel } = require("../config/database");
+    const [activeLoans, totalUsers, availableItems] = await Promise.all([
+      LoanModel.countDocuments({ status: "Loaned" }),
+      UserModel.countDocuments(),
+      ItemModel.countDocuments({ status: "Available" }),
+    ]);
+
     res.render("Dashboard", {
       isLoggedIn,
       cartCount,
       isAdmin,
       isStaff,
-      dashboardData,
+      activeLoans,
+      totalUsers,
+      availableItems,
     });
   } catch (error) {
     next(error);
