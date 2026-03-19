@@ -25,7 +25,7 @@ function TimePicker({ label, id }) {
         <label htmlFor={id}>
           <strong>{label}</strong>
         </label>
-        <input type="time" id={id} className="time-input" />
+        <input type="time" id={id} name={id} className="time-input" />
       </div>
     </>
   );

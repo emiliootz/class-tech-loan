@@ -85,6 +85,26 @@ function RemoveButton({ itemId }) {
   );
 }
 
+// Add to Cart Button
+function AddToCartButton({ itemId, isAvailable }) {
+  return (
+    <>
+      <head>
+        <link rel="stylesheet" href="/css/button.css" />
+      </head>
+      <form action={`/add-to-cart/${itemId}`} method="POST">
+        <button
+          className="button checkout"
+          disabled={!isAvailable}
+          style={{ width: "100%", marginTop: "1rem" }}
+        >
+          {isAvailable ? "Add to Cart" : "Unavailable"}
+        </button>
+      </form>
+    </>
+  );
+}
+
 // Authentication Button (Sign In / Sign Out)
 function AuthButton({ isLoggedIn }) {
   return (
@@ -107,4 +127,5 @@ module.exports = {
   CheckoutButton,
   RemoveButton,
   AuthButton,
+  AddToCartButton,
 };

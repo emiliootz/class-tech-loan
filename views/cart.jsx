@@ -8,11 +8,7 @@
 const React = require("react");
 const Navbar = require("./components/Navbar"); // Importing the navigation bar component
 const TimePicker = require("./components/TimePicker"); // Importing the time selection component
-const {
-  RemoveButton,
-  CheckoutButton,
-  HomeButton,
-} = require("./components/Buttons"); // Importing buttons for cart actions
+const { HomeButton } = require("./components/Buttons"); // Importing buttons for cart actions
 
 /**
  * CartPage Component
@@ -81,21 +77,30 @@ function CartPage({
             <p>Your cart is empty!</p>
           )}
 
-          {/* Display checkout and continue shopping buttons only if cart is not empty */}
+          {/* Continue shopping button */}
           {cartItems.length > 0 && (
             <div className="cart-actions">
               <HomeButton text="Continue Shopping" link="/" />
-              <CheckoutButton />
             </div>
           )}
         </div>
 
-        {/* Right container: Time selection for arrival and return */}
+        {/* Right container: Time selection and checkout */}
         <div className="right-container">
-          <div className="times">
-            <TimePicker label="Arrival Time" id="arrivalDate" />
-            <TimePicker label="Return Time" id="returnDate" />
-          </div>
+          {cartItems.length > 0 ? (
+            <form action="/checkout-cart" method="POST" className="times">
+              <TimePicker label="Arrival Time" id="arrivalDate" />
+              <TimePicker label="Return Time" id="returnDate" />
+              <button type="submit" className="button checkout" style={{ width: "100%", marginTop: "1rem" }}>
+                Checkout
+              </button>
+            </form>
+          ) : (
+            <div className="times">
+              <TimePicker label="Arrival Time" id="arrivalDate" />
+              <TimePicker label="Return Time" id="returnDate" />
+            </div>
+          )}
         </div>
       </section>
     </>

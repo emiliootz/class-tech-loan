@@ -18,24 +18,22 @@ passport.use(
       clientID: config.passport.google.clientID,
       clientSecret: config.passport.google.clientSecret,
       callbackURL: config.passport.google.callbackURL,
-      // scope: ["profile", "email"],
+      scope: ["profile", "email"],
     },
 
-    async (accessToken, refreshToken, profile, cb) => {
+    async (_accessToken, _refreshToken, profile, cb) => {
       try {
-        // Use async/await to find user
-        let user = await UserModel.findOne(
-          { googleId: profile.id }
-          // { email: profile.emails[0].value }
-        );
+        let user = await UserModel.findOne({ googleId: profile.id });
         if (!user) {
-          // If user doesn't exist, create a new one
           user = new UserModel({
             googleId: profile.id,
             name: profile.displayName,
-            // email: profile.emails[0].value,
+            email: profile.emails?.[0]?.value,
           });
           await user.save();
+        }
+        if (user.disabled) {
+          return cb(null, false, { message: "Account has been disabled." });
         }
         return cb(null, user);
       } catch (err) {
