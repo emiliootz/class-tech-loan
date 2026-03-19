@@ -7,10 +7,7 @@ const passport = require("passport"); // Import passport
 const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import for google authentication
 const { UserModel } = require("./database"); // Using UserModel
 
-/*
-    Setting upp google authentication using passport Google Strategy parameters are passed in using
-    config.js and information should be setup in your .env file.
- */
+const ALLOWED_DOMAIN = "umb.edu";
 
 passport.use(
   new GoogleStrategy(
@@ -23,15 +20,33 @@ passport.use(
 
     async (_accessToken, _refreshToken, profile, cb) => {
       try {
-        let user = await UserModel.findOne({ googleId: profile.id });
-        if (!user) {
-          user = new UserModel({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails?.[0]?.value,
-          });
-          await user.save();
+        const email = profile.emails?.[0]?.value || "";
+
+        // Enforce @umb.edu domain
+        if (!email.toLowerCase().endsWith(`@${ALLOWED_DOMAIN}`)) {
+          return cb(null, false, { message: "Only @umb.edu accounts are allowed." });
         }
+
+        // Try to find by Google ID first
+        let user = await UserModel.findOne({ googleId: profile.id });
+
+        if (!user) {
+          // Try to link to an admin-pre-created account by email
+          user = await UserModel.findOne({ email });
+          if (user) {
+            user.googleId = profile.id;
+            await user.save();
+          } else {
+            // Auto-create with default role if no pre-existing record
+            user = new UserModel({
+              googleId: profile.id,
+              name: profile.displayName,
+              email,
+            });
+            await user.save();
+          }
+        }
+
         if (user.disabled) {
           return cb(null, false, { message: "Account has been disabled." });
         }
