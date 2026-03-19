@@ -78,7 +78,6 @@ exports.removeFromCart = async (req, res, next) => {
     user.cart = user.cart.filter((id) => id.toString() !== itemId);
     await user.save();
 
-    console.log(`Item ${itemId} removed from cart`);
     res.redirect("/cart");
   } catch (error) {
     next(error);
@@ -90,6 +89,8 @@ exports.removeFromCart = async (req, res, next) => {
  */
 exports.checkoutCart = async (req, res, next) => {
   try {
+    const { arrivalDate, returnDate } = req.body;
+
     const user = await UserModel.findById(req.user._id).populate("cart");
     if (!user) {
       const error = new Error("User not found");
@@ -111,7 +112,11 @@ exports.checkoutCart = async (req, res, next) => {
     user.cart = [];
     await user.save();
 
-    res.redirect("/checkout-success");
+    const query = new URLSearchParams();
+    if (arrivalDate) query.set("arrivalDate", arrivalDate);
+    if (returnDate) query.set("returnDate", returnDate);
+
+    res.redirect(`/checkout-success?${query.toString()}`);
   } catch (error) {
     next(error);
   }
@@ -122,6 +127,7 @@ exports.checkoutCart = async (req, res, next) => {
  */
 exports.getCheckoutSuccess = async (req, res, next) => {
   try {
+    const { arrivalDate, returnDate } = req.query;
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
@@ -137,11 +143,11 @@ exports.getCheckoutSuccess = async (req, res, next) => {
       isLoggedIn,
       cartCount,
       isAdmin,
+      arrivalDate: arrivalDate || null,
+      returnDate: returnDate || null,
       message: "Your items are ready for pickup!",
     });
   } catch (error) {
     next(error);
   }
-
-  //test
 };
