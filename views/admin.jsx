@@ -100,25 +100,10 @@ const AdminPage = ({
                         </td>
 
                         <td>
-                          <select name="role">
-                            <option
-                              value="user"
-                              selected={user.role === "user"}
-                            >
-                              User
-                            </option>
-                            <option
-                              value="staff"
-                              selected={user.role === "staff"}
-                            >
-                              Staff
-                            </option>
-                            <option
-                              value="admin"
-                              selected={user.role === "admin"}
-                            >
-                              Admin
-                            </option>
+                          <select name="role" defaultValue={user.role}>
+                            <option value="user">User</option>
+                            <option value="staff">Staff</option>
+                            <option value="admin">Admin</option>
                           </select>
                         </td>
 
