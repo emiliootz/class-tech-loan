@@ -125,7 +125,7 @@ function Users({
                             </a>
                             <form
                               method="POST"
-                              action={`/users/${user._id}?_method=DELETE`}
+                              action={`/admin/users/${user._id}?_method=DELETE`}
                               style={{ display: "inline" }}
                             >
                               <button

@@ -308,7 +308,23 @@ exports.updateUserDetails = async (req, res, next) => {
   try {
     await UserModel.findByIdAndUpdate(userId, { phone, role }, { new: true });
 
-    res.redirect("/admin?tab=users"); // Redirect back to admin page
+    res.redirect("/users");
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getUserEditPage = async (req, res, next) => {
+  try {
+    const user = await UserModel.findById(req.params.id).lean();
+    if (!user) {
+      const error = new Error("User not found");
+      error.status = 404;
+      return next(error);
+    }
+    const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
+    const cartCount = req.user?.cart?.length || 0;
+    res.render("editUser", { user, isLoggedIn, isAdmin: true, cartCount });
   } catch (error) {
     next(error);
   }

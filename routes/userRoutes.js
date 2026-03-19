@@ -96,6 +96,26 @@ router.get(
   userController.usersPage
 );
 
+/**
+ * Render the edit page for a specific user.
+ */
+router.get(
+  "/users/:id/edit",
+  requireRole("admin"),
+  validateObjectId("id"),
+  userController.getUserEditPage
+);
+
+/**
+ * Handle the edit form submission for a specific user.
+ */
+router.put(
+  "/users/:id",
+  requireRole("admin"),
+  validateObjectId("id"),
+  userController.updateUserDetails
+);
+
 /*****************************
  *       Staff Role          *
  *****************************/
