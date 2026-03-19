@@ -5,10 +5,7 @@
  * The page centers the error message and includes a styled "Go Back Home" button.
  */
 
-/* Importing Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..700&display=swap");
-
-/* 
+/*
  * Main container for the 404 page 
  * - Centers content vertically and horizontally
  * - Uses Open Sans font for all text

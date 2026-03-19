@@ -7,9 +7,6 @@
  * - The time selection for arrival and return
  */
 
-/* Importing Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
 /*****************************
  *      Main Container       *
  *****************************/
@@ -18,11 +15,11 @@
  * Main cart container layout:
  * - Displays cart contents and time selection side by side
  */
-.container {
+.cart-container {
   display: flex;
-  flex-direction: row; /* Makes the left and right sections appear side by side */
-  justify-content: space-between; /* Distributes space between sections */
-  align-items: flex-start; /* Aligns content to the top */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
   font-family: "Open Sans", sans-serif;
   width: 90%;
   max-width: 1200px;

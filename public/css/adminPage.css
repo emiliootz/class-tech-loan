@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..700&display=swap");
-
 /* General container for the admin page */
 .admin-container {
   font-family: "Open Sans", sans-serif;
@@ -64,7 +62,7 @@
 }
 
 /* Table */
-.table {
+.admin-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -72,24 +70,24 @@
   background-color: white;
 }
 
-.table th,
-.table td {
+.admin-table th,
+.admin-table td {
   text-align: left;
   padding: 12px;
   border: 1px solid #ddd;
 }
 
-.table th {
+.admin-table th {
   background-color: #0056b3;
   color: white;
   font-weight: bold;
 }
 
-.table tr:nth-child(even) {
+.admin-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.table tr:hover {
+.admin-table tr:hover {
   background-color: #e6f3ff;
 }
 
@@ -113,16 +111,6 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 0.9rem;
-}
-
-/* Buttons */
-.btn {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
 }
 
 /* Update Role Button */

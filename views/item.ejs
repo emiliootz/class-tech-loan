@@ -2,7 +2,7 @@
 <%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
 
 <div class="item-page">
-  <div class="row">
+  <div class="item-row">
     <div class="left-column">
       <div class="image">
         <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" />
@@ -24,7 +24,7 @@
     </div>
 
     <div class="right-column">
-      <div class="card">
+      <div class="item-card">
         <%- include('partials/timepicker', { label: 'Arrival Time', id: 'arrivalDate' }) %>
         <%- include('partials/timepicker', { label: 'Return Time', id: 'returnDate' }) %>
         <form action="/add-to-cart/<%= item._id %>" method="POST">
