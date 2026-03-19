@@ -8,9 +8,43 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-/* ── Logo ──────────────────────────────────────── */
-.logo {
-  max-width: 130px;
+/* ── Screen reader only (visually hidden) ──────── */
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Logo — matches official umb.edu structure ─── */
+.header__logo {
+  display: block;
+  max-width: 131px;
+  flex: 1;
+}
+
+.logo__main {
+  width: 8.25rem;
+}
+
+.svg {
+  display: block;
+  position: relative;
+}
+
+.svg figure {
+  margin: 0;
+}
+
+.svg figure img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ── Sticky wrapper ────────────────────────────── */
