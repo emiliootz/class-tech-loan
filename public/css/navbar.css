@@ -1,22 +1,201 @@
 /**
  * @file navbar.css
- * @description Minimal custom styles for branding and logo size
- *              used in conjunction with Bootstrap navbar component.
+ * @description Custom styles matching the two-tier UMass Boston website header,
+ *              with sticky positioning and collapsible search bar.
  */
-
-/* ===============================
-   Brand Styling
-   =============================== */
 
 body {
   font-family: "Open Sans", sans-serif;
 }
-/* UMass Boston logo sizing */
+
+/* ── Logo ──────────────────────────────────────── */
 .logo {
-  max-width: 125px;
+  max-width: 130px;
 }
 
-/* UMass Boston logo color */
+/* ── Sticky wrapper ────────────────────────────── */
+.navbar-umb-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+/* ── Primary nav ───────────────────────────────── */
 .bg-umb-blue {
   background-color: #005a8b;
+}
+
+/* ── Search toggle button ──────────────────────── */
+.btn-search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  transition: opacity 0.15s;
+}
+
+.btn-search-toggle:hover {
+  opacity: 0.75;
+}
+
+/* ── Collapsible search bar ────────────────────── */
+.navbar-umb-search {
+  background-color: #004a75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+  padding: 0 1.5rem;
+}
+
+.navbar-umb-search.is-open {
+  max-height: 80px;
+  padding: 0.6rem 1.5rem;
+}
+
+.navbar-umb-search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.navbar-umb-search-icon {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.navbar-umb-search-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.75rem;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.navbar-umb-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-umb-search-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar-umb-search-btn {
+  background: #fff;
+  border: none;
+  border-radius: 3px;
+  color: #004a75;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.navbar-umb-search-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.navbar-umb-search-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.navbar-umb-search-close:hover {
+  color: #fff;
+}
+
+/* ── Secondary bar ─────────────────────────────── */
+.navbar-umb-secondary {
+  background-color: #003f66;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1.5rem;
+  gap: 1rem;
+}
+
+/* Shared list reset */
+.navbar-umb-audience {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+/* Left — plain audience links */
+.navbar-umb-audience--invert {
+  gap: 0;
+}
+
+.navbar-umb-audience--invert li + li::before {
+  content: "|";
+  color: rgba(255, 255, 255, 0.35);
+  padding: 0 0.5rem;
+}
+
+.navbar-umb-audience--invert a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+}
+
+.navbar-umb-audience--invert a:hover {
+  color: #fff;
+}
+
+/* Right — outlined button links */
+.navbar-umb-btn {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.15s, color 0.15s;
+}
+
+.navbar-umb-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* CTA variant — filled white */
+.navbar-umb-btn--cta {
+  background: #fff;
+  color: #003f66;
+  border-color: #fff;
+}
+
+.navbar-umb-btn--cta:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: #003f66;
 }

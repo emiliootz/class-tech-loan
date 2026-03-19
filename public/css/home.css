@@ -186,6 +186,18 @@
   text-align: center;
 }
 
+/* Item card button */
+.btn-umb {
+  background-color: #005a8b;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-umb:hover {
+  background-color: #003f66;
+  color: white;
+}
+
 /* Pagination */
 .pagination {
   display: flex;

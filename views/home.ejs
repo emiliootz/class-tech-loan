@@ -1,4 +1,4 @@
-<%- include('partials/head', { title: 'UMass Boston Equipment Borrowing', styles: ['home.css', 'itemGrid.css', 'itemCard.css'] }) %>
+<%- include('partials/head', { title: 'UMass Boston Equipment Borrowing', styles: ['home.css'] }) %>
 <%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
 
 <section class="hero">
@@ -31,14 +31,14 @@
   <h1>Available Items</h1>
 
   <% if (items.length > 0) { %>
-  <section class="item-grid">
-    <div class="grid">
+  <div class="container-fluid px-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       <% items.forEach(function(item) { %>
-      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+      <div class="col">
         <a href="/item/<%= item._id %>" class="text-decoration-none text-dark">
           <div class="card h-100 shadow-sm">
-            <div class="image">
-              <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" />
+            <div class="d-flex justify-content-center align-items-center p-3" style="height: 200px;">
+              <img src="<%= item.picture %>" alt="<%= item.make %> <%= item.model %>" class="img-fluid" style="max-height: 180px; object-fit: contain;" />
             </div>
             <div class="card-body text-center">
               <h5 class="card-title"><%= item.make %> <%= item.model %></h5>
@@ -55,7 +55,7 @@
       </div>
       <% }); %>
     </div>
-  </section>
+  </div>
   <% } else { %>
   <p>No items available at the moment.</p>
   <% } %>

@@ -36,13 +36,16 @@ const { ItemModel, UserModel } = require("./config/database");
 // Home route
 app.get("/", async (req, res, next) => {
   try {
-    const { category } = req.query;
+    const { category, search } = req.query;
     const PAGE_SIZE = 12;
     const page = Math.max(1, parseInt(req.query.page) || 1);
 
-    const query = category
-      ? { assetType: { $regex: new RegExp(category, "i") } }
-      : {};
+    const query = {};
+    if (category) query.assetType = { $regex: new RegExp(category, "i") };
+    if (search) {
+      const re = new RegExp(search.trim(), "i");
+      query.$or = [{ make: re }, { model: re }, { assetType: re }];
+    }
 
     const [items, totalItems] = await Promise.all([
       ItemModel.find(query).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE),

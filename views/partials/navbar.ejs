@@ -1,72 +1,150 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-umb-blue px-4">
-  <a class="navbar-brand" href="/">
-    <img
-      src="/images/UMassBoston-Logo/white-logo-lockup/White-UMB-logo-lockup.png"
-      alt="UMass Boston Logo"
-      class="logo"
-    />
-  </a>
+<header class="navbar-umb-wrap">
 
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarNav"
-    aria-controls="navbarNav"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <!-- Primary nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-umb-blue px-4">
+    <a class="navbar-brand" href="/">
+      <img
+        src="/images/UMassBoston-Logo/white-logo-lockup/White-UMB-logo-lockup.svg"
+        alt="UMass Boston Logo"
+        class="logo"
+      />
+    </a>
 
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto">
-      <li class="nav-item">
-        <a class="nav-link text-white" href="/">Browse Equipment</a>
-      </li>
-    </ul>
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="d-flex align-items-center gap-3">
-      <!-- Cart icon with badge -->
-      <a href="/cart" class="position-relative text-white" aria-label="View cart">
-        <i class="bi bi-cart3 fs-4"></i>
-        <% if (cartCount > 0) { %>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem">
-          <%= cartCount %>
-        </span>
-        <% } %>
-      </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white fw-semibold" href="/">Browse Equipment</a>
+        </li>
+      </ul>
 
-      <% if (isLoggedIn) { %>
-      <!-- Account dropdown -->
-      <div class="dropdown">
+      <div class="d-flex align-items-center gap-3">
+        <!-- Search toggle -->
         <button
-          class="btn btn-outline-light dropdown-toggle"
+          class="btn-search-toggle text-white"
           type="button"
-          id="accountDropdown"
-          data-bs-toggle="dropdown"
+          aria-label="Toggle search"
           aria-expanded="false"
+          aria-controls="searchBar"
+          id="searchToggle"
         >
-          <i class="bi bi-person-circle me-1"></i>Account
+          <i class="bi bi-search fs-5"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-          <% if (isAdmin) { %>
-          <li><a class="dropdown-item" href="/admin"><i class="bi bi-gear me-2"></i>Admin</a></li>
-          <li><hr class="dropdown-divider" /></li>
+
+        <!-- Cart icon with badge -->
+        <a href="/cart" class="position-relative text-white" aria-label="View cart">
+          <i class="bi bi-cart3 fs-4"></i>
+          <% if (cartCount > 0) { %>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem">
+            <%= cartCount %>
+          </span>
           <% } %>
-          <% if (isAdmin || isStaff) { %>
-          <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <% } %>
-          <li><a class="dropdown-item" href="/my-loans"><i class="bi bi-box-seam me-2"></i>My Loans</a></li>
-          <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-        </ul>
+        </a>
+
+        <% if (isLoggedIn) { %>
+        <!-- Account dropdown -->
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-light dropdown-toggle"
+            type="button"
+            id="accountDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle me-1"></i>Account
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+            <% if (isAdmin) { %>
+            <li><a class="dropdown-item" href="/admin"><i class="bi bi-gear me-2"></i>Admin</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <% } %>
+            <% if (isAdmin || isStaff) { %>
+            <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <% } %>
+            <li><a class="dropdown-item" href="/my-loans"><i class="bi bi-box-seam me-2"></i>My Loans</a></li>
+            <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+        <% } else { %>
+        <a href="/auth/google" class="btn btn-outline-light">
+          <i class="bi bi-google me-1"></i>Sign In
+        </a>
+        <% } %>
       </div>
-      <% } else { %>
-      <a href="/auth/google" class="btn btn-outline-light">
-        <i class="bi bi-google me-1"></i>Sign In
-      </a>
-      <% } %>
     </div>
+  </nav>
+
+  <!-- Collapsible search bar -->
+  <div class="navbar-umb-search" id="searchBar" aria-hidden="true">
+    <form action="/" method="GET" class="navbar-umb-search-form" role="search">
+      <i class="bi bi-search navbar-umb-search-icon"></i>
+      <input
+        type="search"
+        name="search"
+        class="navbar-umb-search-input"
+        placeholder="Search equipment (e.g. laptop, microphone…)"
+        aria-label="Search equipment"
+        autocomplete="off"
+      />
+      <button type="submit" class="navbar-umb-search-btn">Search</button>
+      <button type="button" class="navbar-umb-search-close" id="searchClose" aria-label="Close search">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </form>
   </div>
-</nav>
+
+  <!-- Secondary bar — matches umb.edu two-column structure -->
+  <div class="navbar-umb-secondary" aria-label="Secondary nav" role="navigation">
+    <ul class="navbar-umb-audience navbar-umb-audience--invert">
+      <li><a href="/campus-life/current-students/">Current Students</a></li>
+      <li><a href="/faculty-staff/">Faculty &amp; Staff</a></li>
+    </ul>
+    <ul class="navbar-umb-audience">
+      <li><a href="/" class="navbar-umb-btn">Browse Equipment</a></li>
+      <li><a href="/cart" class="navbar-umb-btn navbar-umb-btn--cta">Borrow Now</a></li>
+    </ul>
+  </div>
+
+</header>
+
+<script>
+  (function () {
+    const toggle = document.getElementById('searchToggle');
+    const bar    = document.getElementById('searchBar');
+    const close  = document.getElementById('searchClose');
+    const input  = bar.querySelector('input[name="search"]');
+
+    function open() {
+      bar.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      bar.setAttribute('aria-hidden', 'false');
+      input.focus();
+    }
+    function shut() {
+      bar.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      bar.setAttribute('aria-hidden', 'true');
+    }
+
+    toggle.addEventListener('click', function () {
+      bar.classList.contains('is-open') ? shut() : open();
+    });
+    close.addEventListener('click', shut);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') shut();
+    });
+  })();
+</script>
