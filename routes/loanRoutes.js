@@ -44,10 +44,11 @@ router.get(
 /**
  * PUT /update-loan/:itemId
  * Updates a loan record by its itemId.
- * Validates the itemId parameter.
+ * Access restricted to users with "staff" or "admin" roles.
  */
 router.put(
   "/update-loan/:itemId",
+  requireRoles(["staff", "admin"]),
   validateObjectId("itemId"),
   loanController.updateLoan
 );
@@ -55,17 +56,18 @@ router.put(
 /**
  * POST /add-loan/
  * Adds a new loan.
- * The loan data (including userId and itemId) is expected in the request body.
+ * Access restricted to users with "staff" or "admin" roles.
  */
-router.post("/add-loan/", loanController.addLoan);
+router.post("/add-loan/", requireRoles(["staff", "admin"]), loanController.addLoan);
 
 /**
  * DELETE /delete-loan/:itemId
  * Deletes a loan by its itemId.
- * Validates the itemId parameter.
+ * Access restricted to users with "staff" or "admin" roles.
  */
 router.delete(
   "/delete-loan/:itemId",
+  requireRoles(["staff", "admin"]),
   validateObjectId("itemId"),
   loanController.deleteLoan
 );
