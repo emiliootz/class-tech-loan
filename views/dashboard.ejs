@@ -34,6 +34,47 @@
           </div>
         </div>
       </div>
+
+      <div class="card shadow-sm mt-2">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Pending Pickups</h5>
+          <a href="/loaned-items" class="btn btn-sm btn-outline-primary">View All</a>
+        </div>
+        <div class="card-body p-0">
+          <% if (recentLoans.length === 0) { %>
+          <p class="text-muted p-3 mb-0">No active loans.</p>
+          <% } else { %>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Faculty</th>
+                  <th>Item</th>
+                  <th>Pickup Time</th>
+                  <th>Return Time</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentLoans.forEach(function(loan) { %>
+                <tr>
+                  <td><%= loan.userId ? loan.userId.name : 'Unknown' %></td>
+                  <td><%= loan.itemId ? loan.itemId.make + ' ' + loan.itemId.model : 'Unknown' %></td>
+                  <td><%= loan.arrivalTime ? new Date(loan.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+                  <td><%= loan.returnTime ? new Date(loan.returnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+                  <td>
+                    <form action="/return-item/<%= loan._id %>?_method=PUT" method="POST">
+                      <button type="submit" class="btn btn-sm btn-success">Return</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+        </div>
+      </div>
     </main>
   </div>
 </div>

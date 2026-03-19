@@ -61,11 +61,13 @@ jest.mock("../../config/database", () => {
   UserModel.findByIdAndUpdate = jest.fn();
   UserModel.countDocuments = jest.fn();
 
-  return {
-    ItemModel,
-    UserModel,
-    LoanModel: { countDocuments: jest.fn().mockResolvedValue(0) },
-  };
+  const LoanModel = jest.fn().mockImplementation(() => ({
+    save: jest.fn().mockResolvedValue(true),
+  }));
+  LoanModel.countDocuments = jest.fn().mockResolvedValue(0);
+  LoanModel.create = jest.fn().mockResolvedValue(true);
+
+  return { ItemModel, UserModel, LoanModel };
 });
 
 // ── Test data ──────────────────────────────────────────────────────────────

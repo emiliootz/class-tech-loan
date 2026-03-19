@@ -51,6 +51,7 @@ jest.mock("../../config/database", () => {
   }));
   ItemModel.find = jest.fn();
   ItemModel.findById = jest.fn();
+  ItemModel.findByIdAndUpdate = jest.fn();
   ItemModel.countDocuments = jest.fn();
 
   const UserModel = jest.fn().mockImplementation(() => ({
@@ -64,10 +65,13 @@ jest.mock("../../config/database", () => {
     save: jest.fn().mockResolvedValue(true),
   }));
   LoanModel.find = jest.fn();
+  LoanModel.findById = jest.fn();
   LoanModel.findOne = jest.fn();
   LoanModel.findOneAndUpdate = jest.fn();
   LoanModel.findOneAndDelete = jest.fn();
+  LoanModel.findByIdAndDelete = jest.fn();
   LoanModel.countDocuments = jest.fn();
+  LoanModel.create = jest.fn();
 
   return { ItemModel, UserModel, LoanModel };
 });
@@ -79,10 +83,11 @@ const staffUser = JSON.stringify({ _id: validId, role: "staff", cart: [] });
 
 const sampleLoan = {
   _id: validId,
-  userId: validId,
-  itemId: validId,
-  status: "Loaned",
-  location: "Room 101",
+  userId: { _id: validId, name: "Test User", email: "test@umb.edu" },
+  itemId: { _id: validId, make: "Sony", model: "A7", assetId: "A001" },
+  arrivalTime: new Date(),
+  returnTime: new Date(),
+  checkedOutAt: new Date(),
 };
 
 // ── App ────────────────────────────────────────────────────────────────────
@@ -105,11 +110,21 @@ beforeEach(() => {
   };
   ItemModel.find.mockReturnValue(itemChain);
   ItemModel.countDocuments.mockResolvedValue(0);
+  ItemModel.findByIdAndUpdate.mockResolvedValue({ status: "Available" });
 
-  LoanModel.find.mockResolvedValue([sampleLoan]);
+  const loanChain = {
+    populate: jest.fn().mockReturnThis(),
+    sort: jest.fn().mockReturnThis(),
+    limit: jest.fn().mockReturnThis(),
+    lean: jest.fn().mockResolvedValue([sampleLoan]),
+  };
+  LoanModel.find.mockReturnValue(loanChain);
+  LoanModel.findById.mockResolvedValue(sampleLoan);
   LoanModel.findOne.mockResolvedValue(sampleLoan);
   LoanModel.findOneAndDelete.mockResolvedValue(sampleLoan);
+  LoanModel.findByIdAndDelete.mockResolvedValue(sampleLoan);
   LoanModel.countDocuments.mockResolvedValue(1);
+  LoanModel.create.mockResolvedValue(sampleLoan);
 });
 
 // ── Tests ──────────────────────────────────────────────────────────────────
@@ -138,15 +153,15 @@ describe("POST /add-loan", () => {
     const res = await request(app)
       .post("/add-loan")
       .set("x-test-user", staffUser)
-      .send({ userId: "bad-id", itemId: "bad-id", status: "Loaned", location: "Room 101" });
+      .send({ userId: "bad-id", itemId: "bad-id", arrivalTime: new Date(), returnTime: new Date() });
     expect(res.status).toBe(400);
   });
 
-  it("returns 400 when location is missing", async () => {
+  it("returns 400 when times are missing", async () => {
     const res = await request(app)
       .post("/add-loan")
       .set("x-test-user", staffUser)
-      .send({ userId: validId, itemId: validId, status: "Loaned", location: "" });
+      .send({ userId: validId, itemId: validId });
     expect(res.status).toBe(400);
   });
 
@@ -154,7 +169,7 @@ describe("POST /add-loan", () => {
     const res = await request(app)
       .post("/add-loan")
       .set("x-test-user", staffUser)
-      .send({ userId: validId, itemId: validId, status: "Loaned", location: "Room 101" });
+      .send({ userId: validId, itemId: validId, arrivalTime: new Date(), returnTime: new Date() });
     expect(res.status).toBe(201);
   });
 });
@@ -170,5 +185,20 @@ describe("DELETE /delete-loan/:itemId", () => {
       .delete(`/delete-loan/${validId}`)
       .set("x-test-user", staffUser);
     expect(res.status).toBe(200);
+  });
+});
+
+describe("PUT /return-item/:loanId", () => {
+  it("returns 401 when not authenticated", async () => {
+    const res = await request(app).put(`/return-item/${validId}`);
+    expect(res.status).toBe(401);
+  });
+
+  it("returns 302 redirect after successful return", async () => {
+    const res = await request(app)
+      .put(`/return-item/${validId}`)
+      .set("x-test-user", staffUser);
+    expect(res.status).toBe(302);
+    expect(res.headers.location).toBe("/loaned-items");
   });
 });

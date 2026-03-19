@@ -1,24 +1,36 @@
 // controllers/loanController.js
 
 const mongoose = require("mongoose");
-const { LoanModel } = require("../config/database");
+const { LoanModel, ItemModel } = require("../config/database");
 
 /**
- * Get all loaned items.
- * Accessible only by staff and admin.
+ * Render the staff loan management page with all active loans.
  */
 exports.getAllLoans = async (req, res, next) => {
   try {
-    const loans = await LoanModel.find();
-    res.status(200).json(loans);
+    const loans = await LoanModel.find()
+      .populate("userId", "name email")
+      .populate("itemId", "make model assetId picture")
+      .lean();
+
+    const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
+    const isAdmin = req.user?.role === "admin";
+    const isStaff = req.user?.role === "staff" || isAdmin;
+    const cartCount = req.user?.cart?.length || 0;
+
+    const flash = {
+      success: req.flash("success"),
+      error: req.flash("error"),
+    };
+
+    res.render("loaned-items", { loans, isLoggedIn, isAdmin, isStaff, cartCount, flash });
   } catch (error) {
     next(error);
   }
 };
 
 /**
- * Get a specific loan by its itemId.
- * Accessible only by staff and admin.
+ * Get a specific loan by its itemId (JSON — for API use).
  */
 exports.getLoanByItemId = async (req, res, next) => {
   const { itemId } = req.params;
@@ -49,22 +61,17 @@ exports.updateLoan = async (req, res, next) => {
       error.status = 404;
       return next(error);
     }
-    res.status(200).json({
-      message: "Loan updated successfully",
-      loan: updatedLoan,
-    });
+    res.status(200).json({ message: "Loan updated successfully", loan: updatedLoan });
   } catch (error) {
     next(error);
   }
 };
 
 /**
- * Add a new loan.
- * This route expects userId and itemId in the request body.
+ * Manually add a new loan (staff/admin).
  */
 exports.addLoan = async (req, res, next) => {
-  const { userId, itemId, status, location } = req.body;
-  const allowedStatuses = ["Available", "Loaned", "Assigned to Location"];
+  const { userId, itemId, arrivalTime, returnTime } = req.body;
 
   if (
     !mongoose.Types.ObjectId.isValid(userId) ||
@@ -75,32 +82,46 @@ exports.addLoan = async (req, res, next) => {
     return next(error);
   }
 
-  if (!allowedStatuses.includes(status)) {
-    const error = new Error("Invalid status value");
-    error.status = 400;
-    return next(error);
-  }
-
-  if (!location || typeof location !== "string" || location.trim() === "") {
-    const error = new Error("Location is required");
+  if (!arrivalTime || !returnTime) {
+    const error = new Error("Arrival time and return time are required");
     error.status = 400;
     return next(error);
   }
 
   try {
-    const newLoan = new LoanModel({ userId, itemId, status, location: location.trim() });
+    const newLoan = new LoanModel({ userId, itemId, arrivalTime, returnTime });
     await newLoan.save();
-    res.status(201).json({
-      message: "Loan added successfully",
-      loan: newLoan,
-    });
+    res.status(201).json({ message: "Loan added successfully", loan: newLoan });
   } catch (error) {
     next(error);
   }
 };
 
 /**
- * Delete a loan by its itemId.
+ * Mark an item as returned: set item status back to Available, delete the loan record.
+ */
+exports.returnItem = async (req, res, next) => {
+  const { loanId } = req.params;
+  try {
+    const loan = await LoanModel.findById(loanId);
+    if (!loan) {
+      const error = new Error("Loan not found");
+      error.status = 404;
+      return next(error);
+    }
+
+    await ItemModel.findByIdAndUpdate(loan.itemId, { status: "Available" });
+    await LoanModel.findByIdAndDelete(loanId);
+
+    req.flash("success", "Item marked as returned.");
+    res.redirect("/loaned-items");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Delete a loan record by its itemId.
  */
 exports.deleteLoan = async (req, res, next) => {
   const { itemId } = req.params;

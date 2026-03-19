@@ -122,6 +122,12 @@ router.put(
 // Dashboard route
 router.get("/dashboard", requireRoles(["staff", "admin"]), userController.dashboardPage);
 
+/**
+ * GET /my-loans
+ * Show the logged-in faculty member's active loans.
+ */
+router.get("/my-loans", isAuthenticated, userController.getMyLoans);
+
 /*****************************
  *   Redirect `/protected`   *
  *****************************/

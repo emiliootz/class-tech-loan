@@ -162,10 +162,16 @@ exports.dashboardPage = async (req, res, next) => {
     }
 
     const { LoanModel } = require("../config/database");
-    const [activeLoans, totalUsers, availableItems] = await Promise.all([
-      LoanModel.countDocuments({ status: "Loaned" }),
+    const [activeLoans, totalUsers, availableItems, recentLoans] = await Promise.all([
+      LoanModel.countDocuments(),
       UserModel.countDocuments(),
       ItemModel.countDocuments({ status: "Available" }),
+      LoanModel.find()
+        .populate("userId", "name email")
+        .populate("itemId", "make model assetId")
+        .sort({ checkedOutAt: -1 })
+        .limit(10)
+        .lean(),
     ]);
 
     res.render("dashboard", {
@@ -176,6 +182,7 @@ exports.dashboardPage = async (req, res, next) => {
       activeLoans,
       totalUsers,
       availableItems,
+      recentLoans,
     });
   } catch (error) {
     next(error);
@@ -312,6 +319,26 @@ exports.getUserEditPage = async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated ? req.isAuthenticated() : false;
     const cartCount = req.user?.cart?.length || 0;
     res.render("editUser", { user, isLoggedIn, isAdmin: true, cartCount });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getMyLoans = async (req, res, next) => {
+  try {
+    const { LoanModel } = require("../config/database");
+    const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
+    const user = await UserModel.findById(req.user._id);
+    const cartCount = user.cart.length;
+    const isAdmin = user.role === "admin";
+    const isStaff = user.role === "staff" || isAdmin;
+
+    const loans = await LoanModel.find({ userId: req.user._id })
+      .populate("itemId", "make model assetId picture")
+      .sort({ arrivalTime: 1 })
+      .lean();
+
+    res.render("my-loans", { loans, isLoggedIn, cartCount, isAdmin, isStaff });
   } catch (error) {
     next(error);
   }

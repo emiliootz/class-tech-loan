@@ -1,0 +1,60 @@
+<%- include('partials/head', { title: 'Active Loans', styles: ['dashboard.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff }) %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <%- include('partials/sidebar', { activeLink: 'loans' }) %>
+
+    <main class="col-md-9 col-lg-10 p-4">
+      <h1 class="mb-4">Active Loans</h1>
+
+      <% if (flash.success && flash.success.length > 0) { %>
+      <div class="alert alert-success"><%= flash.success[0] %></div>
+      <% } %>
+      <% if (flash.error && flash.error.length > 0) { %>
+      <div class="alert alert-danger"><%= flash.error[0] %></div>
+      <% } %>
+
+      <% if (loans.length === 0) { %>
+      <div class="alert alert-info">No active loans at this time.</div>
+      <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="custom-thead">
+            <tr>
+              <th>Faculty</th>
+              <th>Email</th>
+              <th>Item</th>
+              <th>Asset ID</th>
+              <th>Pickup Time</th>
+              <th>Return Time</th>
+              <th>Checked Out</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% loans.forEach(function(loan) { %>
+            <tr>
+              <td><%= loan.userId ? loan.userId.name : 'Unknown' %></td>
+              <td><%= loan.userId ? loan.userId.email : '—' %></td>
+              <td><%= loan.itemId ? loan.itemId.make + ' ' + loan.itemId.model : 'Unknown' %></td>
+              <td><%= loan.itemId ? loan.itemId.assetId : '—' %></td>
+              <td><%= loan.arrivalTime ? new Date(loan.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+              <td><%= loan.returnTime ? new Date(loan.returnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+              <td><%= loan.checkedOutAt ? new Date(loan.checkedOutAt).toLocaleString() : '—' %></td>
+              <td>
+                <form action="/return-item/<%= loan._id %>?_method=PUT" method="POST">
+                  <button type="submit" class="btn btn-sm btn-success">Mark Returned</button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </main>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

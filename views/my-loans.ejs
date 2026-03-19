@@ -1,0 +1,55 @@
+<%- include('partials/head', { title: 'My Loans', styles: ['checkout.css'] }) %>
+<%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff }) %>
+
+<section class="container my-5" style="max-width: 900px">
+  <div class="d-flex align-items-center mb-4 gap-3">
+    <a href="/" class="btn btn-outline-secondary btn-sm">&larr; Back to Home</a>
+    <h1 class="mb-0">My Active Loans</h1>
+  </div>
+
+  <% if (loans.length === 0) { %>
+  <div class="alert alert-info">
+    You have no active loans. <a href="/">Browse available items</a> to get started.
+  </div>
+  <% } else { %>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead style="background-color: #005a8b; color: white;">
+        <tr>
+          <th>Item</th>
+          <th>Asset ID</th>
+          <th>Pickup Time</th>
+          <th>Return Time</th>
+          <th>Checked Out</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% loans.forEach(function(loan) { %>
+        <tr>
+          <td>
+            <% if (loan.itemId) { %>
+            <div class="d-flex align-items-center gap-2">
+              <img
+                src="<%= loan.itemId.picture || '/images/placeholder.jpg' %>"
+                alt="<%= loan.itemId.make %> <%= loan.itemId.model %>"
+                style="width: 48px; height: 48px; object-fit: contain;"
+              />
+              <span><%= loan.itemId.make %> <%= loan.itemId.model %></span>
+            </div>
+            <% } else { %>
+            Unknown
+            <% } %>
+          </td>
+          <td><%= loan.itemId ? loan.itemId.assetId : '—' %></td>
+          <td><%= loan.arrivalTime ? new Date(loan.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+          <td><%= loan.returnTime ? new Date(loan.returnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—' %></td>
+          <td><%= loan.checkedOutAt ? new Date(loan.checkedOutAt).toLocaleString() : '—' %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</section>
+
+<%- include('partials/foot') %>

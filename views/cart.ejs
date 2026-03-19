@@ -5,6 +5,10 @@
   <div class="left-container">
     <h1>Your Cart</h1>
 
+    <% if (flash && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger"><%= flash.error[0] %></div>
+    <% } %>
+
     <% if (cartItems.length > 0) { %>
     <ul class="items">
       <% cartItems.forEach(function(item) { %>

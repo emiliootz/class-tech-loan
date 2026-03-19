@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-// Helper function
-const getTomorrow = () => new Date(Date.now() + 86400000);
-
-// Lending Schema and Model
 const loaningSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,23 +11,17 @@ const loaningSchema = new mongoose.Schema({
     ref: "Item",
     required: true,
   },
-  startTime: {
+  arrivalTime: {
+    type: Date,
+    required: true,
+  },
+  returnTime: {
+    type: Date,
+    required: true,
+  },
+  checkedOutAt: {
     type: Date,
     default: Date.now,
-  },
-  endTime: {
-    type: Date,
-    default: getTomorrow,
-  },
-  status: {
-    type: String,
-    enum: ["Available", "Loaned", "Assigned to Location"],
-    required: true,
-  },
-  location: {
-    type: String,
-    default: "N/A",
-    required: true,
   },
 });
 

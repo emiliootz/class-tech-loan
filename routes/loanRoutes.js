@@ -72,4 +72,16 @@ router.delete(
   loanController.deleteLoan
 );
 
+/**
+ * PUT /return-item/:loanId
+ * Marks an item as returned: sets item status to Available and deletes the loan.
+ * Access restricted to users with "staff" or "admin" roles.
+ */
+router.put(
+  "/return-item/:loanId",
+  requireRoles(["staff", "admin"]),
+  validateObjectId("loanId"),
+  loanController.returnItem
+);
+
 module.exports = router;

@@ -1,5 +1,14 @@
 // controllers/cartController.js
-const { UserModel, ItemModel } = require("../config/database");
+const { UserModel, ItemModel, LoanModel } = require("../config/database");
+
+/**
+ * Combine today's date with a time string "HH:MM" into a full Date object.
+ */
+const toDateTime = (timeStr) => {
+  const today = new Date();
+  const [h, m] = timeStr.split(":").map(Number);
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate(), h, m);
+};
 
 /**
  * Display the user's cart.
@@ -10,13 +19,15 @@ exports.getCart = async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
+    let flash = { error: [], success: [] };
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartItems = user.cart;
       cartCount = user.cart.length;
       isAdmin = user.role === "admin";
+      flash = { error: req.flash("error"), success: req.flash("success") };
     }
-    res.render("cart", { cartItems, isLoggedIn, cartCount, isAdmin });
+    res.render("cart", { cartItems, isLoggedIn, cartCount, isAdmin, flash });
   } catch (error) {
     next(error);
   }
@@ -86,6 +97,8 @@ exports.removeFromCart = async (req, res, next) => {
 
 /**
  * Process the checkout for the user's cart.
+ * Re-validates availability at checkout time to prevent double-booking.
+ * Creates a Loan record for each item with the chosen pickup/return times.
  */
 exports.checkoutCart = async (req, res, next) => {
   try {
@@ -98,25 +111,43 @@ exports.checkoutCart = async (req, res, next) => {
       return next(error);
     }
 
+    if (!arrivalDate || !returnDate) {
+      req.flash("error", "Please select both an arrival time and a return time.");
+      return res.redirect("/cart");
+    }
+
+    const arrivalTime = toDateTime(arrivalDate);
+    const returnTime = toDateTime(returnDate);
+
+    // Re-validate all items are still available before doing anything (race condition fix)
     for (const item of user.cart) {
       const dbItem = await ItemModel.findById(item._id);
-      if (!dbItem) {
-        const error = new Error(`Item ${item.assetId} not found`);
-        error.status = 404;
-        return next(error);
+      if (!dbItem || dbItem.status !== "Available") {
+        req.flash(
+          "error",
+          `"${item.make} ${item.model}" is no longer available. Please remove it from your cart.`
+        );
+        return res.redirect("/cart");
       }
+    }
+
+    // All items confirmed available — mark loaned and create loan records
+    for (const item of user.cart) {
+      const dbItem = await ItemModel.findById(item._id);
       dbItem.status = "Loaned";
       await dbItem.save();
+      await LoanModel.create({
+        userId: user._id,
+        itemId: dbItem._id,
+        arrivalTime,
+        returnTime,
+      });
     }
 
     user.cart = [];
     await user.save();
 
-    const query = new URLSearchParams();
-    if (arrivalDate) query.set("arrivalDate", arrivalDate);
-    if (returnDate) query.set("returnDate", returnDate);
-
-    res.redirect(`/checkout-success?${query.toString()}`);
+    res.redirect("/checkout-success");
   } catch (error) {
     next(error);
   }
@@ -127,7 +158,6 @@ exports.checkoutCart = async (req, res, next) => {
  */
 exports.getCheckoutSuccess = async (req, res, next) => {
   try {
-    const { arrivalDate, returnDate } = req.query;
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
@@ -143,9 +173,7 @@ exports.getCheckoutSuccess = async (req, res, next) => {
       isLoggedIn,
       cartCount,
       isAdmin,
-      arrivalDate: arrivalDate || null,
-      returnDate: returnDate || null,
-      message: "Your items are ready for pickup!",
+      message: "Your items are ready for pickup. You can view your active loans anytime from your account.",
     });
   } catch (error) {
     next(error);
