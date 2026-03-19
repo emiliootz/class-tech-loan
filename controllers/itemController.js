@@ -56,10 +56,24 @@ exports.getItem = async (req, res, next) => {
  */
 exports.updateItem = async (req, res, next) => {
   const assetId = req.params.assetId;
+  const { assetType, make, model, status, picture, location } = req.body;
+  const allowedStatuses = ["Available", "Loaned", "Assigned To Location"];
+  if (status && !allowedStatuses.includes(status)) {
+    const error = new Error("Invalid status value");
+    error.status = 400;
+    return next(error);
+  }
+  const updates = {};
+  if (assetType !== undefined) updates.assetType = assetType;
+  if (make !== undefined) updates.make = make;
+  if (model !== undefined) updates.model = model;
+  if (status !== undefined) updates.status = status;
+  if (picture !== undefined) updates.picture = picture;
+  if (location !== undefined) updates.location = location;
   try {
     const updatedItem = await ItemModel.findOneAndUpdate(
       { assetId },
-      req.body,
+      updates,
       { new: true }
     );
     if (!updatedItem) {
@@ -91,12 +105,8 @@ exports.addItem = async (req, res, next) => {
       status: status || "Available", // Default to "Available" if not provided
     });
     await newItem.save();
-
-    console.log(`Item added: ${newItem}`);
-    // Redirect to the admin page after successful addition.
     res.redirect("/admin");
   } catch (error) {
-    console.error("Error adding item:", error);
     next(error);
   }
 };
@@ -110,25 +120,12 @@ exports.deleteItem = async (req, res, next) => {
   try {
     const deletedItem = await ItemModel.findByIdAndDelete(id);
     if (!deletedItem) {
-      console.log(`Item not found for id: ${id}`);
       const error = new Error("Item not found");
       error.status = 404;
       return next(error);
     }
-
-    console.log(`Item deleted: ${deletedItem}`);
-
-    // Optional: Verify that the item has been removed.
-    const checkItem = await ItemModel.findById(id);
-    if (checkItem) {
-      console.error(`Item still exists after deletion: ${checkItem}`);
-    } else {
-      console.log("Item successfully removed from database.");
-    }
-
     res.redirect("/admin");
   } catch (error) {
-    console.error("Error deleting item:", error);
     next(error);
   }
 };

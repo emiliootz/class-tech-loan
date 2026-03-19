@@ -64,17 +64,31 @@ exports.updateLoan = async (req, res, next) => {
  */
 exports.addLoan = async (req, res, next) => {
   const { userId, itemId, status, location } = req.body;
+  const allowedStatuses = ["Available", "Loaned", "Assigned to Location"];
+
+  if (
+    !mongoose.Types.ObjectId.isValid(userId) ||
+    !mongoose.Types.ObjectId.isValid(itemId)
+  ) {
+    const error = new Error("Invalid userId or itemId");
+    error.status = 400;
+    return next(error);
+  }
+
+  if (!allowedStatuses.includes(status)) {
+    const error = new Error("Invalid status value");
+    error.status = 400;
+    return next(error);
+  }
+
+  if (!location || typeof location !== "string" || location.trim() === "") {
+    const error = new Error("Location is required");
+    error.status = 400;
+    return next(error);
+  }
+
   try {
-    // Validate that userId and itemId are valid ObjectIds
-    if (
-      !mongoose.Types.ObjectId.isValid(userId) ||
-      !mongoose.Types.ObjectId.isValid(itemId)
-    ) {
-      const error = new Error("Invalid userId or itemId");
-      error.status = 400;
-      return next(error);
-    }
-    const newLoan = new LoanModel({ userId, itemId, status, location });
+    const newLoan = new LoanModel({ userId, itemId, status, location: location.trim() });
     await newLoan.save();
     res.status(201).json({
       message: "Loan added successfully",
