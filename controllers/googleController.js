@@ -1,7 +1,7 @@
 const passport = require("passport");
 const UserModel = require("../config/database");
 
-const LOGIN_ROUTE = "/login";
+const LOGIN_ROUTE = "/";
 const PROTECTED_ROUTE = "/protected";
 const LOGOUT_ROUTE = "/";
 
@@ -9,7 +9,7 @@ const LOGOUT_ROUTE = "/";
  * Initiates Google authentication.
  */
 exports.googleAuth = (req, res, next) => {
-  return passport.authenticate("google", { scope: ["profile"] })(
+  return passport.authenticate("google", { scope: ["profile", "email"] })(
     req,
     res,
     next

@@ -66,7 +66,7 @@ module.exports.configureExpressMiddleware = (app) => {
       cookie: {
         maxAge: config.session.cookieMaxAge,
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
         // secure should only be true over HTTPS (i.e., in production)
         secure: isProduction,
       },

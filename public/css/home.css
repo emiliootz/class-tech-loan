@@ -37,7 +37,7 @@
  * - Text-shadow
  */
 .hero h1 {
-  font-family: "Open+Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 600;
   font-size: 110px;
   line-height: 106px;
@@ -140,7 +140,7 @@
  * - Uses text-shadow
  */
 .category-box h3 {
-  font-family: "Open+Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 600;
   font-size: 22px;
   line-height: 28px;

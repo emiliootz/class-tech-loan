@@ -54,11 +54,13 @@ app.get("/", async (req, res, next) => {
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
+    let isStaff = false;
 
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
       isAdmin = user.role === "admin";
+      isStaff = user.role === "staff";
     }
 
     res.render("home", {
@@ -66,6 +68,7 @@ app.get("/", async (req, res, next) => {
       isLoggedIn,
       cartCount,
       isAdmin,
+      isStaff,
       activeCategory: category || null,
       currentPage: page,
       totalPages,
