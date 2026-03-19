@@ -36,6 +36,7 @@ function Home({
   isLoggedIn,
   isAdmin = false,
   isStaff = false,
+  activeCategory = null,
 }) {
   return (
     <>
@@ -66,22 +67,20 @@ function Home({
       {/* Category section */}
       <section className="category">
         <h1>Categories</h1>
-        <a href="#" className="category-box">
+        <a href="/" className={`category-box${!activeCategory ? " active" : ""}`}>
           <div className="dark-overlay"></div>
-          <h3>Video</h3>
+          <h3>All</h3>
         </a>
-        <a href="#" className="category-box">
-          <div className="dark-overlay"></div>
-          <h3>Audio</h3>
-        </a>
-        <a href="#" className="category-box">
-          <div className="dark-overlay"></div>
-          <h3>Photo</h3>
-        </a>
-        <a href="#" className="category-box">
-          <div className="dark-overlay"></div>
-          <h3>Dongle</h3>
-        </a>
+        {["Video", "Audio", "Photo", "Dongle"].map((cat) => (
+          <a
+            key={cat}
+            href={`/?category=${cat}`}
+            className={`category-box${activeCategory && activeCategory.toLowerCase() === cat.toLowerCase() ? " active" : ""}`}
+          >
+            <div className="dark-overlay"></div>
+            <h3>{cat}</h3>
+          </a>
+        ))}
       </section>
 
       {/* Available items section */}

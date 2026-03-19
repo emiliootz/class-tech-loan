@@ -40,7 +40,11 @@ const { ItemModel, UserModel } = require("./config/database");
 // Home route
 app.get("/", async (req, res, next) => {
   try {
-    const items = await ItemModel.find();
+    const { category } = req.query;
+    const query = category
+      ? { assetType: { $regex: new RegExp(category, "i") } }
+      : {};
+    const items = await ItemModel.find(query);
     const isLoggedIn = req.isAuthenticated && req.isAuthenticated();
     let cartCount = 0;
     let isAdmin = false;
@@ -48,10 +52,10 @@ app.get("/", async (req, res, next) => {
     if (isLoggedIn && req.user) {
       const user = await UserModel.findById(req.user._id).populate("cart");
       cartCount = user.cart.length;
-      isAdmin = user.role === "admin"; // Check if the logged-in user has an admin role
+      isAdmin = user.role === "admin";
     }
 
-    res.render("home", { items, isLoggedIn, cartCount, isAdmin });
+    res.render("home", { items, isLoggedIn, cartCount, isAdmin, activeCategory: category || null });
   } catch (error) {
     next(error);
   }
