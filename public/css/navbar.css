@@ -4,8 +4,49 @@
  *              with sticky positioning and collapsible search bar.
  */
 
+/* ── Design tokens — mirrors umb.edu CSS variables ─ */
+:root {
+  --sans-serif: "Open Sans", sans-serif;
+
+  /* Colors */
+  --color-blue:   #005a8b;
+  --color-dark:   #111111;
+  --color-light:  #ffffff;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-s:  0.75rem;
+  --space-m:  1rem;
+  --space-l:  1.5rem;
+  --space-xl: 2.5rem;
+}
+
+/* ── Base HTML & body — mirrors umb.edu base styles ─ */
+html {
+  color-scheme: light;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--sans-serif);
+  line-height: 1.5;
+  word-wrap: break-word;
+  text-rendering: optimizeSpeed;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero tokens ────────────────────────────────── */
+.hero--home {
+  --outline-color: var(--color-light);
+}
+
+.hero {
+  --gutter: var(--space-l);
+  --sidebar-target-width: 36rem;
+  --sidebar-content-min-width: 50%;
 }
 
 /* ── Screen reader only (visually hidden) ──────── */
@@ -56,7 +97,7 @@ body {
 
 /* ── Primary nav ───────────────────────────────── */
 .bg-umb-blue {
-  background-color: #005a8b;
+  background-color: var(--color-blue);
 }
 
 /* ── Search toggle button ──────────────────────── */
@@ -156,9 +197,11 @@ body {
   color: #fff;
 }
 
-/* ── Secondary bar ─────────────────────────────── */
+/* ── Secondary bar — mirrors .secondary-menu.bg-blue ── */
 .navbar-umb-secondary {
-  background-color: #003f66;
+  --outline-color: var(--color-light);
+  background-color: var(--color-blue);
+  color: var(--color-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -166,22 +209,36 @@ body {
   gap: 1rem;
 }
 
-/* Shared list reset */
+/* ul base — mirrors .secondary-menu ul */
 .navbar-umb-audience {
-  list-style: none;
-  margin: 0;
+  list-style-type: none;
+  margin: 0 auto;
   padding: 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.25rem;
-  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* At ≥512px: push right list to end, left list stays left */
+@media (min-width: 32em) {
+  .navbar-umb-audience:not(.navbar-umb-audience--invert) {
+    margin: 0 0 0 auto;
+  }
+  .navbar-umb-audience--invert {
+    margin: 0;
+  }
+}
+
+/* At ≥1120px: center-justify both lists */
+@media (min-width: 70em) {
+  .navbar-umb-audience {
+    justify-content: center;
+    margin: 0;
+  }
 }
 
 /* Left — plain audience links */
-.navbar-umb-audience--invert {
-  gap: 0;
-}
-
 .navbar-umb-audience--invert li + li::before {
   content: "|";
   color: rgba(255, 255, 255, 0.35);
@@ -189,17 +246,18 @@ body {
 }
 
 .navbar-umb-audience--invert a {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-light);
+  opacity: 0.8;
   font-size: 0.78rem;
   font-weight: 600;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  transition: color 0.15s;
+  transition: opacity 0.15s;
 }
 
 .navbar-umb-audience--invert a:hover {
-  color: #fff;
+  opacity: 1;
 }
 
 /* Right — outlined button links */

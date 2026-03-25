@@ -12,41 +12,66 @@
  *       Hero Section        *
  *****************************/
 
-/* 
- * Hero section styles:
- * - Background image
- * - Centers the message on the screen
- */
-.hero {
-  width: 100%;
-  height: calc(100vh - 450px);
-  background-image: url(/images/bg.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+.hero--home .hero__media {
+  height: 62vh;
+  min-height: 450px;
+  max-height: 830px;
 }
 
-/* 
- * Hero title styles:
- * - Large uppercase text
- * - White color
- * - Text-shadow
- */
-.hero h1 {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-  font-size: 110px;
-  line-height: 106px;
-  color: #ffffff;
-  text-transform: uppercase;
-  background-color: transparent;
-  text-shadow: -1px 1px 1px;
-  z-index: 100;
+.hero__media {
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
 }
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Dark overlay on the background */
+.hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.hero__title-line {
+  display: block;
+  font-family: var(--sans-serif);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 1.05;
+  color: var(--color-light);
+  text-transform: uppercase;
+  text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hero__title-line--left  { text-align: left; }
+.hero__title-line--right { text-align: right; }
 
 /*****************************
  *     Category Section      *

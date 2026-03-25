@@ -1,14 +1,22 @@
 <%- include('partials/head', { title: 'UMass Boston Equipment Borrowing', styles: ['home.css'] }) %>
 <%- include('partials/navbar', { cartCount, isLoggedIn, isAdmin, isStaff: locals.isStaff || false }) %>
 
-<section class="hero">
-  <div class="dark-overlay"></div>
-  <h1>
-    Borrow<br />
-    &nbsp;&nbsp;&nbsp;Equipment at<br />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Umass Boston
-  </h1>
-</section>
+<div class="hero hero--home">
+  <div class="hero__media">
+    <img
+      src="/images/bg.png"
+      alt=""
+      class="hero__bg"
+    />
+
+    <div class="hero__content">
+      <div class="hero__title">
+        <span class="hero__title-line hero__title-line--left">Borrow Equipment</span>
+        <span class="hero__title-line hero__title-line--right">at UMass Boston</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="category">
   <h1>Categories</h1>
